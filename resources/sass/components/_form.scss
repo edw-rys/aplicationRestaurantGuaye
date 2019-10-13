@@ -1,0 +1,144 @@
+.input-txt{
+	border: none;
+	border-bottom: 1px solid #000;
+    outline: none;
+    font-size: 1em;
+}
+/*----------------   LOGIN --------------------*/
+.container-login{
+	height: 400px;
+}
+
+.form form .col-input{
+	display: grid;
+	grid-template-columns: 2fr 2fr;
+}
+.form form .col-input{
+	margin: 20px 0;
+}
+/*----------------   LOGIN --------------------*/
+
+
+/*----------------   Contact ------------------*/
+.contact{
+    width: 90%;
+    margin: auto;
+    h1.tittle{
+        font-size: 1.5em;
+    }
+    form{
+        label.message{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    }
+}
+@media (min-width:750px){
+    .contact{
+        width: 60%;
+        ._us{
+            display: flex;  
+            label{
+                margin: 0 20px;
+            }
+        }
+        form{
+            label.message{
+                width: 80%;
+            }
+        }
+        input[type="submit"]{
+            margin: auto;
+            width: 35%;
+        }
+    }
+}   
+
+
+
+/*----------------   BLOG --------------------*/
+
+.form-blog{
+	width: 90%;
+    background: #FFD6C1;
+	padding: 20px;
+    border-radius: 20px;
+    .image-select{
+        position: relative;
+        display: block;
+        width: 50px;
+        height: 50px;;
+        overflow: hidden;
+        input{
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            left: 0;
+            height: 50px;cursor: pointer;
+        }
+        .icon{
+            i{
+                background: #470048;
+                border: 1ps solid #470048;
+                font-size: 2em;
+                padding: 8px;
+                color: #ffF;
+                border-radius: 20%;
+                transition: all 0.4s;
+            }
+        }
+    }
+}
+@media (min-width:750px){
+    .form-send{
+        width: 500px;
+        margin: auto;
+    }
+}
+/* Input type file */
+
+/* ******************** */
+
+/* list */
+.form-blog ul#list-ingredients,
+.form-blog ul#list-ingredients  li 
+.form-blog #list-social-input,
+.form-blog #list-social-input li{
+    width: 100%;
+}
+.form-blog ul#list-ingredients input[type="text"]{
+    width: 85%;
+}
+
+/* /*************** */
+
+
+
+/* Menú */
+.form{
+    margin: 70px 0;
+    .select{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .radio{
+        .op{
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            background: #E0E0E0;
+            label{
+                justify-self: center;
+            }
+        }
+    }
+    .line label,.form .area{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Event */
+.event{
+    font-size: 1.1em;
+}

@@ -1,0 +1,92 @@
+
+.internal-message {
+    z-index: 999;
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    width: 250px; 
+    .close {
+        margin: 5px;
+        cursor: pointer;
+        display: inline-block;
+        padding: 7px 10px;
+        background: var(--color-first);
+        border-radius: 50%; 
+        i {
+            color: #fff; 
+        }
+    }
+    ._body {
+      background: #ffF;
+      border-radius: 20px; 
+        a{
+          font-size: 2em;
+          margin-left: 10px; 
+          i {
+            color: var(--color); 
+          }
+        }
+        p {
+          padding: 10px; 
+        }
+    }
+    .description {
+        background: var(--color-first);
+        color: var(--color-txt);
+        border-radius: 0 0 20px 20px; 
+      }
+    .message {
+        border: 1px solid var(--color-first);
+        margin: 10px 0;
+        background: #fff;
+        padding: 10px;
+        border-radius: 20px; 
+        input {
+            width: 85%;
+            outline: none;
+            border: none; 
+            a {
+            width: 10%; 
+            i {
+                color: var(--color-first);
+                font-size: 1.4em; 
+                }
+            }
+        }
+    }
+    #message-ws {
+        position: absolute;
+        bottom: -500px;
+        animation-timing-function: ease-in; 
+        &.open{
+            animation: top-mssg 0.5s;
+            bottom: 40px; 
+        }
+    }
+    button {
+        z-index: 100; 
+        &:hover> span , &:hover > span i {
+            color: var(--color-btn); 
+        }
+        span.text {
+            display: none; 
+        }
+    }
+}
+
+@media (min-width: 750px) {
+    .internal-message button span.text {
+      display: initial; 
+    } 
+  }
+
+  @-webkit-keyframes top-mssg {
+    0% {bottom: -500px; }
+    100% {bottom: 40px; } 
+  }
+  
+  @keyframes top-mssg {
+    0% {bottom: -500px;}
+    100% {bottom: 40px; } 
+  }
+  

@@ -73,50 +73,55 @@ function validarUsuarionuevo(){
 
 
 
-function validaFormBlog() {
-	removeErr("#panelErr");
+function validaFormBlog(data) {
+	var nombre = data.get("nombre");
+	var img    = data.get("imagen");
+	var preparacion=data.get("preparacion");
+	var ingredients=data.getAll("ingrediente[]");
 	var mensaje=[];
 	// Recolección de datos
-	var nombre=document.querySelector("input[name='nombre']");
-	var img=document.querySelector("input[name='imagen']");
-	var preparacion=document.querySelector("textarea[name='preparacion']");
-	
-	var ingredientsUl=document.getElementById("list-ingredients");
-	if(ingredientsUl.children.length <2)
+	if(nombre.length==0){
+		mensaje.push("Escriba el nombre.")
+	}else{
+		if(!regexobjPrepare.test(nombre)){
+			mensaje.push("Nombre no es válido")
+			
+		}
+	}
+
+	if(ingredients.length <2)
 		mensaje.push("Agrege por lo menos 2 ingredientes.")
-	for(var ingredient of ingredientsUl.children){
-		if(ingredient.firstElementChild.value==""){
+	for(var ingredient of ingredients){
+		if(ingredient==""){
 			mensaje.push("Los campos de ingredientes no deben estar vacíos.")
 			break;
 		}
-		if(!letrasNumEspacio.test(ingredient.firstElementChild.value)){
+		if(!letrasNumEspacio.test(ingredient)){
 			mensaje.push("Sólo se permite numeros letras y espacios en los campos de ingredientes.")
 			break;
 		}
 	}
-	var socialLink=document.getElementById("list-social-input");
-	for(var socialUrl of socialLink.children){
-		if(!validaUrl.test(socialUrl.firstElementChild.value)){
+	var socialLink=data.getAll("input-social[]");
+	for(var socialUrl of socialLink){
+		if(!validaUrl.test(socialUrl)){
 			mensaje.push("Los campos de redes sociales habilitadas no deben estar vacíos o deben tener una dirección de url pegada.")
 			break;
 		}
 	}
 
 	// Validaciones
-	if(!regexobj.test(nombre.value))
-		mensaje.push("Nombre: Caracteres no permitidos o excede la su longitud (max->30)");
-	if(!regexobjPrepare.test(preparacion.value))
+	if(!regexobjPrepare.test(preparacion))
 		mensaje.push("Preparación: Caracteres no permitidos o excede la su longitud (max->900)");
 
-	if(!img.value || img.value.length==0)
+	if(!img.name || img.name.length==0)
 		mensaje.push("Inserte una imagen");
-	else if(!imgFormat.test(img.value))
+	else if(!imgFormat.test(img.name))
 		mensaje.push("Formato de archivo no es correcto");
-	errorMessage("#panelErr", mensaje);
+
+
 	if(mensaje.length==0 || !mensaje)
 		return true;
-		addClass("#error","active");
-	return false;
+	return mensaje;
 }
 
 function validaFormEventos() {

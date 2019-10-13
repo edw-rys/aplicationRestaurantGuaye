@@ -1,0 +1,140 @@
+
+
+
+/*************/
+header .navigation {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+header .navigation #menu-bars {
+  display: inline-block;
+  font-size: 30px; 
+}
+header .navigation .isotipo {
+  width: 250px; 
+}
+header .navigation .isotipo img {
+  width: 100%; 
+}
+header .navigation .menu {
+  max-height: 0;
+  height: 0;
+  transition: 1s;
+  /* No se muestra lo que está por fuera del contenedor */
+  overflow: hidden; 
+}
+header .navigation .menu.active {
+  display: block;
+  /* tiempo de animación al cambio de tamaño */
+  transition: max-height 0.5s;
+  height: 23em;
+  max-height: 25em; 
+}
+header .navigation .menu .list-menu {
+  background: transparent;
+  margin-top: 5px; 
+}
+header .navigation .menu .list-menu li {
+  background-color: var(--color); 
+}
+header .navigation .menu .list-menu li a {
+  text-align: center;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: var(--color-txt);
+  transition: all 0.4s;
+  border: 1px solid var(--color);
+  font-size: 1.2em; 
+}
+header .navigation .menu .list-menu li a:hover {
+  border: 1px solid var(--color-invert); 
+}
+@media (min-width: 750px) {
+  header .navigation .menu .list-menu li a {
+    font-size: 1em; 
+  } 
+}
+header .navigation .menu .list-menu li.uss {
+  border-top: 1px solid var(--color-first); 
+}
+header .navigation .menu .list-menu li.uss ul {
+  -ms-flex-pack: distribute;
+  justify-content: space-around; 
+}
+
+
+.user-card{
+  border: 1px solid var(--color-first);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+
+
+
+
+
+/* MESSAGE */
+
+/* ERROR and OTHER MESSAGE */
+#error.active, #errorphp.active, #messagephp.active, #message-panel.active{
+  /* eliminar problema de la fuente borrosa */
+  -webkit-filter: blur(0.000001px);
+  -webkit-font-smoothing: antialiased;
+  /*  */
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--color-panel);
+  animation: animation-panel 0.5s; 
+  z-index: 999;
+}
+
+#error,#errorphp,#messagephp ,#message-panel{
+  position: fixed;
+  top: -500px;
+  left: 50%;
+  background: var(--error);
+  width: 90%; 
+}
+
+#error ._head,#errorphp ._head ,#messagephp ._head,#message-panel ._head{
+  background: var(--color-panel); 
+}
+
+#error .err-tittle,#errorphp .err-tittle {
+  font-size: 1.2em;
+  background: var(--error);
+  color: #fff; 
+}
+
+#error ._head span,#errorphp ._head span,  #messagephp ._head span , #message-panel ._head span{
+  cursor: pointer;
+  background: #fff;
+  border-radius: 50%; 
+}
+
+#error ._head span i ,#errorphp ._head span i,#messagephp ._head span i ,#message-panel ._head span i{
+  font-size: 1.1em;
+  padding: 5px 7px;
+  color: var(--color-panel); 
+}
+
+#panelErr,#panelErrphp,#messagephp,#message-panel{
+  background: #fff; 
+}
+
+#panelErr p,#panelErrphp p ,#messagephp p, #message-panel p{
+  padding: 10px; 
+}
+@media (min-width: 750px) {
+  #error,#errorphp ,#messagephp,#message-panel{
+    max-width: 50%;
+  }
+}
+
+/* 404 */
+

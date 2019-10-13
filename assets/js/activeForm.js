@@ -10,7 +10,7 @@ function eliminarNodos(element){
 
 function addLiInput(_name){
 	var li=document.createElement("li");
-	var input=createElement("input",[["type","text"],["class","input-txt"],["name",_name]]);
+	var input=createElement("input",{"type":"text","class":"input-txt","name":_name});
 	li.classList="space-around flex";
 	li.appendChild(input);
 	return li;
@@ -23,8 +23,8 @@ function addElementBlog(_id){
 }
 
 function trash(){
-	var btn=createElement("button",[["type","button"],["onclick","removeCampFather(this)"]]);
-	var icon=createElement("img",[["src","assets/img/icons/trash-alt-regular.svg"],["width","20"]]);
+	var btn=createElement("button",{"type":"button","onclick":"removeCampFather(this)"});
+	var icon=createElement("img",{"src":"assets/img/icons/trash-alt-regular.svg","width":"20"});
 	btn.appendChild(icon);
 	return btn;
 }
@@ -37,9 +37,9 @@ function addSocialLiInput(_id){
 	var node=document.getElementById(_id);
 	var li=addLiInput( "input-social[]");
 	
-	var selection=createElement("select",[["name","social-op[]"]]);
+	var selection=createElement("select",{"name":"social-op[]"});
 	for(var s of socialNetwork){
-		op=createElement("option",[["value",s.id_socialNetwork]], s.name_socialNetwork)
+		op=createElement("option",{"value":s.id_socialNetwork}, s.name_socialNetwork)
 		selection.appendChild(op);
 
 	}

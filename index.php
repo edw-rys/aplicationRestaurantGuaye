@@ -1,6 +1,5 @@
 <?php
-
-require_once './controller/FrontController.php';
-$ruteador = new FrontController();
-$ruteador->route();
+require_once 'app/classes/Tnx.php';
+// Excecute framework
+Tnx::fly();
 ?>

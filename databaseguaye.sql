@@ -92,6 +92,9 @@ BEGIN
 	where id_control=id_food_control;
 END$$
 
+
+
+
 DELIMITER $$
 
 -- INSERTS
@@ -140,11 +143,11 @@ CREATE PROCEDURE insertBlog(
 	)
 BEGIN
 	-- insertar datos de las recetas
-	INSERT INTO recipe( url_image, name, preparation,creation_date)
-	values(url_image_,name_,preparation_,now());
+	INSERT INTO recipe( url_image, name, preparation)
+	values(url_image_,name_,preparation_);
 		
-	INSERT INTO blog( id_user,id_recipe)
-    values(id_user_,(SELECT MAX(id_recipe) FROM recipe));
+	INSERT INTO blog( id_user,id_recipe,creation_date)
+    values(id_user_,(SELECT MAX(id_recipe) FROM recipe) ,now());
 END$$
 
 -- insertar ingredientes
@@ -525,6 +528,7 @@ BEGIN
         where status=1 and id_menu=id_m;
 END$$
 
+
 DELIMITER $$
 
 -- UPDATES
@@ -655,8 +659,6 @@ BEGIN
 	SET id_TypeFood=id_type_food_, id_schedule=id_schedule_
 	where id_control=id_Control_;
 END$$
-
-
 DELIMITER ;
 
 

@@ -1,0 +1,90 @@
+
+.menu-diario{
+    ._head{
+        ._container{
+            width: 340px;
+            height: 100px;;
+            background: var(--color-first);
+            position: relative;
+            border-radius: 10px;
+            .date{
+                color: #fff;
+                font-size: 1.6em;
+            }
+            .picture{
+                position: absolute;
+                top: -45px;
+                right: -45px;
+                width: 100px;
+            }
+        }
+    }
+    ._main{
+        .section-foods{
+            margin: 40px 20px;
+        }
+        .schedule{
+            background: var(--color-first);
+            width: 80%;
+            margin: auto;
+            /* padding: 15px 0; */
+            border-radius: 15px;
+            p{
+                color: #fff;
+                font-size: 1.5em;
+            }
+        }
+        .foods{
+            .food{
+                border-right: 0;
+                border-left: 0;
+                border-style: dashed;
+                border-color: var(--color-first);
+                display: grid;
+                margin-top: 20px;
+                grid-template-columns: 1fr 1fr;
+                .detail{
+                    width: 100%;
+                    display: grid;
+                    grid-gap: 12px;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    p{
+                        font-size: 1.2em;
+                    }
+                    .name{
+                        color: var(--color-first);
+                    }
+                    .price{
+                        p{ font-size: 1.5em;}
+                    }
+                }
+            }
+        }
+    }
+    ._foot{
+        margin: 20px 0; 
+    }
+    .f1--{
+        font-size: 1.2em;
+    }
+}  
+@media (min-width: 750px) {
+    .menu-diario {
+      width: 80%;
+      margin: auto;
+      ._main{
+        display: grid;
+        grid-gap: 50px;
+        grid-template-columns: 1fr 1fr;
+        .section-foods{
+            margin: 0;
+        }
+        .foods{
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: 1fr 1fr;
+        }
+      }
+    }
+}

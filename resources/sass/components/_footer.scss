@@ -1,0 +1,23 @@
+
+footer {
+    background-color: #1B1C1B;
+    font-size: 1.2em; 
+    .ft{
+        .ft_{
+            padding: 25px; 
+            position: relative; 
+            ._head{
+                position: relative; 
+                padding-bottom: 10px; 
+            }
+            ._body{
+                padding-top: 20px; 
+            }
+            &.social{
+                ul{
+                    justify-content: center; 
+                }
+            }
+        }
+    }
+}  

@@ -184,47 +184,44 @@ function validaFormEventos() {
 	return false;
 }
 
-function validarMenu(){
-	removeErr("#panelErr");
+function validarMenu(data){
+	var ctg = data.get("ctg");
+	var type_food    = data.get("type_food");
+	var nombre=data.get("nombre");
+	var precio=data.get("precio");
+	var horario=data.get("horario");
+	var descripcion=data.get("descripcion");
 	var mensaje=[];
-	var ctg=document.querySelector("select[name='ctg']");
-	var type_food=document.querySelector("select[name='type_food']");
-	var nombre=document.querySelector("input[name='nombre']");
-	var precio=document.querySelector("input[name='precio']");
-	var horario=document.querySelectorAll("input[name='horario']");
-	var descripcion=document.querySelector("textarea[name='descripcion']");
 	
-	if(!nombre.value)
+	if(!nombre)
 		mensaje.push("Ingrese el nombre");
-	else if(!regexobj.test(nombre.value))
+	else if(!regexobj.test(nombre))
 		mensaje.push("El nombre tiene caracteres no permitidos o excede los 15 caracteres permitidos");
 
-	if(descripcion.value=="")
+	if(descripcion=="")
 		mensaje.push("Ingrese la descripción");
 	else
-	if(!regexobj.test(descripcion.value))
+	if(!regexobj.test(descripcion))
 		mensaje.push("La descripción tiene caracteres no permitidos o excede los 30 caracteres permitidos");
 	
-	if(ctg.value==0)
+	if(ctg==0)
 		mensaje.push("Seleccione la categoría");
 
-	if(type_food.value==0)
+	if(type_food==0)
 		mensaje.push("Seleccione un tipo de comida");
-	if(!horario[0].checked && !horario[1].checked)
+	if(!horario)
 		mensaje.push("Marque una casilla del horario");
 	
-	if(!numDecimal.test(precio.value))
+	if(!numDecimal.test(precio))
 		mensaje.push("Valor no está permitido");
 	else{
-		if(precio.value>1000){
+		if(precio>1000){
 			mensaje.push("No exceda el precio!!");
 		}
 	}
-	errorMessage("#panelErr", mensaje);
 	 if(mensaje.length==0 || !mensaje)
 	 	return true;
-		 addClass("#error","active");
-	 return false;
+	 return mensaje;
 }
 
 function validarContacto(){

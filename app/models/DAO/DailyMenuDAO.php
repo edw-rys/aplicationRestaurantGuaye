@@ -88,7 +88,7 @@ class DailyMenuDAO {
         try{
             $parametros = array();
             return Model::sql([
-                "sql"=>"call getCtgFood()",
+                "sql"=>"call getSchedule()",
                 "params"=>$parametros,
                 "type"  =>"query", 
                 "class" =>"Schedule"

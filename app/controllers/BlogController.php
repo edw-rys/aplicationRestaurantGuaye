@@ -236,7 +236,7 @@ class BlogController {
 
     // Views
     public function new($id=0){
-        if(!isset($_SERVER["user"])){
+        if(isset($_SESSION["USER"])){
             if($id!=0){
                 $data = $this->seachRecipe($id,true);
                 // var_dump($data);

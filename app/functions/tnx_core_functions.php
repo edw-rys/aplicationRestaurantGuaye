@@ -54,3 +54,9 @@ function validateExt( $nombre){
     $patron = "%\.(gif|jpe?g|png|svg)$%i"; 
     return preg_match($patron, $nombre) ;
 }
+
+function printObj($object=null){
+    echo "<pre>";
+    var_dump($object);
+    echo "</pre>";
+}

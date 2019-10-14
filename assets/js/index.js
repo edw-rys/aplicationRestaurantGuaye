@@ -1,7 +1,7 @@
 // "use strict";
 // https://codepen.io/darielnoel/full/EdueI/  notificacion
 // https://codepen.io/darielnoel/full/qvGEb/
-const url="http://127.0.0.1:81/aplicationRestaurantGuaye/"
+const url="http://127.0.0.1:81/aplicationRestaurantGuaye/";
 const panelModal=document.getElementById("windowModal");
 const index=this;
 var toggle=(_selector, _class)=>{

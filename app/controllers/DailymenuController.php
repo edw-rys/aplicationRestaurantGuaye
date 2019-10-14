@@ -18,8 +18,8 @@ class DailymenuController{
         $this->foodDao = new FoodDAO();
     }
 
-    public function view($id_control =null, $id_food=null){
-        if(!is_null($id_control) && !is_null($id_food)){
+    public function view($id_control =0, $id_food=0){
+        if($id_control!=0 && $id_food!=0){
                 $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$id_control);
                 if(empty($check)){
                     $data=[
@@ -41,11 +41,10 @@ class DailymenuController{
                 "code"=>400
             ];
         }
-        var_dump($data);
-        // $typesFood=$this->dailyMenuDAO->getTypeFood();
-        // $ctgFood=$this->dailyMenuDAO->getCtgFood();
-        // $schedules=$this->dailyMenuDAO->getSchedule();
-
+        $data["typesFood"]=$this->dailyMenuDAO->getTypeFood();
+        $data["ctgFood"]=$this->dailyMenuDAO->getCtgFood();
+        $data["schedules"]=$this->dailyMenuDAO->getSchedule();
+        return $data;
     }
 
 
@@ -54,13 +53,15 @@ class DailymenuController{
         $typesFood=$this->dailyMenuDAO->getTypeFood();
         $ctgFood=$this->dailyMenuDAO->getCtgFood();
         $schedules=$this->dailyMenuDAO->getSchedule();
-        // die();
 
         $menusDiarios=$this->dailyMenuDAO->query();
         $dailyMenu = array();
         
         $data = [
             "title"=>"Menú diario",
+            "typesFood"=>$typesFood,
+            "ctgFood"=>$ctgFood,
+            "schedules"=>$schedules,
         ];
         
         foreach($menusDiarios as $dm){
@@ -72,12 +73,11 @@ class DailymenuController{
             array_push($dailyMenu, $menu);
         }
         if(!empty($dailyMenu)){
-            $data = [
-                "title"=>"Menú diario",
-                "menu"=>array_reverse($dailyMenu)
-            ];
+            $dailyMenu=array_reverse($dailyMenu);
+            $data["menu"]=(isset($_SESSION['rol']) && $_SESSION['rol']=ADMINISTRADOR )? $dailyMenu: $dailyMenu[0];
         }
-        var_dump($data);
+        // var_dump($data);+
+        View::render("dailyMenu",$data);
     }
     public function delete($id_Control=null){
         if(is_null($id_Control)){
@@ -204,5 +204,14 @@ class DailymenuController{
             }
         }
         var_dump($data);
+    }
+    // Views
+    public function new($id_control=0 , $id_food=0){
+        if(isset($_SESSION["rol"]) && $_SESSION["rol"]==ADMINISTRADOR){
+            $data = $this->view($id_control,$id_food);
+            include_once COMPONENTS."dailyMenu/formDailyMenu.php";
+        }else{
+            echo "error";
+        }
     }
 }

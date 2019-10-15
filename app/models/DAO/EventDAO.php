@@ -7,58 +7,31 @@ class EventDAO {
     }
     //Diferentes sentencias de consulta
         //*Todos los eventos
-    public function queryAll(){
+    public function queryAll($value=""){
         try {
-            return Model::sql([
-                "sql"=>"call getEventAll()",
-                "params"=>[]
-            ]);
-        } catch (Exception $e) {
-            die($e->getMessage());
-            die($e->getTrace());
-        }
-    }
-    //*Todos un evento en especifico
-    public function queryForId($id_evt){
-        try {
-                $parametros = array($id_evt);
-                $resultSet = Model::sql([
-                    "sql"   =>"call getEventForId(?)",
-                    "params"=>$parametros,
-                    "type"  =>"query",
-                    "class" =>"Event"
+            if(empty($value)){
+                return Model::sql([
+                    "sql"=>"call getEventAll()",
+                    "params"=>[]
                 ]);
-            if(count($resultSet) > 0)
-                return $resultSet[0] ;
-            else
-                return $resultSet;
+            }else{
+                return Model::sql([
+                    "sql"=>"call getEventAllByValue(?)",
+                    "params"=>[$value]
+                ]);
+            }
         } catch (Exception $e) {
             die($e->getMessage());
             die($e->getTrace());
         }
     }
-    public function checkEvtByUser($id_evt,$id_us){
-        try {
-            $parametros = array($id_evt,$id_us);
-            return Model::sql([
-                "sql"   =>"call getEventForIdEvtForUser(?,?)",
-                "params"=>$parametros,
-                "type"  =>"query",
-                "class" =>"Event"
-            ]);
-        } catch (Exception $e) {
-            die($e->getMessage());
-            die($e->getTrace());
-        }
-    }
-    
         //*Todos los eventos de un usuario
     public function queryByUser($id_user,$value){
         try {
             if(empty($value)){
                 $parametros = array($id_user);
                 $resultSet = Model::sql([
-                    "sql"   =>"call getEventForIdUser(?)",
+                    "sql"   =>"call getEventByIdUser(?)",
                     "params"=>$parametros,
                 ]);
             }else{
@@ -74,6 +47,42 @@ class EventDAO {
             die($e->getTrace());
         }
     }
+    //*Todos un evento en especifico
+    public function queryById($id_evt){
+        try {
+                $parametros = array($id_evt);
+                $resultSet = Model::sql([
+                    "sql"   =>"call getEventById(?)",
+                    "params"=>$parametros,
+                    "type"  =>"query",
+                    "class" =>"Event"
+                ]);
+            if(count($resultSet) > 0)
+                return $resultSet[0] ;
+            else
+                return $resultSet;
+        } catch (Exception $e) {
+            die($e->getMessage());
+            die($e->getTrace());
+        }
+    }
+ 
+    public function checkEvtByUser($id_evt,$id_us){
+        try {
+            $parametros = array($id_evt,$id_us);
+            return Model::sql([
+                "sql"   =>"call getEventByIdEvtForUser(?,?)",
+                "params"=>$parametros,
+                "type"  =>"query",
+                "class" =>"Event"
+            ]);
+        } catch (Exception $e) {
+            die($e->getMessage());
+            die($e->getTrace());
+        }
+    }
+    
+    
         //  verificar Horario no ocupado
     public function checkSchedule($date, $hour_in,$hour_out){
         try {
@@ -129,7 +138,9 @@ class EventDAO {
                 ,$event->getStart_time() ,$event->getEnd_time() 
                 ,$event->getComments(),$event->getUser());
             return Model::sql([
-                "sql"   =>"call insertEvent(?,?,?,?,?,?)",
+                "sql"   =>"INSERT INTO 
+                            event_( affair,execution_date, start_time, end_time, comment, id_user, creation_date) 
+                            VALUES (?,?,?,?,?,?,now())",
                 "params"=>$parametros,
                 "type"  =>"insert"
             ]);
@@ -141,13 +152,11 @@ class EventDAO {
 
 
     public function accept($id_evt){
-        if(!$this->connection) return 0;
         try {
-            $parametros = array($id_evt);
             return Model::sql([
-                "sql"=>"call acceptEvent(?)",
-                "params"=>$parametros,
-                "type"=>"upate"
+                "sql"=>"UPDATE event_ set  is_accepted=1 where id_event=?;",
+                "params"=>[$id_evt],
+                "type"=>"update"
             ]);
         } catch (Exception $e) {
             die($e->getMessage());

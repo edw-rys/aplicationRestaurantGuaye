@@ -17,7 +17,7 @@ if(isset($data["menu"])){
             <th>Eliminar</th>
         </tr>
     </thead>
-    <tbody  class="underline-a" id="id-table-evt">
+    <tbody  class="underline-a" id="id-table-evt" style="max-height: 55vh;">
         <?php 
          if(!empty($DM->getFoodControl())){
             foreach($DM->getFoodControl() as $foods){ ?>
@@ -38,11 +38,11 @@ if(isset($data["menu"])){
             <?php
 			}else{ ?>
             <td data-campo='Editar' style="--color-txt:#009F41"><a
-                    href="index.php?c=dailymenu&a=view&idc=<?php echo $foods->id_control."&idf=".$foods->id_food; ?>">Editar</a>
+                    href="#!" onclick="editFood(<?php echo $foods->id_control.','.$foods->id_food; ?>)">Editar</a>
             </td>
             <td data-campo='Eliminar' style="--color-txt:var(--color-first)"><a
-                    href="index.php?c=dailymenu&a=delete&idc=<?php echo $foods->id_control; ?>"
-                    onclick="javascript:return confirm('esta seguro?');">Eliminar</a></td>
+                onclick="deleteMenu(<?php echo $foods->id_control; ?>,this)"
+                href="#!">Eliminar</a></td>
             <?php } ?>
         </tr>
         <?php }} ?>

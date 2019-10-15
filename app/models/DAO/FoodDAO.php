@@ -24,7 +24,8 @@ class FoodDAO {
             $parametros = array($id_foodcontrol);
             return Model::sql([
                 "sql"=>"call getFoodForID(?)",
-                "params"=>$parametros
+                "params"=>$parametros,
+                "fetch"=>"one"
             ]);
         }catch(Exception $e) {
         die($e->getMessage());
@@ -38,16 +39,27 @@ class FoodDAO {
                 $foodControl->getFood()->getDesciption_food(),
                 $foodControl->getFood()->getPrice(),
                 $foodControl->getFood()->getCtg_food()->getId_ctgfood(),
+            );
+            $id = Model::sql([
+                "sql"=>"INSERT INTO Food( name_food, description_food , price, id_ctgfood)
+                values(?, ?, ?,?);",
+                "params"=>$parametros,
+                "type"=>"insert"
+            ]);
+            $parametros = array(
                 $foodControl->getTypefood()->getId_TypeFood(),
                 $foodControl->getSchedule()->getId_schedule(),
                 $id_admin,
                 $id_menu
             );
-            return Model::sql([
-                "sql"   =>"call insertFood(?,?,?,?,?,?,?,?)",
+            $id_control = Model::sql([
+                "sql"   =>"INSERT INTO foodControl( id_TypeFood, id_schedule, id_admin,id_menu,id_food ) 
+                VALUES(?, ?, ?, ?,(SELECT MAX(id_food) FROM Food) );",
                 "params"=>$parametros,
-                "type"=>"insert"
+                "type"=>"insert",
+                "fetch"=>"one"
             ]);
+            return $id_control;
         }catch(Exception $e) {
         die($e->getMessage());
         die($e->getTrace());
@@ -83,7 +95,8 @@ class FoodDAO {
             $parametros = array($id_food);
             return Model::sql([
                 "sql"=>" delete from foodControl where id_control=?;",
-                "params"=>$parametros
+                "params"=>$parametros,
+                "type"=>"delete"
             ]);
             return $sentencia->rowCount();
         }catch(Exception $e) {

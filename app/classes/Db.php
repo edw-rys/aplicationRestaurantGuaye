@@ -89,8 +89,9 @@ class Db{
                         ;
             }
         }elseif ($attributes["type"]=="insert") {
+            $id = $link->lastInsertId();
             $link->commit();
-            return $query->rowCount();
+            return $id;
         }elseif ($attributes["type"]=="delete") {
             if($query->rowCount() > 0) {
                 $link->commit();
@@ -103,124 +104,5 @@ class Db{
             return true;
         }
     }
-    public static function queryProcedureAssoc($sql, $params = []){
-        $db = new self();
-        $link = $db->connect(); // nuestra conexión a la db
-        $link->beginTransaction(); // por cualquier error, checkpoint
-        $query = $link->prepare($sql);
-        if(!$query->execute($params)) {
-            $link->rollBack();
-            $error = $query->errorInfo();
-            // index 0 es el tipo de error
-            // index 1 es el código de error
-            // index 2 es el mensaje de error al usuario
-            throw new Exception($error[2]);
-        }
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public static function excecuteProcedure($sql, $params = [], $type="query",$class=null){
-        $type = strtolower($type);
-        $db = new self();
-        $link = $db->connect(); // nuestra conexión a la db
-        $link->beginTransaction(); // por cualquier error, checkpoint
-        $query = $link->prepare($sql);
-        if(!$query->execute($params)) {
-            $link->rollBack();
-            $error = $query->errorInfo();   
-            // index 0 es el tipo de error
-            // index 1 es el código de error
-            // index 2 es el mensaje de error al usuario
-            throw new Exception($error[2]);
-        }
-        if($type =="query"){
-            if($class!=null){
-                return $query->fetchAll(PDO::FETCH_CLASS,$class) ;
-            }else{
-                return $query->fetchAll(PDO::FETCH_OBJ);
-            }
-        }elseif ($type =="insert") {
-            $link->commit();
-            return $query->rowCount();
-        }elseif ($type =="delete") {
-            if($query->rowCount() > 0) {
-                $link->commit();
-                return true;
-            }
-            $link->rollBack();
-            return false; // Nada ha sido borrado
-        }elseif ($type =="update") {
-            $link->commit();
-            return true;
-        }
-    }
-    public static function queryByClass($sql, $params = [], $class){
-        $db = new self();
-        $link = $db->connect(); // nuestra conexión a la db
-        $link->beginTransaction(); // por cualquier error, checkpoint
-        $query = $link->prepare($sql);
-        // Manejando errores en el query o la petición
-        // SELECT * FROM usuarios WHERE id=:cualquier AND name = :name;
-        if(!$query->execute($params)) {
-            $link->rollBack();
-            $error = $query->errorInfo();
-            // index 0 es el tipo de error
-            // index 1 es el código de error
-            // index 2 es el mensaje de error al usuario
-            throw new Exception($error[2]);
-        }
-        return $query->rowCount() > 0 ? $query->fetchAll(PDO::FETCH_CLASS,$class) : false; // no hay resultados
-    }
-    public static function query($sql, $params = []){
-        $db = new self();
-        $link = $db->connect(); // nuestra conexión a la db
-        $link->beginTransaction(); // por cualquier error, checkpoint
-        $query = $link->prepare($sql);
-
-        // Manejando errores en el query o la petición
-        // SELECT * FROM usuarios WHERE id=:cualquier AND name = :name;
-        if(!$query->execute($params)) {
-            $link->rollBack();
-            $error = $query->errorInfo();
-            // index 0 es el tipo de error
-            // index 1 es el código de error
-            // index 2 es el mensaje de error al usuario
-            throw new Exception($error[2]);
-        }
-
-        // SELECT | INSERT | UPDATE | DELETE | ALTER TABLE
-        // Manejando el tipo de query
-        // SELECT * FROM usuarios;
-        if(strpos($sql, 'SELECT') !== false) {
-            
-            return $query->rowCount() > 0 ? $query->fetchAll(PDO::FETCH_OBJ) : false; // no hay resultados
-
-        } elseif(strpos($sql, 'INSERT') !== false) {
-
-            $id = $link->lastInsertId();
-            $link->commit();
-            return $id;
-
-        } elseif(strpos($sql, 'UPDATE') !== false) {
-
-            $link->commit();
-            return true;
-
-        } elseif(strpos($sql, 'DELETE') !== false) {
-
-            if($query->rowCount() > 0) {
-                $link->commit();
-                return true;
-            }
-        
-            $link->rollBack();
-            return false; // Nada ha sido borrado
-
-        } else {
-
-        // ALTER TABLE | DROP TABLE 
-            $link->commit();
-            return true;
-        
-        }
-    }
+    
 }

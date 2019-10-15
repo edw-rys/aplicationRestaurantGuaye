@@ -6,9 +6,11 @@ require_once MODELS.'DTO/User/TypeUser.php';
 class UserController{
     private $userDAO;
     private $typeUserDAO ;
+    private $jwt;
     public function __construct() {
         $this->userDAO=new UserDAO();
         $this->typeUserDAO=new TypeUserDAO();
+        $this->jwt = new JwtAuth();
     }
     public function signup(){
             //en caso de la ausencia de algún campo, retornar =>faltan campos
@@ -67,31 +69,38 @@ class UserController{
     public function login(){
         $user=isset($_POST['user'])?strtolower($_POST['user']):'';
         $password=isset($_POST['password'])?$_POST['password']:'';
-        $results = $this->userDAO->checkUser($user,$password);
+
+        $results = $this->jwt->signup($user,$password,$this->userDAO);
+
+        // $results = $this->userDAO->checkUser($user,$password);        
         $data=[
             "title"=>"Login"
         ];
         // echo $user ." ".$password;
-        if(empty($results)){
+        if($results["code"]==400){
             $data=[
                 "title"=>"Login",
-                "message"=>"usuario no encontrado","code"=>404,"status"=>"error"
+                "message"=>"usuario no encontrado",
+                "code"=>404,"status"=>"error"
             ];
         }else{
-            $types=$this->typeUserDAO->queryOne($results['id_TypeUser']);
-            $user = new User();
-            $user->setId_user($results['id_user']);
-            $user->setUsername($results['username']);
-            $user->setName_user($results['name_user']);
-            $user->setLast_name($results['last_name']);
-            $user->setPhone_number($results['phone_number']);
-            $user->setType_user($types);
-            $_SESSION['rol']=$user->getType_user()->getId_TypeUser();
-            $_SESSION['USER']=serialize($user);
+            $user =  $results["user"];
+            $_SESSION['rol']=$user->getId_TypeUser();
+            // printObj($user);
+            // echo($user->getId_TypeUser());
+            // echo($_SESSION['rol']);
+
+            // die();
             $_SESSION['ID_USER']=$user->getId_user();
+            $_SESSION['USER']=serialize($user);
+            // token
+            $this->csrf = new Csrf();
             $data=[
                 "title"=>"Login",
-                "user"=>$user,"code"=>200,"status"=>"success"
+                "user"=>$user,
+                "code"=>200,
+                "status"=>"success",
+                "token"=>$results["token"]
             ];
             // View::render("home", $data);
         }
@@ -99,13 +108,7 @@ class UserController{
         // View::render("login", $data);        
     }
     public function logout(){
-        if(isset($_SESSION['USER'])){
-            unset($_SESSION['USER']);
-            if(isset($_SESSION['rol']))
-                unset($_SESSION['rol']);
-            if(isset($_SESSION['ID_USER']))
-                unset($_SESSION['ID_USER']);
-        }
+        session_destroy();
         Redirect::to(URL);
     }
     // Views
@@ -130,15 +133,20 @@ class UserController{
                 if(isset($_SESSION['ID_USER']) && $user->getId_user()){
                     $data["profile"]="MY_PROFILE";
                 }
-                View::render("profile", $data);
+                // printObj($data);
+                // View::render("profile", $data);
             }
         }
+        echo "En proceso";
     }
-    public function myprofile($username = null){
-        if(is_null($username)){
+    public function myprofile(){
+        if(!isset($_SESSION["USER"])){
             Redirect::to(URL);
         }else{
-
+            echo "En proceso";
         }
+    }
+    public function settings(){
+        echo "En proceso";
     }
 }

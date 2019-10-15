@@ -1,6 +1,7 @@
 <header>
     <?php require_once NAVIGATION; ?>
 </header>
+
 <div class="despliegue"></div>
 <?php 
     //verificar usuario administrador
@@ -14,6 +15,7 @@
     <?php 
     if(isset($_SESSION['USER']) && isset($_SESSION['rol']) && $_SESSION['rol']==ADMINISTRADOR ){
         echo "<div class='data'>";
+        
         include_once COMPONENTS."dailymenu/viewAdmin.php";
         echo "</div>";
     }

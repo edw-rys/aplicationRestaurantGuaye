@@ -1,6 +1,8 @@
 const urlMenu = url+'dailymenu/';
-const getFormDilyMenu =function(id) {
-    let uri=id?urlMenu+"new/"+id:urlMenu+"new"
+const getFormDilyMenu =function(idcontrol , idcomida) {
+    let uri=idcontrol && idcomida ?`${urlMenu}new/${idcontrol}/${idcomida}`:urlMenu+"new"
+
+    // let uri=id?urlMenu+"new/"+id:urlMenu+"new"
     fetch(uri)
     .then(res=>res.text())
     .then(res=>{
@@ -29,7 +31,7 @@ const saveMenu=()=>{
                 });
                 animationChargeRemove(btn,"Publicar");
             }else{
-                fetch(urlBlog+"save",{
+                fetch(urlMenu+"save",{
                     method:"POST",
                     body:data
                 })
@@ -55,4 +57,39 @@ const saveMenu=()=>{
         
     }
     return false;
+}
+
+const editFood=(idcontrol=0 ,idcomida=0)=>{
+    if(idcontrol!=0 && idcomida!=0){
+        getFormDilyMenu(idcontrol,idcomida);
+    }
+}
+const deleteMenu=(idcontrol,btn)=>{
+    if(idcontrol)
+    if(confirm('esta seguro?')){
+        fetch(urlMenu+"delete/"+idcontrol)
+        .then(res=>res.json())
+        .then(
+            res=>{
+                if(res.status=="success"){
+                    toastr.success(res.message);
+                    let item= btn.parentNode.parentNode
+                    item.classList.add("animated");
+                    item.classList.add("zoomOut");
+                    setTimeout(() => {
+                        item.remove();
+                    },500);
+                }else{
+                    toastr.error(res.message);
+                }
+            }
+        )
+        .catch(
+            err=>{
+                toastr.error("Ups!","Ha ocurrido un error");
+            }
+        );
+    }else{
+        
+    }
 }

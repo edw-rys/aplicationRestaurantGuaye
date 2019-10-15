@@ -27,7 +27,8 @@ class UserDAO {
 			$resultSet = Model::sql([
 				"sql"=>"call getUserCheck(?,?);",
 				"params"=>$parametros,
-				"fetch_type"=>"ASSOC"
+				"class"=>"User"
+				// "fetch_type"=>"ASSOC"
 			]);
 			return empty($resultSet)?null: $resultSet[0];
 		} catch (Exception $e) {

@@ -201,13 +201,15 @@ class BlogController {
                     }else{
                         $numfilasAfectadas = $this->blogDAO->create($blog, $_SESSION['ID_USER']);
                         $message="Guardado exitosamente";
+                        $blog->setId_blog($numfilasAfectadas);
                     }
                     if ($numfilasAfectadas > 0) {
                         $data=[
                             "title"=>"Blog",
                             "status"=>"success",
                             "code"=>200,
-                            "message"=>$message
+                            "message"=>$message,
+                            "idRecipe"=> $blog->getId_recipe(),
                         ];
                     } else {
                         $data=[
@@ -225,6 +227,12 @@ class BlogController {
         }
     }
 
+    public function getItemView($id=null){
+        if(!is_null($id)){
+            $blog = $this->blogDAO->queryById($id);
+            require_once COMPONENTS."blog/blogItem.php";
+        }
+    }
     
     public function destacado($id=0){
         if($id!=0 && $_SESSION['rol']==MODERADOR){

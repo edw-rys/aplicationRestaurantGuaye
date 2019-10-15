@@ -1,3 +1,4 @@
+<?php if(isset($data["food"])){ $editFood=$data["food"];}?>
 <div class="container">
 	<div class="form" style="margin:0">
 		<div class="flex-center">

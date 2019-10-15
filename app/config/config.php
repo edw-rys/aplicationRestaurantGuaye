@@ -34,6 +34,7 @@ define('CONFIG'             , APP.'config'.DS);
 define('CONTROLLERS'        , APP.'controllers'.DS);
 define('FUNCTIONS'          , APP.'functions'.DS);
 define('MODELS'             , APP.'models'.DS);
+define('HELPERS'            , APP.'helpers'.DS);
 
 define('TEMPLATES'          , ROOT.'templates'.DS);
 define('INCLUDES'           , TEMPLATES.'includes'.DS);

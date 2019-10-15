@@ -15,6 +15,8 @@ class Autoloader{
             require_once CONTROLLERS.$class_name.'.php';
         }else if(is_file(MODELS.$class_name.'Model.php')) {
             require_once MODELS.$class_name.'Model.php';
+        }else if(is_file(HELPERS.$class_name.'.php')) {
+            require_once HELPERS.$class_name.'.php';
         }else{
             // die(sprintf("No existe la clase %s en nuestro sistema.", $class_name));
         }

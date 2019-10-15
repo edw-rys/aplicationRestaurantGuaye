@@ -47,12 +47,12 @@
         </footer>
 
     <script src="<?php echo JS?>index.js"></script>
-    <script type="text/javascript" src="<?php echo JS?>ajax.js"></script>
     <script type="text/javascript" src="<?php echo JS?>validaciones.js"></script>
     <script type="text/javascript" src="<?php echo JS?>activeForm.js"></script>
     <script type="text/javascript" src="<?php echo JS?>server/user.functions.js"></script>
     <script type="text/javascript" src="<?php echo JS?>server/blog.functions.js"></script>
-    <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]=ADMINISTRADOR){?>
+    <script type="text/javascript" src="<?php echo JS?>server/event.functions.js"></script>
+    <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]==ADMINISTRADOR){?>
     <script src="<?php echo JS."server/dailymenu.functions.js"?>"></script>
     <?php }?>
     <!-- icons favicon -->

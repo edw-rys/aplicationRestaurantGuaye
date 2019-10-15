@@ -124,17 +124,15 @@ function validaFormBlog(data) {
 	return mensaje;
 }
 
-function validaFormEventos() {
-	var asunto=document.querySelector("input[name='asunto']");
-	var fecha=document.querySelector("input[name='fecha']");
-	var inHour=document.querySelector("input[name='inHour']");
-	var outHour=document.querySelector("input[name='outHour']");
-	var comentario=document.querySelector("textarea[name='comentarios']");
-	removeErr("#panelErr");
+function validaFormEventos(data) {
+	var asunto = data.get("asunto");
+	var fecha    = data.get("fecha");
+	var inHour=data.get("inHour");
+	var outHour=data.get("outHour");
+	var comentario=data.get("comentario");
 	var mensaje=[];
-	queryScheduleEvent(fecha.value, inHour.value, outHour.value)
 	if(fecha){
-		fecha=fecha.value.split("-");
+		fecha=fecha.split("-");
 		var fechaCompare = new Date(parseInt(fecha[0])//año
 								,parseInt(fecha[1]-1),//mes
 								parseInt(fecha[2]));//dia
@@ -150,38 +148,30 @@ function validaFormEventos() {
 			}
 		}
 	}
-	if(comentario.value!=""){
-		if(!regexobj.test(comentario.value))
+	if(comentario!=""){
+		if(!regexobj.test(comentario))
 			mensaje.push("Sólo se permiten letras, números y espacios en el campo de comentario, cantidad de letras [4-30], o puede dejar el campo vacío.");
 	}
-	if(inHour.value==outHour.value){
+	if(inHour==outHour){
 		mensaje.push("La hora de entrada no puede ser la misma de la salida.");
 	}
-	if(!soloNum.test(inHour.value)){
+	if(!soloNum.test(inHour)){
 		mensaje.push("La hora de entrada tiene que ser numérica");
-	}else if(inHour.value<7){
+	}else if(inHour<7){
 		mensaje.push("La hora de entrada no puede ser menor a 7");
 	}
-	if(!soloNum.test(outHour.value)){
+	if(!soloNum.test(outHour)){
 		mensaje.push("La hora de salida tiene que ser numérica");
-	}else if(outHour.value>17){
+	}else if(outHour>17){
 		mensaje.push("La hora de salida no puede ser mayor a 5");
 	}
 
-	if(!letrasNumEspacio.test(asunto.value))
+	if(!letrasNumEspacio.test(asunto))
 		mensaje.push("Nombre del asunto no es válido");
 
-	errorMessage("#panelErr", mensaje);
-
-	errPanel=document.querySelector("#panelErr");
-	if(errPanel.children.length<1){
-		console.log("Valido");
+	if(mensaje.length==0 || !mensaje)
 		return true;
-	}
-	console.log("NO Valido");
-	addClass("#error","active");
-
-	return false;
+	return mensaje;
 }
 
 function validarMenu(data){

@@ -211,6 +211,7 @@ BEGIN
 	VALUES(id_type_food_, id_schedule_, id_admin_, 
 		id_menu_,
 		(SELECT MAX(id_food) FROM Food) );
+	select MAX(id_control) as id_control FROM foodControl;
 END$$
 
 DELIMITER $$
@@ -234,9 +235,10 @@ DROP PROCEDURE IF EXISTS `getUserCheck`$$
 -- obtener usuario después de verificar
 CREATE PROCEDURE getUserCheck(IN usname VARCHAR(20),IN psswd VARCHAR(20))
 BEGIN
-    select id_user,username,name_user,last_name,phone_number,id_TypeUser
-    	from user_
-    	where status=1 and username=usname and password=psswd;
+    select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser
+    	from user_ as u
+        inner join typeuser as t on u.id_TypeUser= t.id_TypeUser
+    	where u.status=1 and username=usname and password=psswd;
 END$$
 
 
@@ -261,6 +263,17 @@ BEGIN
     	inner join user_ as us on us.id_user=evt.id_user where evt.status=1;
 END$$
 
+-- obtener evento por id y valor de asunto
+DROP PROCEDURE IF EXISTS `getEventAllByValue`$$
+CREATE PROCEDURE getEventAllByValue(IN value_ varchar(40))
+BEGIN
+    select evt.id_event, evt.affair,evt.creation_date , evt.is_accepted,
+    	evt.execution_date,evt.start_time, evt.end_time,
+    	evt.comment, us.username, us.name_user,us.last_name
+    	from event_ as evt 
+        inner join user_ us on us.id_user=evt.id_user
+    	where evt.status=1 and (evt.affair like CONCAT('%', value_,'%') or execution_date LIKE concat("%",value_,"%"));
+END$$
 
 -- obtener evento por id y valor de asunto
 DROP PROCEDURE IF EXISTS `getEventByIdUsByValue`$$
@@ -274,8 +287,8 @@ BEGIN
     	where evt.status=1 and evt.id_user=id_user and evt.affair like CONCAT('%', value_,'%');
 END$$
 -- obtener evento por id
-DROP PROCEDURE IF EXISTS `getEventForId`$$
-CREATE PROCEDURE getEventForId(IN id_e int)
+DROP PROCEDURE IF EXISTS `getEventById`$$
+CREATE PROCEDURE getEventById(IN id_e int)
 BEGIN
     select *
         from event_ as evt 
@@ -284,16 +297,16 @@ END$$
 
 
 -- verificar dueño del evento por id de evento y id de dueño
-DROP PROCEDURE IF EXISTS `getEventForIdEvtForUser`$$
-CREATE PROCEDURE getEventForIdEvtForUser(IN id_e int,IN id_us int)
+DROP PROCEDURE IF EXISTS `getEventByIdEvtForUser`$$
+CREATE PROCEDURE getEventByIdEvtForUser(IN id_e int,IN id_us int)
 BEGIN
     select *
         from event_ as evt 
         where evt.status=1 and evt.id_event=id_e and evt.id_user=id_us;
 END$$
 -- obtener los eventos por usuario
-DROP PROCEDURE IF EXISTS `getEventForIdUser`$$
-CREATE PROCEDURE getEventForIdUser(IN id_user INT)
+DROP PROCEDURE IF EXISTS `getEventByIdUser`$$
+CREATE PROCEDURE getEventByIdUser(IN id_user INT)
 BEGIN
     select evt.id_event, evt.affair,evt.creation_date , evt.is_accepted,
     	evt.execution_date,evt.start_time, evt.end_time,
@@ -527,7 +540,6 @@ BEGIN
         from DailyMenu 
         where status=1 and id_menu=id_m;
 END$$
-
 
 DELIMITER $$
 

@@ -39,14 +39,14 @@
                 </a>
                 <ul class="options-nav drop-down-nav" id="sub-nav">
                     <li class="option-nav">
-                      <a class="op-nav" href="#">op1</a>
+                      <a class="op-nav" href="<?php echo URL?>event">Eventos</a>
                     </li>
-                    <li class="option-nav">
+                    <!-- <li class="option-nav">
                       <a class="op-nav" href="#">op1</a>
-                    </li>
+                    </li> -->
                     <div class="line-nav-separator"></div>
                     <li class="option-nav">
-                      <a class="op-nav" href="<?php echo URL?>user/profile">Mi perfil</a>
+                      <a class="op-nav" href="<?php echo URL?>user/myprofile">Mi perfil</a>
                     </li>
                     <li class="option-nav">
                       <a class="op-nav" href="<?php echo URL?>user/settings">Ajustes</a>

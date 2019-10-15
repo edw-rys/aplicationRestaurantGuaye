@@ -28,17 +28,25 @@ class DailyMenuDAO {
     public function insert(DailyMenu $DM,$id_admin){
         try{
             $parametros = array();
-            $resultSet = Model::sql([
-                "sql"   =>"call insertDailyMenu()",
-                "params"=>$parametros
+            $id = Model::sql([
+                "sql"=>"SELECT id_menu from DailyMenu where date_create=CURDATE() and status =1;",
+                "fetch"=>"one",
+                "params"=>[]
             ]);
-            // var_dump($resultSet);
-            if(!empty($resultSet)){
-                $resultSet=$resultSet[0];
-                $id_menu=$resultSet->menu_diario_id;
-                $resultSet=$this->foodDao->insertFood($DM->getFoodControl(), $id_menu,$id_admin);
+            if(!$id){
+                $id =Model::sql([
+                    "sql"=>"INSERT INTO DailyMenu(date_create) values(now());",
+                    "fetch"=>"one",
+                    "type"=>"insert",
+                    "params"=>[]
+                ]);
+            }else{
+                $id=$id->id_menu;
             }
-            return $resultSet;
+            if($id){
+                $resultSet=$this->foodDao->insertFood($DM->getFoodControl(), $id,$id_admin);
+            }
+            return isset($resultSet)?$resultSet: 0;
         }catch(Exception $e) {
         die($e->getMessage());
         die($e->getTrace());

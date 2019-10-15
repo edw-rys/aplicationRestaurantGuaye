@@ -8,7 +8,10 @@ class User{
     private $password;
     private $phone_number;
     private $type_user;
- //   private $id_TypeUser;
+
+    private $id_TypeUser;
+    private $name_TypeUser;
+
     public function __construct(){
     }
     public function getId_user() {
@@ -65,5 +68,17 @@ class User{
 
     public function setType_user($type_user) {
         $this->type_user = $type_user;
+    }
+    public function getId_TypeUser(){
+        return $this->id_TypeUser;
+    }
+    public function setId_TypeUser($Id_TypeUser){
+        $this->id_TypeUser = $Id_TypeUser;
+    }
+    public function getname_TypeUser(){
+        return $this->name_TypeUser;
+    }
+    public function setname_TypeUser($name_TypeUser){
+        $this->name_TypeUser = $name_TypeUser;
     }
 }

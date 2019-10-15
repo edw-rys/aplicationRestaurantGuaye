@@ -77,7 +77,7 @@ class Tnx{
         // require_once CLASSES.'View.php';
         // require_once CLASSES.'Controller.php';
         require_once CLASSES.'Autoloader.php';
-        
+        require_once './external/php-jwt-master/src/JWT.php';
         Autoloader::init();
         return;
     }

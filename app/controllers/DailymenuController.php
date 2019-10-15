@@ -49,7 +49,6 @@ class DailymenuController{
 
 
     public function index(){   
-
         $typesFood=$this->dailyMenuDAO->getTypeFood();
         $ctgFood=$this->dailyMenuDAO->getCtgFood();
         $schedules=$this->dailyMenuDAO->getSchedule();
@@ -74,7 +73,7 @@ class DailymenuController{
         }
         if(!empty($dailyMenu)){
             $dailyMenu=array_reverse($dailyMenu);
-            $data["menu"]=(isset($_SESSION['rol']) && $_SESSION['rol']=ADMINISTRADOR )? $dailyMenu: $dailyMenu[0];
+            $data["menu"]=(isset($_SESSION['rol']) && $_SESSION['rol']==ADMINISTRADOR )? $dailyMenu: $dailyMenu[0];
         }
         // var_dump($data);+
         View::render("dailyMenu",$data);
@@ -113,9 +112,9 @@ class DailymenuController{
                 }
             }
         }
-        var_dump($data);
+        echo json_encode($data);
     }
-    public function save($id_control=null,$id_food=null){
+    public function save(){
         if(!(isset($_REQUEST['horario']) && isset($_REQUEST['type_food']) && 
             isset($_REQUEST['nombre']) && isset($_REQUEST['precio']) && 
             isset($_REQUEST['descripcion'] ) && isset($_REQUEST['ctg']) )){
@@ -151,20 +150,21 @@ class DailymenuController{
             $dailyMenu=new DailyMenu();
             $dailyMenu->setFoodControl($foodControl);
             $filas_afectadas=0;
-            if( !is_null($id_control) && !is_null($id_food)){
-                
+
+            if( isset($_POST["idc"]) && $_POST["idc"]!=0 &&
+                isset($_POST["idf"]) && $_POST["idf"]!=0){
                 // Edit
-                $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$id_control);
+                $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$_POST["idc"]);
                 
                 if(empty($check)){
                     $data=[
-                        "message"=>"No tiene permisos de eliminar este contenido.",
+                        "message"=>"No tiene permisos de editar este contenido.",
                         "status"=>"error",
                         "code"=>400
                     ];  
                 }else{
-                    $foodControl->setId_control($id_control);
-                    $food->setId_food($id_food);
+                    $foodControl->setId_control($_POST["idc"]);
+                    $food->setId_food($_POST["idf"]);
                     $foodControl->setFood($food);
                     $dailyMenu->getFoodControl($foodControl);
                     $filas_afectadas=$this->dailyMenuDAO->update($dailyMenu);  
@@ -203,7 +203,7 @@ class DailymenuController{
                 }
             }
         }
-        var_dump($data);
+        echo json_encode($data);
     }
     // Views
     public function new($id_control=0 , $id_food=0){

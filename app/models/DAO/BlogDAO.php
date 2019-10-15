@@ -167,11 +167,15 @@ class BlogDAO {
       $parametros = array(
         $blog->getRecipe()->getUrl_image(),
         $blog->getRecipe()->getName_recipe(), 
-        $blog->getRecipe()->getPreparation(), 
-        $id_user);
+        $blog->getRecipe()->getPreparation());
       $count = Model::sql([
-        "sql"   =>"call insertBlog(?,?,?,?)",
+        "sql"   =>"INSERT INTO recipe( url_image, name, preparation) values(?,?,?);",
         "params"=>$parametros, 
+        "type"  =>"insert"
+      ]);
+      $count = Model::sql([
+        "sql"   =>"INSERT INTO blog( id_user,id_recipe,creation_date) values(?,(SELECT MAX(id_recipe) FROM recipe) ,now());",
+        "params"=>[$id_user], 
         "type"  =>"insert"
       ]);
       $id_blog=$this->queryLastIdBlog();
@@ -260,7 +264,10 @@ class BlogDAO {
   /////////////////////////// SOCIAL NETWORK
   public function querySocialNetwork(){
     try{
-      return Model::excecuteProcedure("call getTypeSocialNetwork()",[]);
+      return Model::sql([
+        "sql"=>"call getTypeSocialNetwork()",
+        "params"=>[]
+      ]);
     }catch(Exception $e) {
       die($e->getMessage());
       die($e->getTrace());
@@ -269,7 +276,11 @@ class BlogDAO {
   public function updateDestacado($id){
     try{
       $parametros = array($id);
-      return Model::excecuteProcedure("call updateBlogDescatacado(?)",$parametros, "update");
+      return Model::sql([
+        "sql"=>"call updateBlogDescatacado(?)",
+        "params"=>$parametros, 
+        "type"=>"update"
+      ]);
     }catch(Exception $e) {
       die($e->getMessage());
       die($e->getTrace());
@@ -328,7 +339,10 @@ class BlogDAO {
   public function getSocialNetwork($id_blog){
     try{
       $parametros = array($id_blog);
-      return Model::excecuteProcedure("call getlink_social_network_blog(?)",$parametros);
+      return Model::sql([
+        "sql"=>"call getlink_social_network_blog(?)",
+        "params"=>$parametros
+        ]);
     }catch(Exception $e) {
       die($e->getMessage());
       die($e->getTrace());

@@ -10,11 +10,17 @@
 	<title><?php echo isset($data)?$data["title"]:"Inicio";?></title>
 	<link rel="stylesheet" href="<?php echo CSS?>styles.css">
 	<link rel="stylesheet" href="<?php echo CSS?>animate.css">
-
-
-	<script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<link rel="stylesheet" href="<?php echo CSS?>toastr.min.css">
+	<link rel="stylesheet" href="<?php echo CSS?>calendar.min.css">
+	<link href="https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/master/calendarorganizer.min.css" rel="stylesheet" />
+	
+	<script src="<?php echo JS?>pluggins/jquery.min.js"></script>
+	<script src="<?php echo JS?>pluggins/toastr.min.js"></script>
+	<script src="<?php echo JS?>pluggins/calendar.min.js"></script>
+	
+	<!-- <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
 	<style>
 		a:hover{
 			text-decoration: none;
@@ -52,7 +58,7 @@
 				margin: auto;
 			}
         }
-		    @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash');
+		    /* @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash'); */
         </style>
         <!-- icons -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />

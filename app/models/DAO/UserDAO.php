@@ -56,10 +56,13 @@ class UserDAO {
 	}
     public function create(User $user){
         try{
-			$parametros = array($user->getUsername(), $user->getName_user(),
-								$user->getLast_name(),$user->getPassword(),$user->getPhone_number(),102);
+			$parametros = array($user->getUsername(), $user->getName_user(), $user->getLast_name(),
+								$user->getPassword(), $user->getPhone_number(), 102);
 			return Model::sql([
-				"sql"=>"call insertUser(?,?,?,?,?,?);",
+				"sql"=>"INSERT INTO 
+						user_(username, name_user, last_name, password, phone_number, id_TypeUser,date_create) 
+						values
+						(?,?,?,?,?,?,now());",
 				"params"=>$parametros,
 				"type"=>"insert"
 			]);

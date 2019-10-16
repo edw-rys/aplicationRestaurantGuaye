@@ -14,61 +14,58 @@ const regexobj=/^[a-zA-Z0-9üáéíóú][a-zA-Z0-9ü+ _áéíóú-]{3,30}$/;
 const regexobjPrepare=/^[a-zA-Z0-9üáéíóú][a-zA-Z0-9ü+ _.,:;áéíóú-]{3,900}$/;
 
 //k
-function validarUsuarionuevo(){
+function validarUsuarionuevo(data){
 	var mensaje=[];
-	removeErr("#panelErr");
-	var nombre=document.querySelector("input[name='name']");
-	var apellido=document.querySelector("input[name='lastname']");
-	var nombUsuario=document.querySelector("input[name='username']");
-	var contrasenia=document.querySelector("input[name='password']");
-	var telf=document.querySelector("input[name='numtelf']");
-	if(!nombre.value){
+	var nombre= data.get("name");
+	var apellido= data.get("lastname");
+	var nombUsuario= data.get("username");
+	var contrasenia= data.get("password");
+	var telf= data.get("numtelf");
+	if(!nombre){
 		mensaje.push("Debe ingresar su nombre.");
 	}else
-	if(!letrasNumEspacio.test(nombre.value)){
+	if(!letrasNumEspacio.test(nombre)){
 		mensaje.push("Debe ingresar su nombre.");
-		if (!sololetras.test(nombre.value)) {
+		if (!sololetras.test(nombre)) {
 			mensaje.push("Debe ingresar un nombre válido.");
 		}
 	}
-	if(!apellido.value){
+	if(!apellido){
 		mensaje.push("Debe ingresar su apellido.");
 	}else
-	if(!letrasNumEspacio.test(apellido.value)){
+	if(!letrasNumEspacio.test(apellido)){
 		mensaje.push("Debe ingresar su apellido.");
-		if (!sololetras.test(apellido.value)) {
+		if (!sololetras.test(apellido)) {
 			mensaje.push("Debe ingresar un apellido válido.");
 		}
 	}
-	if(!nombUsuario.value){
+	if(!nombUsuario){
 		mensaje.push("Debe ingresar su nombre de usuario.");
 	}else
-	if(!expUsername.test(nombUsuario.value)){
+	if(!expUsername.test(nombUsuario)){
 		mensaje.push("Nombre de usuario: letras y números, rago de caracteres [3-15], símbolos permitidos [ _ ü ], no se admiten espacios");
 	}
-	if(!contrasenia.value){
+	if(!contrasenia){
 		mensaje.push("Debe ingresar su contraseña.");
 	}else{
-		if(!regexp_password.test(contrasenia.value)){
-			mensaje.push("La contraseña debe tener al entre 6 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.");
-		}
+		// if(!regexp_password.test(contrasenia)){
+		// 	mensaje.push("La contraseña debe tener al entre 6 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.");
+		// }
 	}
-	if(!telf.value){
+	if(!telf){
 		mensaje.push("Debe ingresar su número de teléfono");
 	}else{
-		if(!soloNum.test(telf.value)){
+		if(!soloNum.test(telf)){
 		mensaje.push("Debe ingresar un número de teléfono válido.");
 		}else{
-			if(telf.value.length!==10 && telf.value.length!==7)
+			if(telf.length!==10 && telf.length!==7)
 				mensaje.push("El número de teléfono debe tener 10 dígitos para móvil y 7 para fijos.");
 		// console.log(typeof(telf.value))
 		}
 	}
-	errorMessage("#panelErr", mensaje);
 	if(mensaje.length==0 || !mensaje)
 		return true;
-		addClass("#error","active");
-	return false;
+	return mensaje;
 }
 
 

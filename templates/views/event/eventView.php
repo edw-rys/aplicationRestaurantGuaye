@@ -5,15 +5,20 @@
 			Redirect::to("");
 	?>
 </header>
+<div class="despliegue"></div>
 <div class="event container">
 	<div class="<?php echo $_SESSION["rol"]!=ADMINISTRADOR?'form':''?> font-i-f flex-center flex-y">
 		<div class="flex-center">
 		<h2 class="txt-center tittle  tittle-sty-bck bck-t-green">Sus reservaciones</h2>
 		</div>
 		<div class="border"></div>
-		<?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]!=ADMINISTRADOR){
-			echo '<button class="button-new-recipe" onclick="getFormEvent()">Nueva petición</button>';	
-		}?>
+		<div class="flex">
+			<?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]!=ADMINISTRADOR){
+				echo '<button class="button-new-recipe" onclick="getFormEvent()">Nueva petición</button>';	
+			}
+				echo '<button class="button-new-recipe" onclick="getCalendarEvents()">Ver calendaio</button>';	
+			?>
+		</div>
 	</div>
 </div>
 
@@ -80,3 +85,4 @@ function getTrEvent(event) {
 	`;
 }
 </script>
+<div id="modal"></div>

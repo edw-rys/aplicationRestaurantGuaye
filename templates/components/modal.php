@@ -7,7 +7,7 @@
                 <img class="icon" src="<?php echo IMAGES."icons/close.svg"?>" alt="close" width="30" height="30">
             </a>
         </div>
-        <div class="_body">
+        <div class="_body flex-center">
         </div>
     </div>
     </div>

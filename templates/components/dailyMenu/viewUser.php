@@ -1,4 +1,4 @@
-<div class="_head font-barriecito flex-center">
+<div class="_head font-barriecito flex-center" style="margin-top:120px">
     <div class="_container flex-center">
         <p class="date">Fecha: <?php echo $menudiario->getDate_create();?></p>
         <img class="picture" src="<?php echo IMAGES?>icons/calendar.png" alt="">

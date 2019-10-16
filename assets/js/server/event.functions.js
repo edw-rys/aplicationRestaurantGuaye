@@ -69,7 +69,7 @@ const saveEvent=()=>{
                     toastr.error("Ups!","Ha ocurrido un error");
                 });
             }
-        }, 1000);
+        }, timeResponse);
         
     }
     return false;
@@ -97,7 +97,7 @@ const deleteEvent=(id,col)=>{
                         item.classList.add("zoomOut");
                         setTimeout(() => {
                             item.remove();
-                        },500);
+                        },400);
                     }else{
                         toastr.error(res.message);
                     }
@@ -112,7 +112,7 @@ const deleteEvent=(id,col)=>{
                     col.innerHTML = aux;
                 }
             );
-        }, 1000);
+        }, timeResponse);
     }else{
         
     }
@@ -165,7 +165,7 @@ const aceptarPeticion=(id , btn)=>{
                 loading_4_close(item, aux);
             }
         )
-    }, 1000);
+    }, timeResponse);
 }
 getNewEvent= async (id)=>{
     if(!id)return false;
@@ -173,4 +173,42 @@ getNewEvent= async (id)=>{
     res = await res.text();
     // Return Promise
     return res;
+}
+
+getCalendarEvents=()=>{
+    const idEventCalendar='calendarEvent';
+    const idorganizedCalendar='organizedEvent';
+    fetch(urlEvent+"calendar")
+    .then(res=>res.json())
+    .then(
+        res=>{
+            activeModal(templatCalendar(idEventCalendar,idorganizedCalendar));
+            addClass(panelModal.firstElementChild.firstElementChild,"modal-extend");
+            if(res.calendar){
+                let dataCalendar ={};
+                res.calendar.forEach(data=>{
+                    let dateEvt = data.execution_date.split("-");
+                    if(!dataCalendar[dateEvt[0]]){
+                        dataCalendar[dateEvt[0]]={}
+                    }
+                    if(!dataCalendar[dateEvt[0]][dateEvt[1]]){
+                        dataCalendar[dateEvt[0]][dateEvt[1]]={}
+                    }
+                    if(!dataCalendar[dateEvt[0]][dateEvt[1]][dateEvt[2]]){
+                        dataCalendar[dateEvt[0]][dateEvt[1]][dateEvt[2]]=[]
+                    }
+                    dataCalendar[dateEvt[0]][dateEvt[1]][dateEvt[2]].push({
+                        startTime: data.start_time+":00",
+                        endTime: data.end_time+":00",
+                        text: data.event_
+                    });
+                });
+                const calendarEvt = getCalendar(idEventCalendar,"small","Monday","#fff","#961821");
+                console.log(res);
+                setDataCalendar( idorganizedCalendar , calendarEvt , dataCalendar)
+
+            }
+        }
+    )
+    .catch(err=>console.log(err));
 }

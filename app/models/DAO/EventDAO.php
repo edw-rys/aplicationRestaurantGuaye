@@ -170,5 +170,15 @@ class EventDAO {
             die($e->getTrace());
         }
     }
-   
+    public function getDataCalendarEvent(){
+        try {
+            return Model::sql([
+                "sql"=>"SELECT execution_date, start_time, end_time, affair event_ from event_",
+                "params"=>[]
+            ]);
+        } catch (Exception $e) {
+            // die($e->getMessage());
+            // die($e->getTrace());
+        }
+    }
 }

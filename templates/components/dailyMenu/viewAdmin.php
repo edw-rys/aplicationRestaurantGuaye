@@ -49,9 +49,9 @@ if(isset($data["menu"])){
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="3" style="background:white"></th>
-            <th colspan="3">Fecha del menú</th>
-            <th colspan="3"><?php echo $DM->getDate_create();?></th>
+            <th colspan="2" style="background:white"></th>
+            <th colspan="4">Fecha del menú</th>
+            <th colspan="2"><?php echo $DM->getDate_create();?></th>
         </tr>
     </tfoot>
 </table>

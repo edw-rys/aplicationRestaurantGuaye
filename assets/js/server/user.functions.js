@@ -35,7 +35,7 @@ const login =(form) =>{
                 }
                 
                 animationChargeRemove(btn,"Enviar");
-            },1000);
+            },timeResponse);
         }
     )
     .catch(err=>{
@@ -47,3 +47,52 @@ const login =(form) =>{
 }
 
 
+newUser=()=>{
+    const form = document.getElementById("formSignup");
+    if(form){
+        form.addEventListener("submit",e=>e.preventDefault());
+        const data = new FormData(form);
+        let btn = form.submit;
+        animationCharge(btn);
+        // Validar datos
+        value = validarUsuarionuevo(data);
+        setTimeout(() => {
+            
+            if(Array.isArray(value)){
+                // error de datos
+                value.forEach(element => {
+                    toastr.error(element);
+                });
+            }else{
+                fetch(urlUser+"/signup",
+                {
+                    method:"POST",
+                    body: data
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    if(res){
+                        if(res.status=="success"){
+                            toastr.success(res.message);
+                            toastr.info("Estamos iniciando sesión, por favor espere.","Información");
+                            setTimeout(() => {
+                                login(form);
+                            }, 500);
+                        }else{
+                            toastr.error(res.message);
+                        }
+                    }else{
+                        toastr.error("Ups!","Ha ocurrido un error");
+                    }
+                    console.log(res);
+                })
+                .catch(err=>{
+                    console.log(err);
+                    toastr.error("Ups!","Ha ocurrido un error");
+                });
+            }
+            animationChargeRemove(btn,"Publicar");
+        }, timeResponse);
+    }
+
+}

@@ -7,22 +7,29 @@
         <h1 class="tittle txt-center">REGISTRATE</h1>
         <div class="border"></div>
         
-        <form action="index.php?c=user&a=signup" onsubmit="return validarUsuarionuevo()" method="POST" name="formRegistry">
-
-            <label><span class="txt-center">Nombre:</span><input class="input-txt" type="text" name="name"/></label>
-
-            <label><span class="txt-center">Apellido:</span><input class="input-txt" type="text" name="lastname"/></label>
-
-            <label><span class="txt-center">Nombre de usuario:</span><input class="input-txt" type="text" name="username"/></label>
-            
-            <label><span class="txt-center">Contraseña:</span><input class="input-txt" type="password" name="password"/></label>
-
-            <label><span class="txt-center">Número de teléfono:</span><input class="input-txt" type="number" name="numtelf"/></label>
-
-
-
+        <form action="" method="POST" name="formRegistry" id="formSignup">
+            <div class="col-input">
+                <label for="name" class="txt-center">Nombre:</label>
+                <input class="input-txt" type="text" name="name" id="name"/>
+            </div>
+            <div class="col-input">
+                <label for="lastname" class="txt-center">Apellido:</label>
+                <input class="input-txt" type="text" name="lastname" id="lastname"/>
+            </div>
+            <div class="col-input">
+                <label for="username" class="txt-center">Nombre de usuario:</label>
+                <input class="input-txt" type="text" name="username" id="username"/>
+            </div>
+            <div class="col-input">
+                <label for="numtelf" class="txt-center">Número de teléfono:</label>
+                <input class="input-txt" type="text" name="numtelf" id="numtelf"/>
+            </div>
+            <div class="col-input">
+                <label for="password" class="txt-center">Contraseña:</label>
+                <input class="input-txt" type="password" name="password"/>
+            </div>
             <div class="in flex-center">
-                <input class="button btn-first c-pointer" type="submit" name="enviar" value="Registrarse" style="width:50%;"/><br>
+                <button onclick="newUser()" name="submit" class="button btn-first c-pointer" type="submit" style="width:50%;">Registrarse</button>
             </div>
         </form>
     </div>

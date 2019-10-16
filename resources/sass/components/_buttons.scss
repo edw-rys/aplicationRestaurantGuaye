@@ -56,10 +56,16 @@
 
 // Button float
 .float-w-l{
-    position: absolute;
-    top: 13%;
+    position: static;
+    // z-index: 25;
+}
+@media(min-width:700px){
+  .float-w-l{
+    position: relative;
+    top: 20px;
     left: 10px;
     // z-index: 25;
+  }
 }
 .button-new-recipe{
   border:none;

@@ -50,18 +50,20 @@
 					</select>
 				</div>
 
-				<div class="line">
-					<label><span>Nombre</span>
-						<input class="input-txt" type="text" name="nombre"
-							value="<?php echo isset($editFood)?$editFood->name_food:''?>">
-					</label>
-					<label><span>Precio</span>
-						<input class="input-txt" type="text" name="precio"
+				<!-- <div class="line"> -->
+					<div class="col-input">
+						<label for="nombre" class="txt-center">Nombre</label>
+						<input class="input-txt" name="nombre"
+							value="<?php echo isset($editFood)?$editFood->name_food:''?>"/>
+					</div>
+					<div class="col-input">
+						<label for="precio" class="txt-center">Precio</label>
+						<input class="input-txt txt-right" name="precio"
 							value="<?php echo isset($editFood)?$editFood->price:'1'?>" min="0">
-					</label>
-				</div>
+					</div>
+				<!-- </div> -->
 				<div class="area ">
-					<label>Breve descripción </label>
+					<label class="txt-center">Breve descripción </label>
 					<textarea class="block width-100-p" rows="4" name="descripcion"><?php echo isset($editFood)?$editFood->description_food:''?></textarea>
 				</div>
 				<div class="select">

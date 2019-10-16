@@ -1,10 +1,8 @@
+<header>
+	<?php require_once NAVIGATION; ?>
+</header>
 <div class="container-all">
-	<header>
-		<?php require_once NAVIGATION; ?>
-	</header>
-	<main>
-		<div class="errors"></div>
-
+	<main style="margin-top:50px">
 		<?php 
 			if(isset($_SESSION['USER'])){ 
 				if(isset($_SESSION['rol']) && $_SESSION['rol']!=MODERADOR){

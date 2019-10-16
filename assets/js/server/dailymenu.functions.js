@@ -52,7 +52,7 @@ const saveMenu=()=>{
                     toastr.error("Ups!","Ha ocurrido un error");
                 });
             }
-        }, 1000);
+        }, timeResponse);
         
     }
     return false;
@@ -77,7 +77,7 @@ const deleteMenu=(idcontrol,btn)=>{
                     item.classList.add("zoomOut");
                     setTimeout(() => {
                         item.remove();
-                    },500);
+                    },400);
                 }else{
                     toastr.error(res.message);
                 }

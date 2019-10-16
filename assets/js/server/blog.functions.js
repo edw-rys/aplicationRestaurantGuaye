@@ -80,7 +80,7 @@ const saveBlog= ()=>{
                     toastr.error("Ups!","Ha ocurrido un error");
                 });
             }
-        }, 500);
+        }, timeResponse);
         
     }
     return false;
@@ -117,7 +117,7 @@ const deletePost = (id=0 , btn)=>{
                     btn.innerHTML=auxContent;
                     btn.classList.remove("flex-x");
                 }
-            }, 1000);
+            }, timeResponse);
         }
     )
     .catch(err=>{

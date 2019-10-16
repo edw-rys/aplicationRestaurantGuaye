@@ -24,7 +24,6 @@ class UserController{
                     "status"=>"error"
                 ];
                 // View::render("home", $data);  
-                die();              
         }
         $verify=$this->userDAO->verifyUserNotRepeat(strtolower($_REQUEST['username']));
         if(!empty( $verify)){
@@ -43,7 +42,6 @@ class UserController{
             $user->setPhone_number($_REQUEST['numtelf']);
             $user->setPassword($_REQUEST['password']);
             $num=$this->userDAO->create($user);
-            echo $num;
             if($num>0){
                 $data=[
                     "title"=>"Login",
@@ -63,11 +61,11 @@ class UserController{
             }
             // View::render("home", $data);
         }
-        var_dump($data);
+        echo json_encode($data);      
     }
     
     public function login(){
-        $user=isset($_POST['user'])?strtolower($_POST['user']):'';
+        $user=isset($_POST['username'])?strtolower($_POST['username']):'';
         $password=isset($_POST['password'])?$_POST['password']:'';
 
         $results = $this->jwt->signup($user,$password,$this->userDAO);

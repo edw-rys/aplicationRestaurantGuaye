@@ -4,6 +4,7 @@
 const url="http://127.0.0.1:81/aplicationRestaurantGuaye/";
 const panelModal=document.getElementById("windowModal");
 const index=this;
+const timeResponse=400;
 var toggle=(_selector, _class)=>{
 	var element=document.querySelector(_selector);
 	if(!element)return false;
@@ -385,10 +386,74 @@ function activeModal(element){
 function removeModal() {
 	// addClass(panelModal,"animated zoomOut");
 	toggle('#windowModal','hidden');
+	if(panelModal.firstElementChild)
+		if(panelModal.firstElementChild.firstElementChild)
+		removeClass(panelModal.firstElementChild.firstElementChild,"modal-extend");
 	return true;
 }
 
 
 viewImage= (url)=>{
 	activeModal(`<img src="${url}">`);
+}
+
+
+
+"use strict";
+
+// Calendar
+/**
+ *  Add data
+ * 	data={}
+ * 	data[year]={}
+ *  data[month]={}
+ *  data[day]=[]
+ *  data[day].push(
+ * 		{
+ * 			startTime: "10:00",
+            endTime: "12:00",
+            text: "Some Event Here"
+ * 		}	
+ * 	);
+ */
+
+templatCalendar=(idCalendar, idOrganizer)=>{
+	return `
+	<div class="calendarContainer flex-center">
+		<div id="${idCalendar}" class="flex-center"></div>
+		<div id="${idOrganizer}" class="flex-center"></div>
+	</div>
+	`;
+}
+// https://github.com/nizarmah/calendar-javascript-lib
+const getCalendar=(id,size="small" ,dayInit="Monday",
+				primaryColor="#fff" , primaryColorDark="#fff",
+				textColor="#fff", textColorDark="#fff")=>{
+	const calendar = new Calendar(
+		id, // id of html container for calendar
+		size, // size of calendar, can be small | medium | large
+		[
+			dayInit, // left most day of calendar labels
+		  3 // maximum length of the calendar labels
+		],
+		[
+			primaryColor, // primary color
+		  	primaryColorDark, // primary dark color
+			textColor, // text color
+			textColorDark // text dark color
+		],
+		{
+			// days:["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"],
+			months:["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+		}
+	  );
+	return calendar;
+}
+const setDataCalendar = (id,calendar, data)=>{
+	// initializing a new organizer object, that will use an html container to create itself
+	const organizer = new Organizer(
+		id, // id of html container for calendar
+	  	calendar, // defining the calendar that the organizer is related to
+	  	data // giving the organizer the static data that should be displayed
+	);
 }

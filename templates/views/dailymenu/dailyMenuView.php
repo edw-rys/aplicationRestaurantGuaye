@@ -2,10 +2,11 @@
     <?php require_once NAVIGATION; ?>
 </header>
 
-<div class="despliegue"></div>
+
 <?php 
     //verificar usuario administrador
     if(isset($_SESSION['USER']) && isset($_SESSION['rol']) && $_SESSION['rol']==ADMINISTRADOR ){
+        echo '<div class="despliegue"></div>';
 		echo '<div class="flex-center"><button class="button-new-recipe" onclick="getFormDilyMenu()">Nueva receta</button></div>';
         // echo "<button>Nuevo</button>";
     }

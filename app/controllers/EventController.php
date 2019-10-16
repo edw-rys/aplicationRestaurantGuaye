@@ -306,4 +306,11 @@ class EventController {
         }
         var_dump($data);
     }
+
+    public function calendar(Type $var = null){
+        $data=[
+            "calendar"=>$this->eventDao->getDataCalendarEvent()
+        ];
+        echo json_encode($data);
+    }
 }

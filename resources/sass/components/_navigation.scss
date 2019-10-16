@@ -1,5 +1,8 @@
 
 .navbar-tnx{
+    z-index: 1100;
+    width: 100%;
+    position: fixed;
     --bck-panel:#343A40;
     background: var(--bck-panel);
     .nav_head{

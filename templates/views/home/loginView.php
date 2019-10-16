@@ -15,8 +15,8 @@
 
             <!-- <span ></span> -->
             <div class="col-input">
-                <label for="user" class="txt-center">Usuario:</label>
-                <input class="input-txt" type="text" name="user" id="username"/>
+                <label for="username" class="txt-center">Usuario:</label>
+                <input class="input-txt" type="text" name="username" id="username"/>
             </div>
             <div class="col-input">
                 <label for="password" class="txt-center">Contraseña:</label>

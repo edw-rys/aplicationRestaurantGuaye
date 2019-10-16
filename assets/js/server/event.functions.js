@@ -7,8 +7,7 @@ const getFormEvent =function(id) {
     .then(res=>{
         // console.log(res);
         if(res && res!="error"){
-            panelModal.querySelector("._body").innerHTML=res;
-            panelModal.classList.remove("hidden");
+            activeModal(res);
             loadSocialNetwork();
         }
     })
@@ -36,10 +35,28 @@ const saveEvent=()=>{
                 })
                 .then(res=>res.json())
                 .then(
-                    res=>{
+                    async (res)=>{
                         console.log(res)
                         if(res.code==200){
                             toastr.success(res.message);
+                            let eventsTable = document.getElementById("body_table_event");
+                            let dataEvent = await getNewEvent(res.idEvent);
+                            if(dataEvent){
+                                dataEvent = JSON.parse(dataEvent);
+                                let element = getTrEvent(dataEvent);
+                                element = createElement("tr",{"target-name": "event-id-"+dataEvent.id_event},element);
+                                if(!data.get("id")){
+                                    // Insert new
+                                    eventsTable.insertBefore(element, eventsTable.firstElementChild);
+                                    addClass(element,"animated zoomInUp");
+    
+                                }else{
+                                    // Edit
+                                    let eventReplace = document.querySelector(`target-name["event-id-${res.idEvent}"]`);
+                                    eventsTable.replaceChild(element, eventReplace);
+                                }
+                            }
+                            removeModal();
                         }else{
                             toastr.error(res.message);
                         }
@@ -76,7 +93,6 @@ const deleteEvent=(id,col)=>{
                     if(res.status=="success"){
                         let item= col.parentNode;
                         toastr.success(res.message);
-                        console.log(item);
                         item.classList.add("animated");
                         item.classList.add("zoomOut");
                         setTimeout(() => {
@@ -150,4 +166,11 @@ const aceptarPeticion=(id , btn)=>{
             }
         )
     }, 1000);
+}
+getNewEvent= async (id)=>{
+    if(!id)return false;
+    let res = await fetch(urlEvent+"getItemView/"+id);
+    res = await res.text();
+    // Return Promise
+    return res;
 }

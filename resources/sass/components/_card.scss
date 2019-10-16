@@ -3,11 +3,18 @@
     grid-template-columns: repeat(1,1fr);
     .recipe-item{
         position: relative;
+        // position: absolute;
         width: 95%;
         border-bottom: 0 none;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
-        img{
-            width: 100%;
+        ._picture_recipe{
+            // height: 200px;
+            max-height: 300px;
+            overflow: hidden;
+            img{
+                cursor: zoom-in;
+                width: 100%;
+            }
         }
         .social-red{
             position: absolute;

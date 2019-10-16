@@ -1,4 +1,4 @@
-<div class="_item recipe-item realtive">
+<div class="_item recipe-item relative item-blog-number-<?php echo isset($blog)?$blog->getId_blog():''; ?>">
     <div class="_head">
         <?php 
         if(isset($_SESSION['rol']) && $_SESSION['rol']==MODERADOR){
@@ -27,11 +27,16 @@
 		}?>
     </div>
     <div class="_body font-i-f">
-        <?php  echo '<img src="'.$blog->getRecipe()->getUrl_image().'">';?>
+        <div class="_picture_recipe">
+            <?php  echo '<img src="'.$blog->getRecipe()->getUrl_image().'" onclick="viewImage(\''.$blog->getRecipe()->getUrl_image().'\')">';?>
+        </div>
         <?php  echo '<h4 class="tittle txt-center" style="font-size:1.3em">'. $blog->getRecipe()->getName_recipe().'</h4>';?>
         <?php if(isset($_SESSION['ID_USER'])){?>
             <div class="like-container relative" style="bottom:20px">
-                <?php include COMPONENTS."buttons/like.php"?>
+                <?php 
+                $status=$blog->getDestacado();
+                    include COMPONENTS."buttons/like.php";
+                ?>
             </div>
         <?php }?>
     </div>

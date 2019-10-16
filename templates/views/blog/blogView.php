@@ -14,7 +14,7 @@
 				}
 			} 
 		?>
-		<div class=" flex-center flex-y">
+		<div class="flex-center flex-y">
 			<div class="flex-center">
 				<h2 class="txt-center tittle tittle-sty-bck bck-t-first">Nuestro Blog</h2>
 			</div>
@@ -26,6 +26,7 @@
 						if(isset($data["allBlog"])){
 							$allBlog=$data["allBlog"];
 							foreach($allBlog as $blog){
+								// include COMPONENTS."blog/tnx/index.php";
 								include COMPONENTS."blog/blogItem.php";
 							} 
 						}

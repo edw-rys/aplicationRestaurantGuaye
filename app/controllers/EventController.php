@@ -107,6 +107,20 @@ class EventController {
         }
         return $data;
     }
+    /**
+     * Show View 
+     */
+    public function getItemView($id=null){
+        if(!is_null($id)){
+            $event =$this->eventDao->queryById($id, "object");
+            if(isset($_SESSION["ID_USER"]) && $event->id_user==$_SESSION["ID_USER"]){
+                if(!empty($event)){
+                    echo json_encode($event);
+                }
+            }
+        }
+    }
+
     public function save(){
         //en caso de la ausencia de algún campo, retornar =>faltan campos
         if(!(isset($_POST['asunto']) && isset($_POST['fecha']) && 
@@ -153,6 +167,7 @@ class EventController {
                             "code"=>200,
                             "status"=>"success",
                             "message"=>"Editado exitosamente",
+                            "idEvent"=>$_POST['id']
                         ];
                     }
                 }else{
@@ -163,7 +178,7 @@ class EventController {
                             "code"=>200,
                             "status"=>"success",
                             "message"=>"Guardado exitosamente",
-                            "dat"=>$numfilasAfectadas
+                            "idEvent"=>$numfilasAfectadas
                         ];
                     } else {
                         $data = [

@@ -290,8 +290,11 @@ END$$
 DROP PROCEDURE IF EXISTS `getEventById`$$
 CREATE PROCEDURE getEventById(IN id_e int)
 BEGIN
-    select *
+    select evt.id_event, evt.affair,evt.creation_date ,
+    	evt.execution_date,evt.start_time, evt.end_time, evt.is_accepted,
+    	evt.comment, us.username,us.name_user,us.last_name,us.id_user
         from event_ as evt 
+    inner join user_ as us on us.id_user=evt.id_user
         where evt.status=1 and evt.id_event=id_e;
 END$$
 

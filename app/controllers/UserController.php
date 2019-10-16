@@ -137,6 +137,7 @@ class UserController{
                 // View::render("profile", $data);
             }
         }
+        var_dump($data);
         echo "En proceso";
     }
     public function myprofile(){

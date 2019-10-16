@@ -20,7 +20,7 @@ define("BASEPATH", IS_LOCAL ? '/aplicationRestaurantGuaye/' : '___PRODUCTION___'
 define('AUTH_SALT'          ,'TNX_UPP_@S5249A6');
 
 // Puerto y URL
-define('PORT', "81");
+define('PORT'               , "81");
 define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"__URL_PRODUCTION__");
 
 // Las rutas de directorios y archivos

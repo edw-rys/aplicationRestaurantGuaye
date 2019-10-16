@@ -11,6 +11,9 @@ class BlogController {
 
     public function index(){
         $allBlog = $this->blogDAO->query();
+        if(!empty($allBlog)){
+            $allBlog=array_reverse($allBlog);
+        }
         $data=[
             "title"=>"Blog",
             "allBlog"=>$allBlog,
@@ -193,14 +196,15 @@ class BlogController {
                                 "title"=>"Blog",
                                 "status"=>"success",
                                 "code"=>200,
-                                "message"=>"Editado exitosamente."
+                                "message"=>"Editado exitosamente.",
+                                "idRecipe"=> $blog->getId_blog(),
                             ];
                             $message="Editado exitosamente";
                             $numfilasAfectadas = $this->blogDAO->update($blog);
                         }
                     }else{
                         $numfilasAfectadas = $this->blogDAO->create($blog, $_SESSION['ID_USER']);
-                        $message="Guardado exitosamente";
+                        $message="Receta guardada.";
                         $blog->setId_blog($numfilasAfectadas);
                     }
                     if ($numfilasAfectadas > 0) {
@@ -209,7 +213,7 @@ class BlogController {
                             "status"=>"success",
                             "code"=>200,
                             "message"=>$message,
-                            "idRecipe"=> $blog->getId_recipe(),
+                            "idRecipe"=> $blog->getId_blog(),
                         ];
                     } else {
                         $data=[
@@ -236,9 +240,22 @@ class BlogController {
     
     public function destacado($id=0){
         if($id!=0 && $_SESSION['rol']==MODERADOR){
-            echo $this->blogDAO->updateDestacado($id);
+            $res = $this->blogDAO->updateDestacado($id);
+            echo json_encode(
+                [
+                    "status"=>$res?"success":"error",
+                    "code"=>$res?200:400,
+                    "message"=>$res?"":"Ocurrió un error!"
+                ]
+            );
         }else{
-            echo 404;
+            echo json_encode(
+                [
+                    "status"=>"error",
+                    "code"=>400,
+                    "message"=>"Acción no disponible!"
+                ]
+            );
         }
     }
 

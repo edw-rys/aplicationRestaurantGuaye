@@ -11,21 +11,22 @@ var toggle=(_selector, _class)=>{
 	element.classList.toggle(_class);
 	return true;
 }
-function addClass(_selector, _class){
-	var element=document.querySelector(_selector);
-	if(!element)return false;
-	
-	element.classList.add(_class);
+function addClass(element , class_){
+	if(!element || !class_)return false;
+	let classes= class_.split(" ");
+	classes.forEach(_class_ => {
+		element.classList.add(_class_);
+	});
 	return true;
 }
-function removeClass(_selector, _class){
-	var element=document.querySelector(_selector);
-	if(!element)return false;
-	
-	element.classList.remove(_class);
+function removeClass(element , class_){
+	if(!element || !class_)return false;
+	let classes= class_.split(" ");
+	classes.forEach(_class_ => {
+		element.classList.remove(_class_);
+	});
 	return true;
 }
-
 const nav=document.querySelector('.navigation')
 const btnScollUp=document.querySelector('.btn-up');
 
@@ -47,19 +48,12 @@ function createElement(_name,_attributes, inner) {
 	return node;
 }
 
-// function errorMessage(_element, message){
-// 	if(message.length==0)
-// 	return;
-// 	var element=document.querySelector(_element);
-
-// 	if(_element!=null && _element!=undefined) {
-// 		element.appendChild(createElement("p",[["class","txt-center err-tittle"]], "Hay errores en los  datos ingresados"));
-// 		for(var value of message){
-// 			var p =createElement("p",null, value);
-// 			element.appendChild(p);
-// 		}
-// 	}
-// }
+function getHTML(text){
+	if(!text)return false;
+	let dom=new DOMParser();
+	let elementHTML = dom.parseFromString(text, "text/html");
+	return elementHTML.querySelector("body").firstChild;
+}
 function addElementPanel(queryPanel, value){
 	if(value.length==0)
 	return;
@@ -68,18 +62,8 @@ function addElementPanel(queryPanel, value){
 		element.appendChild(createElement("p",null, value));
 	}
 }
-function removeErr(_element){
-	var element=document.querySelector(_element);
-	if(element.children==0) return false;
-	while(element.hasChildNodes())
-		element.removeChild(element.firstChild);
-}
 
 
-function panelClose(_query,_class,_queryChildren){
-	removeClass(_query,_class);
-	removeErr(_queryChildren);
-}
 
 
 
@@ -91,7 +75,6 @@ window.onscroll = function() {
 		nav.style.background="transparent";
 	}
 }
-
 
 
 
@@ -124,11 +107,7 @@ activeOptionsBlogBtn=(btnToggle)=>{
 
 	if (!btnToggle.open) animate(btnToggle,buttons);
 	else {
-		buttons.classList.remove("step-1");
-		buttons.classList.remove("step-0");
-		buttons.classList.remove("step-3");
-		buttons.classList.remove("step-2");
-		buttons.classList.remove("activate" );  
+		removeClass(buttons,"step-1 step-0 step-3 step-2 activate");
 		clearTimeout(btnToggle.lastTimeout);
 		btnToggle.open = false;
 		btnToggle.curStep = 0;
@@ -147,21 +126,13 @@ function animate(btnToggle,buttons) {
 }
 
 function setStep(buttons, curStep) {    
-	buttons.classList.remove("step-1");
-	buttons.classList.remove("step-0");
-	buttons.classList.remove("step-3");
-	buttons.classList.remove("step-2");
-	buttons.classList.add("activate" );  
+	removeClass(buttons,"step-1 step-0 step-3 step-2");
+	addClass(buttons, "activate");
 	buttons.classList.add("step-" + curStep);  
 
 }
 
 
-// $('.allRecipes').masonry({
-// 	// options
-// 	itemSelector: '.recipe-item',
-// 	columnWidth: 200
-// });
 
 // Animations Load
 
@@ -400,4 +371,24 @@ function loading_10_close(elementContainer , content) {
     elementContainer.removeAttribute('disabled');
 	elementContainer.innerHTML=content
 	return true;
+}
+
+// Modal
+function activeModal(element){
+	if(!element)return false;
+	let body = panelModal.querySelector("._body");
+	body.innerHTML=element;
+	panelModal.classList.remove("hidden");
+	// addClass(panelModal, "animated zoomIn");
+	return true;
+}
+function removeModal() {
+	// addClass(panelModal,"animated zoomOut");
+	toggle('#windowModal','hidden');
+	return true;
+}
+
+
+viewImage= (url)=>{
+	activeModal(`<img src="${url}">`);
 }

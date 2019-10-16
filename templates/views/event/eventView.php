@@ -53,3 +53,30 @@
 } ?>
 </div>  
 <div class="m-20"></div>
+
+<script>
+function getTrEvent(event) {
+	let optionsTr ="";
+	if(event.execution_date<new Date()){
+		optionsTr=`
+		<td data-campo='Editar'><span class='txt-through txt-inactive'>Editar</span></td>
+		<td data-campo='Eliminar'><span class='txt-through txt-inactive'>Eliminar</span></td>
+		`;
+	}else{
+		optionsTr =`
+		<td data-campo='Editar' style="--color-txt:#009F41"><a href="#!" onclick="editEvent(${event.id_event}")>Editar</a></td>
+		<td data-campo='Eliminar' style="--color-txt:var(--color-first)"><a onclick="deleteEvent(${event.id_event}, this.parentNode)" href="#!">Eliminar</a></td>
+		`;
+	}
+	return `
+		<td data-campo='Usuario'>${event.name_user}</td>
+		<td data-campo='Fecha de creación'>${event.creation_date}</td>
+		<td data-campo='Asunto'>${event.affair}</td>
+		<td data-campo='Fecha de ejecución'>${event.execution_date}</td>
+		<td data-campo='Hora de entrada'>${event.start_time}</td>
+		<td data-campo='Hora de salida'>${event.end_time}</td>
+		<td data-campo='Comentarios'>${event.comment}</td>
+		${optionsTr}
+	`;
+}
+</script>

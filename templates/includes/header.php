@@ -15,7 +15,6 @@
 	<script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="<?php echo JS?>/pluggins/massory.min.js"></script>
 	<style>
 		a:hover{
 			text-decoration: none;

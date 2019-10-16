@@ -8,8 +8,7 @@ const getFormDilyMenu =function(idcontrol , idcomida) {
     .then(res=>{
         // console.log(res);
         if(res && res!="error"){
-            panelModal.querySelector("._body").innerHTML=res;
-            panelModal.classList.remove("hidden");
+            activeModal(res);
             loadSocialNetwork();
         }
     })

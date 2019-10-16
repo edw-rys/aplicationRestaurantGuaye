@@ -7,8 +7,7 @@ const getFormRecipe =function(id) {
     .then(res=>{
         // console.log(res);
         if(res && res!="error"){
-            panelModal.querySelector("._body").innerHTML=res;
-            panelModal.classList.remove("hidden");
+            activeModal(res);
             loadSocialNetwork();
         }
     })
@@ -24,10 +23,10 @@ const loadSocialNetwork=()=>{
     })
     .catch(err=>console.log(err));
 }
-const addItemSocialNetwork=()=>{
-    panelModal.querySelector();
-}
-const saveBlog=()=>{
+// const addItemSocialNetwork=()=>{
+//     panelModal.querySelector();
+// }
+const saveBlog= ()=>{
     const formRecipe=document.getElementById("formRecipe");
     var btn=formRecipe.save;
     animationCharge(btn);
@@ -49,10 +48,26 @@ const saveBlog=()=>{
                 })
                 .then(res=>res.json())
                 .then(
-                    res=>{
-                        console.log(res)
+                    async(res)=>{
+                        // console.log(res)
                         if(res.code==200){
                             toastr.success(res.message);
+                            // Agregar al muro o editar
+                            let Recipes = document.querySelector(".allRecipes");
+                            if(!data.get("id")){
+                                // New
+                                let element = await getNewItem(res.idRecipe);
+                                element = getHTML(element);
+                                Recipes.insertBefore(element, Recipes.firstElementChild);
+                                addClass(element,"animated zoomInUp");
+                            }else{
+                                // Edit
+                                let recipe = document.querySelector(".item-blog-number-"+res.idRecipe);
+                                let element = await getNewItem(res.idRecipe);
+                                element = getHTML(element);
+                                Recipes.replaceChild(element, recipe);
+                            }
+                            removeModal();
                         }else{
                             toastr.error(res.message);
                         }
@@ -65,7 +80,7 @@ const saveBlog=()=>{
                     toastr.error("Ups!","Ha ocurrido un error");
                 });
             }
-        }, 1000);
+        }, 500);
         
     }
     return false;
@@ -90,8 +105,7 @@ const deletePost = (id=0 , btn)=>{
                     if(res.code==200){
                         toastr.success(res.message);
                         let item =btn.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-                        item.classList.add("animated");
-                        item.classList.add("zoomOut");
+                        addClass(item, "animated zoomOut");
                         setTimeout(() => {
                             item.remove();
                         },500);
@@ -120,8 +134,7 @@ viewBlog =(id)=>{
     .then(
         res=>{
             if(res && res!="null"){
-                panelModal.querySelector("._body").innerHTML=res;
-                panelModal.classList.remove("hidden");
+                activeModal(res);
             }   
         }
     )
@@ -129,4 +142,28 @@ viewBlog =(id)=>{
         console.log(err);
         toastr.error("Ups!","Ha ocurrido un error");
     });
+}
+
+
+getNewItem = async (id)=>{
+    if(!id)return false;
+    let res = await fetch(urlBlog+"getItemView/"+id);
+    res = await res.text();
+    // Return Promise
+    return res;
+}
+const updateStarPost = (id)=>{
+    if(!id)return false;
+    fetch(urlBlog+"destacado/"+id)
+    .then(res=>res.json())
+    .then(
+        res=>{
+            if(res.status=="success"){
+                console.log('hecho');
+            }else{
+                toastr.error(res.message);
+            }
+        }
+    )
+    .catch(err=>console.log(err));
 }

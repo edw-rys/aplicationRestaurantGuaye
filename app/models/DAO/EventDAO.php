@@ -48,15 +48,22 @@ class EventDAO {
         }
     }
     //*Todos un evento en especifico
-    public function queryById($id_evt){
+    public function queryById($id_evt,$mode=null){
         try {
                 $parametros = array($id_evt);
-                $resultSet = Model::sql([
-                    "sql"   =>"call getEventById(?)",
-                    "params"=>$parametros,
-                    "type"  =>"query",
-                    "class" =>"Event"
-                ]);
+                if(is_null($mode)){
+                    $resultSet = Model::sql([
+                        "sql"   =>"call getEventById(?)",
+                        "params"=>$parametros,
+                        "type"  =>"query",
+                        "class" =>"Event"
+                    ]);
+                }else{
+                    $resultSet = Model::sql([
+                        "sql"   =>"call getEventById(?)",
+                        "params"=>$parametros,
+                    ]);
+                }
             if(count($resultSet) > 0)
                 return $resultSet[0] ;
             else

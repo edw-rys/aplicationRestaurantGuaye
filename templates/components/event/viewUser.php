@@ -1,8 +1,8 @@
 <?php
 if(isset($data["events"])){
 	foreach($data["events"] as $res){
-        ?>
-        <tr>
+		?>
+        <tr target-name="event-id-<?php echo $res->id_event?>">
 			<td  data-campo='Usuario'><?php echo $res->name_user; ?></td>
 			<td data-campo='Fecha de creación'><?php echo $res->creation_date; ?></td>
 			<td data-campo='Asunto'><?php echo $res->affair; ?></td>

@@ -20,7 +20,8 @@
 // MODULOS (SMACSS) O COMPONENTES (ITCSS)
   // Son los elementos de UI de tu interfaz, como botones, tablas, menus, etc.
   // Crea los archivos adicionales que necesites (uno por componente)
-// @import "components/buttons";
+
+@import "components/buttons";
 @import "components/404";
 @import "components/menus";
 @import "components/buttons";
@@ -42,6 +43,7 @@
 
 // Animations
 @import "animations/loading";
+@import "animations/animationColors";
 // Utilities (hacks)
   // Todos los hacks que hayas necesitado para solucionar conflictos
   // o resolver situaciones extremas. Se espera poder mejorarlos luego.

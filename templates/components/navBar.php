@@ -58,7 +58,8 @@
             </li>
         <?php
             }else{
-                echo '<li class="item-nav"><a class="dir-item" href="'.URL.'home/static/login">Login</a></li>';
+                echo '<li class="item-nav"><a class="dir-item" href="#!" onclick="getFormLogin()">Login</a></li>';
+                // echo '<li class="item-nav"><a class="dir-item" href="'.URL.'home/static/login">Login</a></li>';
                 echo '<li class="item-nav"><a class="dir-item" href="'.URL.'home/static/signup">Registrese</a></li>';
             }
         ?>

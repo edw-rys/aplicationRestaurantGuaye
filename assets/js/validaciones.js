@@ -15,12 +15,13 @@ const regexobjPrepare=/^[a-zA-Z0-9üáéíóú][a-zA-Z0-9ü+ _.,:;áéíóú-]{3
 
 //k
 function validarUsuarionuevo(data){
-	var mensaje=[];
-	var nombre= data.get("name");
-	var apellido= data.get("lastname");
-	var nombUsuario= data.get("username");
-	var contrasenia= data.get("password");
-	var telf= data.get("numtelf");
+	let mensaje=[];
+	let nombre= data.get("name");
+	let apellido= data.get("lastname");
+	let nombUsuario= data.get("username");
+	let contrasenia= data.get("password");
+	let telf= data.get("numtelf");
+	let gender = data.get("gender");
 	if(!nombre){
 		mensaje.push("Debe ingresar su nombre.");
 	}else
@@ -52,16 +53,16 @@ function validarUsuarionuevo(data){
 		// 	mensaje.push("La contraseña debe tener al entre 6 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.");
 		// }
 	}
-	if(!telf){
-		mensaje.push("Debe ingresar su número de teléfono");
-	}else{
+	if(telf || telf.length>0){
 		if(!soloNum.test(telf)){
-		mensaje.push("Debe ingresar un número de teléfono válido.");
+			mensaje.push("Debe ingresar un número de teléfono válido.");
 		}else{
 			if(telf.length!==10 && telf.length!==7)
 				mensaje.push("El número de teléfono debe tener 10 dígitos para móvil y 7 para fijos.");
-		// console.log(typeof(telf.value))
 		}
+	}
+	if(!gender){
+		mensaje.push("Seleccione su género.");
 	}
 	if(mensaje.length==0 || !mensaje)
 		return true;
@@ -75,6 +76,7 @@ function validaFormBlog(data) {
 	var img    = data.get("imagen");
 	var preparacion=data.get("preparacion");
 	var ingredients=data.getAll("ingrediente[]");
+	let imageAut = data.get("imagen-edit");
 	var mensaje=[];
 	// Recolección de datos
 	if(nombre.length==0){
@@ -109,11 +111,12 @@ function validaFormBlog(data) {
 	// Validaciones
 	if(!regexobjPrepare.test(preparacion))
 		mensaje.push("Preparación: Caracteres no permitidos o excede la su longitud (max->900)");
-
-	if(!img.name || img.name.length==0)
-		mensaje.push("Inserte una imagen");
-	else if(!imgFormat.test(img.name))
-		mensaje.push("Formato de archivo no es correcto");
+	if(!imageAut){
+		if(!img.name || img.name.length==0)
+			mensaje.push("Inserte una imagen");
+		else if(!imgFormat.test(img.name))
+			mensaje.push("Formato de archivo no es correcto");
+	}
 
 
 	if(mensaje.length==0 || !mensaje)
@@ -235,20 +238,5 @@ function validarContacto(){
 	addClass("#error","active");
 	 return false;
 
-}
-
-function logInNotNull() {
-	username=document.querySelector("input[name='user']");
-	password=document.querySelector("input[name='password']");
-	var mensaje=[];
-	if(!username.value)
-		mensaje.push("* Ingrese su nombre usuario");
-	if(!password.value)
-		mensaje.push("* Ingrese su contraseña");
-	if(mensaje.length==0 || !mensaje)
-	 	return true;
-	errorMessage("#panelErr", mensaje);
-	addClass("#error","active");
-	 return false;
 }
 

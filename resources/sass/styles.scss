@@ -35,11 +35,16 @@
 @import "components/dailyMenu";
 @import "components/footer";
 @import "components/table";
-@import "components/form";
 @import "components/modal";
 @import "components/_video.sass";
 @import "components/card";
 @import "components/calendar";
+@import "components/form/login";
+@import "components/form/form";
+@import "components/form/input";
+@import "components/form/radioBtn";
+@import "components/form/selected";
+@import "components/form/search";
 
 
 // Animations

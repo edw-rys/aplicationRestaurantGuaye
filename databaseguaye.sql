@@ -235,9 +235,10 @@ DROP PROCEDURE IF EXISTS `getUserCheck`$$
 -- obtener usuario después de verificar
 CREATE PROCEDURE getUserCheck(IN usname VARCHAR(20),IN psswd VARCHAR(20))
 BEGIN
-    select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser
+    select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender 
     	from user_ as u
         inner join typeuser as t on u.id_TypeUser= t.id_TypeUser
+        inner join gender as g on u.gender = g.id_gender
     	where u.status=1 and username=usname and password=psswd;
 END$$
 
@@ -693,6 +694,13 @@ CREATE TABLE TypeUser(
 -- insercion de 3 tipos de usuarios
 INSERT INTO TypeUser(id_TypeUser, name_TypeUser) VALUES (101,'admin'),(102,'cliente'), (303,'Moderador');
 
+CREATE TABLE gender(
+    id_gender int AUTO_INCREMENT,
+    name_gender varchar(20) not null,
+    status int DEFAULT 1,
+    PRIMARY KEY (id_gender)
+);
+insert into gender values(1,"masculino",1) , (2,"femenino",1);
 -- tabla de usuario
 CREATE TABLE user_(
     id_user int AUTO_INCREMENT,
@@ -703,19 +711,24 @@ CREATE TABLE user_(
     phone_number varchar(11),
     date_create date not null,
     id_TypeUser int not null,
+    gender int not null,
     status int DEFAULT 1,
     PRIMARY KEY (id_user),
-    FOREIGN KEY (id_TypeUser) REFERENCES TypeUser(id_TypeUser)
+    FOREIGN KEY (id_TypeUser) REFERENCES TypeUser(id_TypeUser),
+    FOREIGN KEY (gender) REFERENCES gender(id_gender)
 );
 -- insercion de 6 usuarios
-INSERT INTO user_(id_user, username, name_user, last_name, password, phone_number, id_TypeUser,date_create) 
+INSERT INTO user_(id_user, username, name_user, last_name, password, phone_number, id_TypeUser,date_create,gender)
     VALUES 
-        (1,'tnx',"tnx nx","last name","tnx","",101,'2019-06-27'),
-        (2,'edw','Edward', "Reyes","edw01","",102,'2019-06-27'),
-        (3,'lozado','Cristian', "Lozado","lozado","",102,'2019-06-27'),
-        (4,'kelvin','Kelvin', "Castro","kelvin","",102,'2019-06-27'),
-        (5,'admin','admin', "ADMIN","admin","",101,'2019-06-27'),
-        (6,"moderador","moderador","moderador","moderador","",303,'2019-06-27');
+        (1,'tnx',"tnx nx","last name","tnx","",101,'2019-06-27',1),
+        (2,'edw','Edward', "Reyes","edw01","",102,'2019-06-27',1),
+        (3,'lozado','Cristian', "Lozado","lozado","",102,'2019-06-27',1),
+        (4,'kelvin','Kelvin', "Castro","kelvin","",102,'2019-06-27',1),
+        (5,'admin','admin', "ADMIN","admin","",101,'2019-06-27',1),
+        (6,"moderador","moderador","moderador","moderador","",303,'2019-06-27',1),
+        (7,'Ka','Pi', "Kar","Piv","",101,'2019-06-27',2);
+
+
 CREATE TABLE event_(
     id_event int AUTO_INCREMENT,
     affair varchar(20) not null, -- asunto
@@ -841,17 +854,18 @@ INSERT INTO ingredients(id_ingredient, name_ingredient,id_recipe )
     (11,"Ingrediente",2),(12,"Ingrediente",2),(13,"Ingrediente",2),(14,"Ingrediente",2),
     (15,"Ingrediente",3),(16,"Ingrediente",3),(17,"Ingrediente",3),(18,"Ingrediente",3);
 
-
--- -------------------
+-- ----------------
 -- tabla de horarios
 CREATE TABLE schedule(
     id_schedule int AUTO_INCREMENT,
     name_schedule varchar(70) not null,
+    name_icon varchar(20) not null,
     status int DEFAULT 1,
     PRIMARY KEY (id_schedule)
 );
 
-INSERT INTO schedule(id_schedule,name_schedule) values(30,"MAÑANA"),(31,"TARDE");
+INSERT INTO schedule(id_schedule,name_schedule,name_icon) values(30,"MAÑANA","fas fa-mug-hot"),(31,"TARDE","fas fa-utensils");
+
 
 -- TABLA DE LA CATEGORIA DE COMIDA
 CREATE TABLE CtgFood(

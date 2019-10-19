@@ -5,16 +5,29 @@
 html{
 scroll-behavior: smooth;
 }
+$color-first:				#961821;
+$color-second:				#b22222;
+$color-third:				#e25822;
+$color-fourth:				#f1bc31;
 /*colors*/
 :root{/*root: todo el documento html*/
 /*variable css*/
---color-txt: 				#000;
---color-tittle: 			#000;
---color-first:				#961821;
---color:					#fff;
---color-invert:				#961821;
---color-txt-invert:			#fff;
---error:					#FD3F3F;
+  --color-first:				#961821;
+  --color-second:				#b22222;
+  --color-third:				#e25822;
+  --color-fourth:				#f1bc31;
+
+
+  --color-txt: 				#000;
+  --color-tittle: 			#000;
+  --color:					#fff;
+  --color-invert:				#961821;
+  --color-txt-invert:			#fff;
+  --error:					#FD3F3F;
+  --color-dark:					#1B1C1B;
+}
+.btn-third{
+  --color-btn :      var(--color-third);
 }
 .error{
 --color-panel:				var(--error);
@@ -92,7 +105,12 @@ scroll-behavior: smooth;
   --color-btn:				#D60024;
   --color-txt:				#fff;
 }
-
+.male,.masculino{
+	--color-gender:				#005797;
+}
+.female, .femenino{
+	--color-gender:				#F1005B;
+}
 
 /* social */
 .messenger,.MESSENGER {
@@ -268,6 +286,30 @@ top: 50%;
 transform: translate(-50%, -50%);
 -webkit-transform: translate(-50%, -50%) 
 }
+.fixed-center,.fixed-center{
+  position: fixed;
+  left: 0%;
+  right: 0%;
+  top: 20%;
+  @media (min-width:500px){ 
+    left: 10%;
+    right: 10%;
+    top: 20%;
+  }
+  @media (min-width:750px){ 
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%) ;
+  }
+  @media(max-height:500px){
+    top: 0;
+  }
+  @media(max-height:600px){
+    top: 5%;
+  }
+}
+
 /*Elemento en la aprte superior*/
 .abs-top{
 position: absolute;
@@ -369,7 +411,7 @@ cursor: pointer;
 
 
 .grid-center{
-align-self: center;
+  align-self: center;
   justify-self: center;
 }
 
@@ -389,4 +431,19 @@ text-decoration: line-through;
 }
 .width-100-p{
   width: 100%;
+}
+.border-botom{
+  border-bottom: 1px solid #A9A9A9;
+}
+.no-outline{
+  outline: none;
+}
+.border-bottom-unique{
+  border:0;
+  border-bottom: 1px solid #A9A9A9;
+}
+.no-borde{
+  border:none;
+}.m-10px{
+  margin: 10px;
 }

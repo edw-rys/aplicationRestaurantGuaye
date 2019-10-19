@@ -17,7 +17,7 @@
 				<h2 class="txt-center tittle tittle-sty-bck bck-t-first">Nuestro Blog</h2>
 			</div>
 			<div class="">
-				<section class="_menu recetas">
+				<section class="_menu recetas flex-center flex-y">
 					<h3 class="tittle txt-center">Recetas</h3>
 					<div class="allRecipes">
 						<?php 

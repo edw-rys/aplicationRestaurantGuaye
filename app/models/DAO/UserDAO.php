@@ -7,9 +7,10 @@ class UserDAO {
 	public function getUser($username){
 		try{
 			$resultSet = Model::sql([
-				"sql"=>"select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser ".
+				"sql"=>"select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender".
 						"from user_ as u ".
 						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join gender as g on u.gender = g.id_gender ".
 						"where username=?",
 				"params"=>[$username],
 				"class"=>"User"
@@ -57,12 +58,12 @@ class UserDAO {
     public function create(User $user){
         try{
 			$parametros = array($user->getUsername(), $user->getName_user(), $user->getLast_name(),
-								$user->getPassword(), $user->getPhone_number(), 102);
+								$user->getPassword(), $user->getPhone_number(), $user->getid_gender(),102);
 			return Model::sql([
 				"sql"=>"INSERT INTO 
-						user_(username, name_user, last_name, password, phone_number, id_TypeUser,date_create) 
+						user_(username, name_user, last_name, password, phone_number,gender, id_TypeUser , date_create) 
 						values
-						(?,?,?,?,?,?,now());",
+						(?,?,?,?,?,?,?,now());",
 				"params"=>$parametros,
 				"type"=>"insert"
 			]);

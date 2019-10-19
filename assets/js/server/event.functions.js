@@ -42,17 +42,18 @@ const saveEvent=()=>{
                             let eventsTable = document.getElementById("body_table_event");
                             let dataEvent = await getNewEvent(res.idEvent);
                             if(dataEvent){
-                                dataEvent = JSON.parse(dataEvent);
-                                let element = getTrEvent(dataEvent);
-                                element = createElement("tr",{"target-name": "event-id-"+dataEvent.id_event},element);
+                                let element = getHTML(dataEvent);
                                 if(!data.get("id")){
                                     // Insert new
-                                    eventsTable.insertBefore(element, eventsTable.firstElementChild);
+                                    if(eventsTable.childElementCount>1){
+                                        eventsTable.insertBefore(element, eventsTable.children[1]);
+                                    }else{
+                                        eventsTable.appendChild(element);
+                                    }
                                     addClass(element,"animated zoomInUp");
-    
                                 }else{
                                     // Edit
-                                    let eventReplace = document.querySelector(`target-name["event-id-${res.idEvent}"]`);
+                                    let eventReplace = document.querySelector(`[target-name="event-id-${res.idEvent}"]`);
                                     eventsTable.replaceChild(element, eventReplace);
                                 }
                             }
@@ -117,8 +118,7 @@ const deleteEvent=(id,col)=>{
         
     }
 }
-const filterByAffair=(value)=>{
-    if(!value)return false;
+const filterByAffair=(value="")=>{
     fetch(urlEvent+"query/"+value)
     .then(res=>res.text())
     .then(

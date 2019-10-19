@@ -10,7 +10,7 @@ function eliminarNodos(element){
 
 function addLiInput(_name){
 	var li=document.createElement("li");
-	var input=createElement("input",{"type":"text","class":"input-txt","name":_name});
+	var input=createElement("input",{"type":"text","class":"input-txt border-bottom-unique no-outline","name":_name});
 	li.classList="space-around flex";
 	li.appendChild(input);
 	return li;
@@ -20,6 +20,7 @@ function addElementBlog(_id){
 	var li=addLiInput( "ingrediente[]");
 	li.appendChild(trash());
 	node.appendChild(li);
+	addClass(li, "animated zoomIn");
 }
 
 function trash(){
@@ -46,11 +47,39 @@ function addSocialLiInput(_id){
 	li.appendChild(selection);
 	li.appendChild(trash());
 	node.appendChild(li);
+	addClass(li, "animated zoomIn");
 }
 
 function removeCampFather(children){
 	
 	children=children.parentNode;
 	nodes=children.parentNode;
-	nodes.removeChild(children);
+	addClass(children,"animated zoomOut");
+	setTimeout(() => {
+		nodes.removeChild(children);
+	}, 400);
+}
+function togglePanel(query) {
+	let element = document.querySelector(query);
+	if(!element)return false;
+	let classList_ = element.classList.value.split(" ");
+	let hidden_ = classList_.find(res=>{
+		return res =='hidden';
+	});
+	if(!hidden_){
+		addClass(element,"animated zoomOutUp");
+		setTimeout(() => {
+			addClass(element, "hidden");
+			removeClass(element,"animated zoomOutUp");
+		}, 600);
+	}else{
+		addClass(element,"animated zoomInDown");
+		setTimeout(() => {
+			removeClass(element, "hidden");
+			setTimeout(() => {
+				removeClass(element,"animated zoomInDown");
+			}, 1000);
+		}, 200);
+	}
+
 }

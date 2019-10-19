@@ -14,46 +14,40 @@
 		<div class="border"></div>
 		<div class="flex">
 			<?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]!=ADMINISTRADOR){
-				echo '<button class="button-new-recipe" onclick="getFormEvent()">Nueva petición</button>';	
+				echo '<button class="button-new-recipe" onclick="getFormEvent()" style="margin:0 10px;padding:5px 10px">Nueva petición</button>';	
 			}
-				echo '<button class="button-new-recipe" onclick="getCalendarEvents()">Ver calendaio</button>';	
+				echo '<button class="button-new-recipe" onclick="getCalendarEvents()" style="margin:0 10px;padding:5px 10px">Ver calendaio</button>';	
 			?>
 		</div>
 	</div>
 </div>
+<div class="m-20"></div>
 
 <div class="data flex-center flex-y">
-<?php if(isset($data["events"])){ ?>
-<form action="" onsubmit="return false">
+<?php if(isset($data["events"])){
+	$fun ="filterByAffair";
+	include_once COMPONENTS."search.php";
+	?>
+<div class="m-20"></div>
+
+<!-- <form action="" onsubmit="return false">
 	<input type="text" placeholder="Filtrar por Asunto " onkeypress="filterByAffair(this.value)">
 	<button class="button btn-first" style="cursor:pointer" onclick="filterByAffair(this.parentNode.children[0].value)">Filtrar</button>
-</form>
-<table>
-	<thead>
-		<th>Usuario</th>
-		<th>Fecha de creación</th>
-		<th>Asunto</th>
-		<th>Fecha de ejecución</th>
-		<th>Hora de entrada</th>
-		<th>Hora de salida</th>
-		<th>Comentarios</th>
-        <?php if($_SESSION["rol"]==ADMINISTRADOR){?>
-        <th>Estado</th>
-        <?php }else{?>
-		<th>Editar</th>
-		<th>Eliminar</th>
-        <?php }?>
-	</thead>
-	<tbody class="underline-a"  id="body_table_event">
+</form> -->
+
+
+<div class="table-responsive"id="body_table_event">
 	<?php
+        require_once COMPONENTS."event/headerTable.php";
         if(isset($_SESSION["rol"]) && $_SESSION["rol"]==ADMINISTRADOR){
             require_once COMPONENTS."event/viewAdmin.php";
         }else{
             require_once COMPONENTS."event/viewUser.php";
         }
 	?>
-	</tbody>
-</table>    <?php }else{
+</div>
+
+ <?php }else{
     echo $_SESSION["rol"]==ADMINISTRADOR?"NO HAY RESERVACIONES":"Usted no ha hecho ni una reservación";
 } ?>
 </div>  
@@ -69,7 +63,7 @@ function getTrEvent(event) {
 		`;
 	}else{
 		optionsTr =`
-		<td data-campo='Editar' style="--color-txt:#009F41"><a href="#!" onclick="editEvent(${event.id_event}")>Editar</a></td>
+		<td data-campo='Editar' style="--color-txt:#009F41"><a href="#!" onclick="editEvent(${event.id_event})">Editar</a></td>
 		<td data-campo='Eliminar' style="--color-txt:var(--color-first)"><a onclick="deleteEvent(${event.id_event}, this.parentNode)" href="#!">Eliminar</a></td>
 		`;
 	}

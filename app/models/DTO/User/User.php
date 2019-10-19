@@ -8,10 +8,23 @@ class User{
     private $password;
     private $phone_number;
     private $type_user;
+    private $id_gender;
+    private $name_gender;
 
     private $id_TypeUser;
     private $name_TypeUser;
-
+    public function getname_gender(){
+        return $this->name_gender;
+    }
+    public function setname_gender($name_gender){
+        $this->name_gender = $name_gender;
+    }
+    public function getid_gender(){
+        return $this->id_gender;
+    }
+    public function setid_gender($id_gender){
+        $this->id_gender = $id_gender;
+    }
     public function __construct(){
     }
     public function getId_user() {

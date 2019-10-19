@@ -142,7 +142,7 @@ class BlogController {
                 "message"=>"Necesita estar autenticado para publicar en el blog."
             ];
         }else{
-            if(!(isset($_REQUEST['nombre']) && isset($_FILES['imagen']) && 
+            if(!(isset($_REQUEST['nombre']) && 
                 isset($_REQUEST['ingrediente']) && isset($_REQUEST['preparacion']))){
                 $data=[
                     "title"=>"Blog",
@@ -151,80 +151,117 @@ class BlogController {
                     "message"=>"Faltan datos!"
                 ];
             }else{
-                $data = saveImage('imagen');
-                if($data["status"]=="success"){
-                    $url = $data["url"];
-
-                    $recipe =new Recipe();
-                    $recipe->setPreparation($_REQUEST['preparacion']);        
-                    $recipe->setUrl_image($url);
-                    $recipe->setName_recipe($_REQUEST['nombre']);
-                    for($i=0; $i<count($_REQUEST['ingrediente']) ;$i++){
-                        $ingredient_=array(
-                            "value"=>$_REQUEST['ingrediente'][$i]
-                        );
-                        $recipe->addIngredients($ingredient_);
+                
+                
+                $recipe =new Recipe();
+                $recipe->setPreparation($_REQUEST['preparacion']);        
+                
+                $recipe->setName_recipe($_REQUEST['nombre']);
+                for($i=0; $i<count($_REQUEST['ingrediente']) ;$i++){
+                    $ingredient_=array(
+                        "value"=>$_REQUEST['ingrediente'][$i]
+                    );
+                    $recipe->addIngredients($ingredient_);
+                }
+                $blog=new Blog();
+                $blog->setRecipe($recipe);
+                if(isset($_REQUEST['input-social']) && isset($_REQUEST['social-op'])){
+                    if(count($_REQUEST['input-social'])==count($_REQUEST['social-op'])){
+                        for($i=0;$i<count($_REQUEST['input-social']);$i++){
+                            $link=array(
+                                        "link"=>$_REQUEST['input-social'][$i],
+                                        "id_type"=>$_REQUEST['social-op'][$i]
+                                    );
+                            $blog->addLink($link);
+                        }
                     }
-                    $blog=new Blog();
-                    $blog->setRecipe($recipe);
-                    if(isset($_REQUEST['input-social']) && isset($_REQUEST['social-op'])){
-                        if(count($_REQUEST['input-social'])==count($_REQUEST['social-op'])){
-                            for($i=0;$i<count($_REQUEST['input-social']);$i++){
-                                $link=array(
-                                            "link"=>$_REQUEST['input-social'][$i],
-                                            "id_type"=>$_REQUEST['social-op'][$i]
-                                        );
-                                $blog->addLink($link);
+                }
+                $numfilasAfectadas =0;
+                if (isset($_REQUEST['id']) && !empty($_REQUEST['id']) &&  isset($_REQUEST['id_recipe']) && !empty($_REQUEST['id_recipe']) ) {
+                    // editar
+                    if(isset($_REQUEST['imagen-edit']) && !is_null($_REQUEST['imagen-edit'])){
+                        $blog->getRecipe()->setUrl_image($_REQUEST['imagen-edit']);
+                        if(isset($_FILES['imagen'])){
+                            if($_FILES['imagen']['name']){
+                                $data = saveImage('imagen');
+                                if($data["status"]=="success"){
+                                    $url = $data["url"];
+                                    $blog->getRecipe()->setUrl_image($url);
+                                }
                             }
                         }
-                    }
-                    $numfilasAfectadas =0;
-                    if (isset($_REQUEST['id']) && !empty($_REQUEST['id']) &&  isset($_REQUEST['id_recipe']) && !empty($_REQUEST['id_recipe']) ) {
-                        // editar
-                        $blog->setId_blog($_REQUEST['id']);
-                        $blog->getRecipe()->setId_recipe($_REQUEST['id_recipe']);
-                        $verify=$this->blogDAO->queryByIdCheck($blog->getId_blog(),$_SESSION['ID_USER']);
-                        if(empty($verify)){
-                            $data=[
-                                "title"=>"Blog",
-                                "status"=>"error",
-                                "code"=>400,
-                                "message"=>"Usted no tiene permisos para editar esta publicación."
-                            ];
-                        }else{
-                            $data=[
-                                "title"=>"Blog",
-                                "status"=>"success",
-                                "code"=>200,
-                                "message"=>"Editado exitosamente.",
-                                "idRecipe"=> $blog->getId_blog(),
-                            ];
-                            $message="Editado exitosamente";
-                            $numfilasAfectadas = $this->blogDAO->update($blog);
-                        }
                     }else{
-                        $numfilasAfectadas = $this->blogDAO->create($blog, $_SESSION['ID_USER']);
-                        $message="Receta guardada.";
-                        $blog->setId_blog($numfilasAfectadas);
+                        $data = saveImage('imagen');
+                        if($data["status"]=="success"){
+                            $url = $data["url"];
+                            $blog->getRecipe()->setUrl_image($url);
+                        }
                     }
-                    if ($numfilasAfectadas > 0) {
-                        $data=[
-                            "title"=>"Blog",
-                            "status"=>"success",
-                            "code"=>200,
-                            "message"=>$message,
-                            "idRecipe"=> $blog->getId_blog(),
-                        ];
-                    } else {
+
+                    $blog->setId_blog($_REQUEST['id']);
+                    $blog->getRecipe()->setId_recipe($_REQUEST['id_recipe']);
+                    $verify=$this->blogDAO->queryByIdCheck($blog->getId_blog(),$_SESSION['ID_USER']);
+                    if(empty($verify)){
                         $data=[
                             "title"=>"Blog",
                             "status"=>"error",
                             "code"=>400,
-                            "message"=>"No se pudo guardar los datos"
+                            "message"=>"Usted no tiene permisos para editar esta publicación."
                         ];
+                    }else{
+                        $data=[
+                            "title"=>"Blog",
+                            "status"=>"success",
+                            "code"=>200,
+                            "message"=>"Editado exitosamente.",
+                            "idRecipe"=> $blog->getId_blog(),
+                        ];
+                        $numfilasAfectadas = $this->blogDAO->update($blog);
+                        if ($numfilasAfectadas > 0) {
+                            $data=[
+                                "title"=>"Blog",
+                                "status"=>"success",
+                                "code"=>200,
+                                "message"=>"Editado exitosamente",
+                                "idRecipe"=> $blog->getId_blog(),
+                                "img"=>$_FILES['imagen']['name']?"true":"false"
+                            ];
+                        } else {
+                            $data=[
+                                "title"=>"Blog",
+                                "status"=>"error",
+                                "code"=>400,
+                                "message"=>"No se pudo guardar los datos"
+                            ];
+                        }
                     }
+                    
                 }else{
-                    // return $data;
+                    $data = saveImage('imagen');
+                    if($data["status"]=="success"){
+                        $url = $data["url"];
+                        $blog->getRecipe()->setUrl_image($url);
+                        $numfilasAfectadas = $this->blogDAO->create($blog, $_SESSION['ID_USER']);
+                        
+                        $blog->setId_blog($numfilasAfectadas);
+
+                        if ($numfilasAfectadas > 0) {
+                            $data=[
+                                "title"=>"Blog",
+                                "status"=>"success",
+                                "code"=>200,
+                                "message"=>"Receta guardada.",
+                                "idRecipe"=> $blog->getId_blog(),
+                            ];
+                        } else {
+                            $data=[
+                                "title"=>"Blog",
+                                "status"=>"error",
+                                "code"=>400,
+                                "message"=>"No se pudo guardar los datos"
+                            ];
+                        }
+                    }
                 }
             }
             echo json_encode($data);

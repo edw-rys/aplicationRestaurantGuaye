@@ -1,44 +1,26 @@
-<div class="_item recipe-item relative item-blog-number-<?php echo isset($blog)?$blog->getId_blog():''; ?>">
+<div class="_item grid-center recipe-item relative item-blog-number-<?php echo isset($blog)?$blog->getId_blog():''; ?>" style="margin: 10px 0">
     <div class="_head">
-        <?php 
-        if(isset($_SESSION['rol']) && $_SESSION['rol']==MODERADOR){
-		?>
-        <div class="<?php echo ($blog->getDestacado()==1)?"star":'other'?> abs-right-0 abs-top-0"
-            target_identify="<?php echo $blog->getId_blog() ?>">
-            <a href="#!" onclick="blogDestacado(<?php echo $blog->getId_blog() ?>)"
-                class="txt-white flex-center flex-y">
-                <span class="hidden"><?php  echo $blog->getDestacado()?></span>
-                <img src="<?php echo IMAGES?>icons/star-solid.svg" alt="destacado" width="30" height="30">
-                <span class="<?php echo ($blog->getDestacado()==1)?"txt-black":'txt-white'?>">Destacado</span>
-            </a>
-        </div>
-        <?php
-		}else{
-		    if($blog->getDestacado()==1){?>
-        <div class="star abs-right-0 abs-top-0">
-            <a href="#!" class="txt-white flex-center flex-y">
-                <img src="<?php echo IMAGES?>icons/star-solid.svg" alt="destacado" width="30" height="30">
-                <span class="<?php echo ($blog->getDestacado()==1)?"txt-black":'txt-white'?>">Destacado</span>
-            </a>
-        </div>
-        <?php
-			}
-											
-		}?>
     </div>
     <div class="_body font-i-f">
         <div class="_picture_recipe">
             <?php  echo '<img src="'.$blog->getRecipe()->getUrl_image().'" onclick="viewImage(\''.$blog->getRecipe()->getUrl_image().'\')">';?>
         </div>
         <?php  echo '<h4 class="tittle txt-center" style="font-size:1.3em">'. $blog->getRecipe()->getName_recipe().'</h4>';?>
-        <?php if(isset($_SESSION['ID_USER'])){?>
-            <div class="like-container relative" style="bottom:20px">
+
+        <div class="like-container relative" style="bottom:20px">
+        <?php if(isset($_SESSION['ID_USER']) && $_SESSION['rol']==MODERADOR ){?>
                 <?php 
                 $status=$blog->getDestacado();
                     include COMPONENTS."buttons/like.php";
                 ?>
-            </div>
-        <?php }?>
+        <?php }else{
+            ?>
+            <span class="abs-left"><i class="fas fa-star"style="font-size:25px;color:
+            <?php echo $blog->getDestacado()?'#AEC100':'#818181';?>
+                "></i>
+            </span>
+            <?php }?>
+        </div>
     </div>
     <div class="_footer font-i-f">
         <div class="user flex-center flex-y" style="margin:10px 0;">

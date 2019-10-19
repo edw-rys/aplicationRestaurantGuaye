@@ -29,13 +29,14 @@ class EventController {
             View::render("event",$data);
         }
     }
-    public function query($value=null){
-        if(!isset($_SESSION["USER"]) || is_null($value)){
+    public function query($value=""){
+        if(!isset($_SESSION["USER"])){
             echo "null";
         }else{
             $data = [
                 "title"=>"Eventos"
             ];
+            include COMPONENTS."event/headerTable.php";
             if($_SESSION["rol"]==ADMINISTRADOR){
                 $results = $this->eventDao->queryAll($value);
                 if(!empty($results)){
@@ -115,7 +116,11 @@ class EventController {
             $event =$this->eventDao->queryById($id, "object");
             if(isset($_SESSION["ID_USER"]) && $event->id_user==$_SESSION["ID_USER"]){
                 if(!empty($event)){
-                    echo json_encode($event);
+                    // echo json_encode($event);
+                    $data=[
+                        "events"=>[$event]
+                    ];
+                    include_once COMPONENTS."event/viewUser.php";
                 }
             }
         }

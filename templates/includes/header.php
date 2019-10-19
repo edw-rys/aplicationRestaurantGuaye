@@ -14,10 +14,14 @@
 	<link rel="stylesheet" href="<?php echo CSS?>calendar.min.css">
 	<link href="https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/master/calendarorganizer.min.css" rel="stylesheet" />
 	
+	<script>
+		const url="<?php echo URL?>";
+	</script>
 	<script src="<?php echo JS?>pluggins/jquery.min.js"></script>
 	<script src="<?php echo JS?>pluggins/toastr.min.js"></script>
 	<script src="<?php echo JS?>pluggins/calendar.min.js"></script>
 	
+
 	<!-- <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script> -->
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
@@ -63,7 +67,7 @@
         <!-- icons -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
 
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!-- Scripts -->
     </head>
 

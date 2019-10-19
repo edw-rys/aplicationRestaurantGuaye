@@ -1,6 +1,19 @@
 const urlUser = url+'user/';
 
 const formLogin = document.querySelector("form[name='loginForm']");
+
+const getFormLogin = function(param="login") {
+    cleanModalFree();
+    fetch(urlUser+"signin/"+param)
+    .then(res=>res.text())
+    .then(res=>{
+        // console.log(res);
+        if(res && res!="error"){
+            activeModalFree(res);
+        }
+    })
+    .catch(err=>console.log(err));
+}
 if(formLogin){
     formLogin.addEventListener('submit',function(e){
         e.preventDefault();
@@ -9,7 +22,13 @@ if(formLogin){
     });
 }
 
+
 const login =(form) =>{
+    if(!form){
+        form=document.getElementById("formLogin");
+    }
+
+    form.addEventListener("submit",e=>{e.preventDefault();});
     let loginUser=new FormData(form);
     // Bloquear botón
     let btn = form.enviar;
@@ -41,7 +60,7 @@ const login =(form) =>{
     .catch(err=>{
         console.log(err);
         toastr.error("Ups!","Tenemos un error")
-        animationChargeRemove(btn,"Enviar");
+        animationChargeRemove(btn,"Login");
     });
     return false;
 }
@@ -91,7 +110,7 @@ newUser=()=>{
                     toastr.error("Ups!","Ha ocurrido un error");
                 });
             }
-            animationChargeRemove(btn,"Publicar");
+            animationChargeRemove(btn,"Crear cuenta");
         }, timeResponse);
     }
 

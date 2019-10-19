@@ -1,7 +1,6 @@
 // "use strict";
 // https://codepen.io/darielnoel/full/EdueI/  notificacion
 // https://codepen.io/darielnoel/full/qvGEb/
-const url="http://127.0.0.1:81/aplicationRestaurantGuaye/";
 const panelModal=document.getElementById("windowModal");
 const index=this;
 const timeResponse=400;
@@ -392,14 +391,31 @@ function removeModal() {
 	return true;
 }
 
+function activeModalFree(element){
+	if(!element)return false;
+	let body = document.querySelector(".modal-free");
+	let div = document.createElement('div');
+	addClass(div,"fixed-center flex-center");
+	div.addEventListener("click",()=>{toggle(".modal-free", "hidden")});
+	div.innerHTML=element;
+	div.style.zIndex="1500";
+	body.appendChild(div);
+	removeClass(body, "hidden");
+	return true;
+}
+function cleanModalFree() {
+	let body = document.querySelector(".modal-free");
+	if(body){
+		body.innerHTML="";
+	}
+	return true;
+}
 
 viewImage= (url)=>{
 	activeModal(`<img src="${url}">`);
 }
 
 
-
-"use strict";
 
 // Calendar
 /**
@@ -456,4 +472,56 @@ const setDataCalendar = (id,calendar, data)=>{
 	  	calendar, // defining the calendar that the organizer is related to
 	  	data // giving the organizer the static data that should be displayed
 	);
+}
+
+
+// Input efect
+const hiddenLabel=(parent, evt)=>{
+	if(!parent)return false;
+	if(evt=="focus"){
+		parent.children[0].style.textIndent="0px";
+		parent.children[1].style.opacity="1";
+	}else{
+		if(parent.children[0] && parent.children[1]){
+			if(parent.children[0].value){
+				parent.children[0].style.textIndent="0px";
+				parent.children[1].style.opacity="0";
+			}else{
+				parent.children[0].style.textIndent="0px";
+				parent.children[1].style.opacity="1";
+			}
+		}
+	}
+}
+
+// Search
+/*
+	Inspired by Dribble "Search..."
+    By: Anish Chandran
+    Link: http://drbl.in/nRxe
+*/
+
+var searchField = $('.search');
+var searchInput = $("input[type='search']");
+
+var checkSearch = function(){
+    var contents = searchInput.val();
+    if(contents.length !== 0){
+       searchField.addClass('full');
+    } else {
+       searchField.removeClass('full');
+    }
+}
+
+function searchToggle(obj, evt){
+    var container = $(obj).closest('.search-wrapper');
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+            container.removeClass('active');
+            // clear input
+            container.find('.search-input').val('');
+        }
 }

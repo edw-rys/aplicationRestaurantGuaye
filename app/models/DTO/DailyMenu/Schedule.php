@@ -3,10 +3,17 @@
 class schedule{
     private $id_schedule;
     private $name_schedule;
+    private $name_icon;
+
     private $status;
     public function __construct(){
     }
-
+    public function getname_icon(){
+        return $this->name_icon;
+    }
+    public function setname_icon($name_icon){
+        $this->name_icon = $name_icon;
+    }
     public function getId_schedule() {
         return $this->id_schedule;
     }

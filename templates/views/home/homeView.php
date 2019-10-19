@@ -1,7 +1,7 @@
+<?php require_once NAVIGATION;?>
 
 <div class="all">
   <header class="index">
-    <?php require_once NAVIGATION;?>
     <div class="home">
         <div class="first flex-center">
             <div class="contenedor font-i-f">

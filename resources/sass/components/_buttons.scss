@@ -40,6 +40,34 @@
         border: 1px solid var(--color-btn);
     }
 }
+.button-hover{
+  outline:none;
+	background: #cfd8dc;
+	border:0;
+	color: var(--color-btn);
+	padding:10px;
+	font-size: 16px;
+  font-weight: 300;
+	
+	margin:20px auto;
+	display:block;
+	cursor:pointer;
+    -webkit-transition: all 0.4s;
+	transition: all 0.4s;
+	border-radius: 2px;
+}
+
+.button-hover:active{
+	// background: darken($color-first,10%);
+  color: #263238;
+}
+
+.button-hover:hover{
+		background: var(--color-btn);
+  color: #FFF;
+    -webkit-transition: all 0.4s;
+	transition: all 0.4s;
+}
 .social{
     i {
         font-size: 1.5em;

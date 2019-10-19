@@ -5,6 +5,13 @@ function to_object($array){
 }
 
 function saveImage($_name){
+    if(!isset($_FILES[$_name])){
+        return [
+            "status"    =>"error",
+            "code"      =>400,
+            "message"   =>"Archivo no válido"
+        ];
+    }
     if($_FILES[$_name]['size']>2*1000*1000){
         return  [
             "status"    =>"error",

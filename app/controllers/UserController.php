@@ -16,7 +16,7 @@ class UserController{
             //en caso de la ausencia de algún campo, retornar =>faltan campos
         if(!(isset($_REQUEST['name']) && isset($_REQUEST['lastname']) && 
             isset($_REQUEST['username']) && isset($_REQUEST['password']) && 
-            isset($_REQUEST['numtelf']))){
+            isset($_REQUEST['gender']))){
                 $data=[
                     "title"=>"Registro",
                     "message"=>"Compelte todos los campos, por favor!",
@@ -39,8 +39,9 @@ class UserController{
             $user->setUsername(strtolower($_REQUEST['username']));
             $user->setName_user($_REQUEST['name']);
             $user->setLast_name($_REQUEST['lastname']);
-            $user->setPhone_number($_REQUEST['numtelf']);
+            $user->setPhone_number( isset($_REQUEST['numtelf']) ?$_REQUEST['numtelf']:'');
             $user->setPassword($_REQUEST['password']);
+            $user->setid_gender($_REQUEST['gender']);
             $num=$this->userDAO->create($user);
             if($num>0){
                 $data=[
@@ -84,11 +85,6 @@ class UserController{
         }else{
             $user =  $results["user"];
             $_SESSION['rol']=$user->getId_TypeUser();
-            // printObj($user);
-            // echo($user->getId_TypeUser());
-            // echo($_SESSION['rol']);
-
-            // die();
             $_SESSION['ID_USER']=$user->getId_user();
             $_SESSION['USER']=serialize($user);
             // token
@@ -147,5 +143,15 @@ class UserController{
     }
     public function settings(){
         echo "En proceso";
+    }
+
+    public function signin($value="login"){
+        if(!isset($_SESSION["USER"])){
+            if($value=="login")
+                require_once COMPONENTS."user/loginComponent.php";
+            elseif ($value=="signup") {
+                require_once COMPONENTS."user/signupComponent.php";                
+            }
+        }
     }
 }

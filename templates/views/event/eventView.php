@@ -16,7 +16,7 @@
 			<?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]!=ADMINISTRADOR){
 				echo '<button class="button-new-recipe" onclick="getFormEvent()" style="margin:0 10px;padding:5px 10px">Nueva petición</button>';	
 			}
-				echo '<button class="button-new-recipe" onclick="getCalendarEvents()" style="margin:0 10px;padding:5px 10px">Ver calendaio</button>';	
+				echo '<button class="button-new-recipe" onclick="getCalendarEvents()" style="margin:0 10px;padding:5px 10px">Ver calendario</button>';	
 			?>
 		</div>
 	</div>

@@ -46,6 +46,13 @@ class Db{
         $link = $db->connect(); // nuestra conexión a la db
         $link->beginTransaction(); // por cualquier error, checkpoint
         $query = $link->prepare($attributes["sql"]);
+
+        // echo json_encode([
+        //     "status"=>"error",
+        //     "sql"=>json_encode($query)
+        // ]);
+        // printObj($attributes["params"]);
+        // die();
         if(!$query->execute($attributes["params"])) {
             $link->rollBack();
             $error = $query->errorInfo();
@@ -70,10 +77,14 @@ class Db{
         // CHECK TYPE SENTENCE SQL
         if($attributes["type"] =="query"){
             if(isset($attributes["class"])){
-                return 
-                $attributes["fetch"]=="ALL"?
-                    $query->fetchAll(PDO::FETCH_CLASS,$attributes["class"]):
-                    $query->fetch(PDO::FETCH_CLASS,$attributes["class"]);
+                if($attributes["fetch"]=="ALL"){
+                    return 
+                    $query->fetchAll(PDO::FETCH_CLASS,$attributes["class"]);
+                }else{
+                    $resulSet = 
+                    $query->fetchAll(PDO::FETCH_CLASS,$attributes["class"]);
+                    return empty($resulSet)?$resulSet:$resulSet[0];
+                }
             }else{
                 return
                     $attributes["fetch"]=="ALL"?
@@ -104,5 +115,96 @@ class Db{
             return true;
         }
     }
-    
+    public static function cleanData($data=null){
+        if(is_null($data)){
+            $data =[];
+        }
+        if(!isset($data["table"]) || is_null($data["table"])){
+            throw new Exception("Table not found");
+        }
+        if(!isset($data["params"])){
+            $data["params"] = [];
+        }
+        if(!isset($data["_sql_params"])){
+            $data["_sql_params"] = "*";
+        }
+        if(!isset($data["condition"])){
+            $data["condition"]=null;
+        }
+        if(!isset($data["inner_join"])){
+            $data["inner_join"]=null;
+        }
+        return $data;
+    }
+    /**
+     * Recibe un array de string, string se separa con espacios, tendrá un tamaño de 3 palabra
+     * "TABLE llave_primaria llave_de_referencia identificador(opcional)"
+     * genera un array con llaves para hacer un inner join
+     * @return $innerJoinArrayData
+     */
+    public static function generateInnerJoin($params=[]) {
+        $innerJoinArrayData=[];
+        foreach ($params as $value) {
+            $value = explode(' ',$value);
+            $inner =[
+                "table"=>$value[0],
+                "this_col_reference"=>$value[1],
+                "colReference"=>$value[2],
+            ] ;
+            if(isset($value[3]) && !empty($value[3])){
+                $inner["identify"] = $value[3];
+            }
+            array_push($innerJoinArrayData, $inner);
+        }
+        return $innerJoinArrayData;
+    }
+    /**
+     * $params =[
+     *  _sql_params , table, params, inner_join, 
+     * ]
+     */
+    public static function get($params=[]) {
+        try {
+            $params = self::cleanData($params);
+        } catch (Exception $th) {
+            die($th);
+        }
+        // query
+        $as = isset($params['as_table'])?' as '. $params['as_table']:'';
+        $sql = 'SELECT '.$params['_sql_params'].' from '. $params['table']. $as.' ';
+        // Inner
+        if(!is_null($params["inner_join"])){
+            $as_table =isset($params['as_table'])?$params['as_table']:$params['table'];
+            foreach ($params["inner_join"] as $value) {
+                if($value['identify']){
+                    $sql = $sql .
+                    ' inner join '. $value['table'] . ' as '. $value['identify'].
+                        ' on '. $value['identify'] .'.'.$value['this_col_reference'].' = '.$as_table.'.'.$value['colReference'] ;
+                }else{
+                    $sql = $sql .
+                    ' inner join '. $value['table'] .
+                        ' on '. $value['table'].'.'.$value['this_col_reference'].' = '.$as_table.'.'.$value['colReference'] ;
+                }
+            }
+        }
+        if( !is_null($params['condition']) ){
+            $sql  = $sql . " where ".$params['condition'];
+        }
+
+        $data_sql =[
+            "sql"           => $sql,
+            "params"        => $params["params"],
+            "type"          => "query",
+            "fetch"         => isset($params["fetch"])?$params["fetch"]:null,
+            "fetch_type"    => isset($params["fetch_type"])?$params["fetch_type"]:null,
+            "class"         => (isset($params["class"]) && !empty($params["class"]))?$params["class"]:null,
+        ];
+        // printObj($data_sql);
+        // die();
+        try{
+            return self::sql($data_sql);
+        }catch(Exception $ex){
+            die($ex);
+        }
+    }
 }

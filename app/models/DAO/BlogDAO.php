@@ -322,20 +322,6 @@ class BlogDAO {
     $blog->setUrl_social_network($socialnetwork);
     return $blog;
   }
-
-  /* public function getIngredients($id_recipe){
-    if(!$this->connection) return [];
-    try{
-      $sentencia = $this->connection->prepare("call getIngredients(?)");
-      $parametros = array($id_recipe);
-      $sentencia->execute($parametros);
-      $resultSet = $sentencia->fetchAll(PDO::FETCH_OBJ);
-      return $resultSet ;
-    }catch(Exception $e) {
-      die($e->getMessage());
-      die($e->getTrace());
-    }
-  }*/
   public function getSocialNetwork($id_blog){
     try{
       $parametros = array($id_blog);

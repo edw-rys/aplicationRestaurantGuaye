@@ -147,6 +147,8 @@ function validaFormEventos(data) {
 				mensaje.push("La reservación no puede hacerse los domingos.");
 			}
 		}
+	}else{
+		mensaje.push("La fecha es incorrecta");		
 	}
 	if(comentario!=""){
 		if(!regexobj.test(comentario))

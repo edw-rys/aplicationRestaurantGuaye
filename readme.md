@@ -22,8 +22,16 @@ Motor de base de datos MySql.
 
 ## Ejecutando las pruebas ⚙️
 **Módulo de usuario** _Por completar_
-_1. Registo_
-_2. Inicio se sesión_
+_1. Registo_\
+_2. Inicio se sesión_\
+_Usarios y claves_\
+_tnx = tnx_
+_edw = edw01_
+_lozado = lozado_
+_kelvin = kelvin_
+_admon = admin_
+_moderador = moderador_
+_ka = piv_
 
 **Módulo del Blog**  
 _1. Postear un nuevo blog_

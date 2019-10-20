@@ -11,8 +11,8 @@ class UserDAO {
 						"from user_ as u ".
 						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
-						"where username=?",
-				"params"=>[$username],
+						"where username=:username",
+				"params"=>["username"=>$username],
 				"class"=>"User"
 				// "fetch_type"=>"FETCH_CLASS",
 			]);
@@ -22,16 +22,26 @@ class UserDAO {
 			die($e->trace());
 		}
 	}
-    public function checkUser($user, $password){
-        try{
-			$parametros = array($user, $password);
-			$resultSet = Model::sql([
-				"sql"=>"call getUserCheck(?,?);",
-				"params"=>$parametros,
-				"class"=>"User"
-				// "fetch_type"=>"ASSOC"
+    public function checkUser($username, $password){
+		try{
+			$user = Model::sql([
+				"sql"=>"select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender, u.password ".
+						"from user_ as u ".
+						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join gender as g on u.gender = g.id_gender ".
+						"where username=:username",
+				"params"=>["username"=>$username],
+				"class"=>"User",
+				"fetch"=>"one"
 			]);
-			return empty($resultSet)?null: $resultSet[0];
+			if(empty($user)){
+				return null;
+			}else{				
+				if(password_verify($password,$user->getPassword())){
+					return $user;
+				}
+				return null;
+			}
 		} catch (Exception $e) {
 			die($e->getMessage());
 			die($e->trace());

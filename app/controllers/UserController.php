@@ -12,6 +12,10 @@ class UserController{
         $this->typeUserDAO=new TypeUserDAO();
         $this->jwt = new JwtAuth();
     }
+    public function test($d)
+    {
+        echo password_hash($d, PASSWORD_BCRYPT,['cost'=>10]);
+    }
     public function signup(){
             //en caso de la ausencia de algún campo, retornar =>faltan campos
         if(!(isset($_REQUEST['name']) && isset($_REQUEST['lastname']) && 
@@ -40,7 +44,8 @@ class UserController{
             $user->setName_user($_REQUEST['name']);
             $user->setLast_name($_REQUEST['lastname']);
             $user->setPhone_number( isset($_REQUEST['numtelf']) ?$_REQUEST['numtelf']:'');
-            $user->setPassword($_REQUEST['password']);
+            $passwordEncrypt = password_hash($_REQUEST['password'], PASSWORD_BCRYPT , ['cost'=>10]);
+            $user->setPassword($passwordEncrypt );
             $user->setid_gender($_REQUEST['gender']);
             $num=$this->userDAO->create($user);
             if($num>0){

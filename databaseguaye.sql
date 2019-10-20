@@ -707,7 +707,7 @@ CREATE TABLE user_(
     username varchar(30) not null,
     name_user varchar(20) not null,
     last_name varchar(20) not null,
-    password varchar(20) not null,
+    password varchar(255) not null,
     phone_number varchar(11),
     date_create date not null,
     id_TypeUser int not null,
@@ -720,14 +720,13 @@ CREATE TABLE user_(
 -- insercion de 6 usuarios
 INSERT INTO user_(id_user, username, name_user, last_name, password, phone_number, id_TypeUser,date_create,gender)
     VALUES 
-        (1,'tnx',"tnx nx","last name","tnx","",101,'2019-06-27',1),
-        (2,'edw','Edward', "Reyes","edw01","",102,'2019-06-27',1),
-        (3,'lozado','Cristian', "Lozado","lozado","",102,'2019-06-27',1),
-        (4,'kelvin','Kelvin', "Castro","kelvin","",102,'2019-06-27',1),
-        (5,'admin','admin', "ADMIN","admin","",101,'2019-06-27',1),
-        (6,"moderador","moderador","moderador","moderador","",303,'2019-06-27',1),
-        (7,'Ka','Pi', "Kar","Piv","",101,'2019-06-27',2);
-
+        (1,'tnx',"tnx nx","last name","$2y$10$..eZF2avos07AYwvIVQxJubgsgy2zavFABbtkxwRiIP1z0M1gq622","",101,'2019-06-27',1),
+        (2,'edw','Edward', "Reyes","$2y$10$o6vBJoswnhifr6Z3ABe0f.DDFBtwY7TgJJycMbyMHoU0v5SccD/Di","",102,'2019-06-27',1),
+        (3,'lozado','Cristian', "Lozado","$2y$10$fF7/s564zQbPrZJbPYKWkei1FulRy5sog/0nF6tUVx4zuUR1es8J6","",102,'2019-06-27',1),
+        (4,'kelvin','Kelvin', "Castro","$2y$10$oO0VRyPZ9UGVxT9vbew1jOo4qK5ZPuxkpbeashmPhUxcbeidObxCK","",102,'2019-06-27',1),
+        (5,'admin','admin', "ADMIN","$2y$10$PtS8zuwlreRD5pR09yoUp.8gSe9r2B/1SDJSlvgBmFDpeEgtcgSpi","",101,'2019-06-27',1),
+        (6,"moderador","moderador","moderador","$2y$10$SOq7YEVfnoCTenxMMicebeYXfGld0e66slMCgpTyo93wpou3t.TbG","",303,'2019-06-27',1),
+        (7,'Ka','Pi', "Kar","$2y$10$8O7e32sf3giWbzZ0oudcoOg6B9nA/ZrwtbMNyowtoaqFXMhrd9Rgm","",101,'2019-06-27',2);
 
 CREATE TABLE event_(
     id_event int AUTO_INCREMENT,

@@ -79,6 +79,12 @@ class BlogController {
         $blog = $this->blogDAO->queryByUser($id);
         return $blog;
     }
+
+    public function renderPostMin($id=0){
+        $dataBlog = $this->queryAllBlogByUser($id);
+        require_once COMPONENTS.'blog/renderPostMin.php';
+    }
+
     public function chargeSocialNetwork(){
         $socialNetwork= $this->blogDAO->querySocialNetwork();
         echo json_encode($socialNetwork);
@@ -268,10 +274,15 @@ class BlogController {
         }
     }
 
-    public function getItemView($id=null){
+    public function getItemView($id=null, $version="big"){
         if(!is_null($id)){
             $blog = $this->blogDAO->queryById($id);
-            require_once COMPONENTS."blog/blogItem.php";
+            if($version=="big"){
+                require_once COMPONENTS."blog/blogItem.php";
+            }elseif ( $version=="small") {
+                $blogMin = $blog ;
+                require_once COMPONENTS."blog/post_min.php";                
+            }
         }
     }
     

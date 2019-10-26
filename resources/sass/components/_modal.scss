@@ -22,7 +22,7 @@
 .window-modal-bck ._body{
 	position: relative;
 	// height: 90vh;
-	max-height: 90vh;
+	max-height: 80vh;
 	overflow-y: auto;
 }
 /* posicionamiento */
@@ -45,6 +45,7 @@
 	.window-modal-bck ._body{
 		position: static;
 		height: initial;
+		max-height: 90vh;
 	}
 }
 @media(min-width:800px){

@@ -33,7 +33,7 @@ class JwtAuth{
                 $data= [
                     "status"=>"success",
                     "code"=>200,
-                    "data"=>$decode,
+                    "identity"=>$decode,
                     'user'=> $user,
                 ];
         }else{

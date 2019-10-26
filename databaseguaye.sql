@@ -712,6 +712,7 @@ CREATE TABLE user_(
     date_create date not null,
     id_TypeUser int not null,
     gender int not null,
+    url_photo varchar(500) ,
     status int DEFAULT 1,
     PRIMARY KEY (id_user),
     FOREIGN KEY (id_TypeUser) REFERENCES TypeUser(id_TypeUser),

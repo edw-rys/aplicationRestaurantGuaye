@@ -1,10 +1,10 @@
 <header>
     <?php include_once NAVIGATION?>
 </header>
-<main class="flex-center main-login">
+<main class="">
     <?php 
         $valueButton="Editar";
         $tittle="Editar Usuario";
-        include_once COMPONENTS."formDataUser.php";
+        include_once COMPONENTS."user/config.php";
     ?>
 </main>

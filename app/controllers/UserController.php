@@ -3,18 +3,17 @@ require_once MODELS.'DAO/TypeUserDAO.php';
 require_once MODELS.'DAO/UserDAO.php';
 require_once MODELS.'DTO/User/User.php';
 require_once MODELS.'DTO/User/TypeUser.php';
+require_once CONTROLLERS. 'BlogController.php';
 class UserController{
     private $userDAO;
     private $typeUserDAO ;
     private $jwt;
+    private $blog;
     public function __construct() {
         $this->userDAO=new UserDAO();
         $this->typeUserDAO=new TypeUserDAO();
         $this->jwt = new JwtAuth();
-    }
-    public function test($d)
-    {
-        echo password_hash($d, PASSWORD_BCRYPT,['cost'=>10]);
+        $this->blog = new BlogController();
     }
     public function signup(){
             //en caso de la ausencia de algún campo, retornar =>faltan campos
@@ -70,11 +69,11 @@ class UserController{
         echo json_encode($data);      
     }
     
-    public function login(){
+    public function login($getToken=null){
         $user=isset($_POST['username'])?strtolower($_POST['username']):'';
         $password=isset($_POST['password'])?$_POST['password']:'';
 
-        $results = $this->jwt->signup($user,$password,$this->userDAO);
+        $results = $this->jwt->signup($user,$password,$this->userDAO,$getToken);
 
         // $results = $this->userDAO->checkUser($user,$password);        
         $data=[
@@ -99,8 +98,12 @@ class UserController{
                 "user"=>$user,
                 "code"=>200,
                 "status"=>"success",
-                "token"=>$results["token"]
             ];
+            if(is_null($getToken)){
+                $data["token"] = $results["token"];
+            }else{
+                $data["identity"] = $results["identity"];
+            }
             // View::render("home", $data);
         }
         echo json_encode($data);
@@ -139,15 +142,60 @@ class UserController{
         var_dump($data);
         echo "En proceso";
     }
+
     public function myprofile(){
         if(!isset($_SESSION["USER"])){
             Redirect::to(URL);
         }else{
-            echo "En proceso";
+            $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+            if(empty($user)){
+                Redirect::to(URL);
+            }else{
+                // printObj($user);
+                View::render("profile",["title"=>"Perfil","user"=>$user]);
+            }
         }
     }
-    public function settings(){
-        echo "En proceso";
+    public function renderPost($idUser=null) {
+        if(is_null($idUser)){
+            $this->blog->renderPostMin($_SESSION["ID_USER"]);
+        }else{
+            $this->blog->renderPostMin($idUser);
+        }
+    }
+    public function config($param=null){
+        if(is_null($param)){
+            $data =[
+                "title" => "Configuración",
+                "user"  => $this->userDAO->getUserById($_SESSION["ID_USER"])
+            ];
+            include_once COMPONENTS."user/config.php";
+        }elseif ($param="checkusername") {
+            $username = isset($_REQUEST["username"])?$_REQUEST["username"]:null;
+            if(!is_null($username)){
+                $verify=$this->userDAO->verifyUserNotRepeat(strtolower($username),isset($_SESSION['ID_USER'])?$_SESSION['ID_USER']:null);
+                if(empty($verify)){
+                    $data = [
+                        "status" => "success",
+                        "code"   => 200,
+                        "message"=> ""
+                    ];
+                }else{
+                    $data = [
+                        "status" => "error",
+                        "code"   => 400,
+                        "message"=> "Nombre de usuario existente"
+                    ]; 
+                }
+            }else{
+                $data = [
+                    "status" => "error",
+                    "code"   => 400,
+                    "message"=> "Error"
+                ];
+            }
+            echo json_encode($data);
+        }
     }
 
     public function signin($value="login"){
@@ -158,5 +206,122 @@ class UserController{
                 require_once COMPONENTS."user/signupComponent.php";                
             }
         }
+    }
+
+    public function update(){
+        $status = ValidateField::validateUser($_POST,$_SESSION['ID_USER']);
+        if($status["status"]=="success"){
+            unset($_POST['password_confirm']);
+            unset($_POST['password_current']);
+            // actualizar nombre de usuario
+            $username = isset($_REQUEST["username"])?$_REQUEST["username"]:null;
+            if(isset($_POST["password"])){
+                $_POST["password"] = password_hash($_POST["password"], PASSWORD_BCRYPT , ['cost'=>10]);
+            }
+            if(!is_null($username)){
+                $verify=$this->userDAO->verifyUserNotRepeat(strtolower($username),$_SESSION['ID_USER']);
+                if(empty($verify)){
+                    $res = $this->userDAO->update($_POST,$_SESSION['ID_USER']);
+                    if($res){
+                        $data=[
+                            "status"=>"success",
+                            "code"  =>200,
+                            "message"=>"datos actualizados"
+                        ];
+                        $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+                        if(!is_null($user) && !empty($user) ){
+                            $_SESSION["USER"] = serialize($user);
+                        }
+                    }else{
+                        $data=[
+                            "status"=>"error",
+                            "code"  =>400,
+                            "message"=>"error al actualizar"
+                        ];
+                    }
+                }else{
+                    $data = [
+                        "status" => "error",
+                        "code"   => 400,
+                        "message"=> "Nombre de usuario existente"
+                    ]; 
+                }
+            }else{
+                $res = $this->userDAO->update($_POST,$_SESSION['ID_USER']);
+                if($res){
+                    $data=[
+                        "status"=>"success",
+                        "code"  =>200,
+                        "message"=>"datos actualizados"
+                    ];
+                    $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+                    if(!is_null($user) && !empty($user) ){
+                        $_SESSION["USER"] = serialize($user);
+                    }
+                }else{
+                    $data=[
+                        "status"=>"error",
+                        "code"  =>400,
+                        "message"=>"error al actualizar"
+                    ];
+                }
+            }
+        }else{
+            $data=[
+                "status"=>"error",
+                "code"  =>400,
+                "errors"=>$status["errors"]
+            ];
+        }
+        echo json_encode($data);
+    }
+    public function delete(){
+        die("No disponible");
+        $deleteUser = $this->userDAO->delete($_SESSION["ID_USER"]);
+        if($deleteUser){
+            echo json_encode([
+                "status" => "success",
+                "code"   => 200,
+                "message"=> "Usuario eliminado"
+            ]);
+        }else{
+            echo json_encode([
+                "status" => "error",
+                "code"   => 400,
+                "message"=> "Error al eliminar"
+            ]);
+        }
+    }    
+    public function disable(){
+        $password = isset($_POST["password"])?$_POST["password"]:'';
+        $check = $this->userDAO->checkPassword($_SESSION["ID_USER"] , $_POST['password']);
+        if($check){
+            $disableUser = $this->userDAO->disable($_SESSION["ID_USER"]);
+            if($disableUser){
+                $data=[
+                    "status"=>"success",
+                    "code"  =>200,
+                    "message"=>"Usuario deshabilitado."
+                ];
+            }else{
+                $data=[
+                    "status"=>"error",
+                    "code"  =>400,
+                    "message"=>"Error al deshabilitar cuenta."
+                ];
+            }
+        }else{
+            $data=[
+                "status"=>"error",
+                "code"  =>400,
+                "message"=>"Contraseña incorrecta!"
+            ];
+        }
+        echo json_encode($data);
+    }
+
+    public function getMyData(){
+        $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+        echo json_encode(dismount($user));
     }
 }

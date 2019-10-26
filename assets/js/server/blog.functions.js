@@ -1,5 +1,6 @@
 const urlBlog = url+'blog/';
 var socialNetwork =[];
+var version = "big";
 const getFormRecipe =function(id) {
     let uri=id?urlBlog+"new/"+id:urlBlog+"new"
     fetch(uri)
@@ -26,7 +27,7 @@ const loadSocialNetwork=()=>{
 // const addItemSocialNetwork=()=>{
 //     panelModal.querySelector();
 // }
-const saveBlog= ()=>{
+const saveBlog = ()=>{
     const formRecipe=document.getElementById("formRecipe");
     var btn=formRecipe.save;
     animationCharge(btn);
@@ -53,17 +54,23 @@ const saveBlog= ()=>{
                         if(res.code==200){
                             toastr.success(res.message);
                             // Agregar al muro o editar
+
                             let Recipes = document.querySelector(".allRecipes");
+                            let version_item = "big";
+                            if(this.version=="small"){
+                                Recipes = document.getElementById("post-blog-user");
+                                version_item = "small";
+                            }
+                            let element = await getNewItem(res.idRecipe,version_item);
+
                             if(!data.get("id")){
                                 // New
-                                let element = await getNewItem(res.idRecipe);
                                 element = getHTML(element);
                                 Recipes.insertBefore(element, Recipes.firstElementChild);
                                 addClass(element,"animated zoomInUp");
                             }else{
                                 // Edit
                                 let recipe = document.querySelector(".item-blog-number-"+res.idRecipe);
-                                let element = await getNewItem(res.idRecipe);
                                 element = getHTML(element);
                                 Recipes.replaceChild(element, recipe);
                             }
@@ -86,7 +93,8 @@ const saveBlog= ()=>{
     return false;
 }
 
-const editPost=(id=0)=>{
+const editPost=(id=0,version="big")=>{
+    this.version=version;
     if(id!=0){
         getFormRecipe(id);
     }
@@ -104,7 +112,7 @@ const deletePost = (id=0 , btn)=>{
                 if(res){
                     if(res.code==200){
                         toastr.success(res.message);
-                        let item =btn.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+                        let item = document.querySelector(".item-blog-number-"+id);
                         addClass(item, "animated zoomOut");
                         setTimeout(() => {
                             item.remove();
@@ -128,7 +136,7 @@ const deletePost = (id=0 , btn)=>{
         btn.classList.remove("flex-x");
     });
 }
-viewBlog =(id)=>{
+const viewBlog =(id)=>{
     fetch(urlBlog+"viewRecipe/"+id)
     .then(res=>res.text())
     .then(
@@ -145,9 +153,13 @@ viewBlog =(id)=>{
 }
 
 
-getNewItem = async (id)=>{
+const getNewItem = async (id, version)=>{
     if(!id)return false;
-    let res = await fetch(urlBlog+"getItemView/"+id);
+    let uri = urlBlog+"getItemView/"+id;
+    if(version && version=="small"){
+        uri+='/small';
+    }
+    let res = await fetch(uri);
     res = await res.text();
     // Return Promise
     return res;

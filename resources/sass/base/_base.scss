@@ -303,9 +303,9 @@ transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%) ;
   }
   @media(max-height:500px){
-    top: 0;
+    // top: 0;
   }
-  @media(max-height:600px){
+  @media(max-height:600px) and ( max-width:600px){
     top: 5%;
   }
 }

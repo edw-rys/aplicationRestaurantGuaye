@@ -1,0 +1,21 @@
+.sections-config{
+    padding: 5px;
+    box-sizing: border-box;
+    background: #DADADC;
+    .personalInformation{
+        .sett{
+            background: #fff;
+            margin: 10px 0;
+            border-radius: 5px;
+            .field{
+                padding: 10px 0;
+                margin: 5px;
+                &:hover{
+                    background: #E7E7E7;
+                }
+            }
+
+        }
+
+    }
+}

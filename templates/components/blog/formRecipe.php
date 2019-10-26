@@ -5,9 +5,9 @@
 <form action="" onsubmit="return saveBlog()" method="POST"  enctype="multipart/form-data" id="formRecipe">
 	<input type="hidden" name="id" value="<?php echo isset($blog_edit)?$blog_edit->getId_blog():''?>">
 	<input type="hidden" name="id_recipe" value="<?php echo isset($blog_edit)?$blog_edit->getRecipe()->getId_recipe():''?>">
-	<div class="body_">
+	<div class="">
 		<div class="flex-center">
-			<span class="container-input border-botom">
+			<span class="container-input border-botom" style="--color:var(--color-third)">
 				<input class="balloon" id="name" type="text" name="nombre" placeholder="Escriba el título de la receta" value="<?php echo isset($blog_edit)?$blog_edit->getRecipe()->getName_recipe():''?>"/>
 				<label for="name">Título</label>
 			</span>
@@ -124,18 +124,8 @@
 		</div>
 	</div>
 
-
 	<div class="send flex-center">
 		<button class="button btn-first c-pinter" type="submit" name="save" style="width: 60%;">Publicar</button>
-
 	</div>
 </form>
 </div>
-<!-- <div class="">
-	<div class="row" style="margin: auto;">
-		<div id="form-blog" class="form-blog" style="margin: auto;">
-			
-			
-		</div>
-	</div>
-</div> -->

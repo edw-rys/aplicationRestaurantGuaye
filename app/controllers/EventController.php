@@ -139,6 +139,8 @@ class EventController {
                     "message"=>"Compelte todos los campos, por favor!",
                 ];
         }else{
+            // Token
+            $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
             $this->eventModel->setExecutionDate($_POST['fecha']);
             $this->eventModel->setAffair($_POST['asunto']);
             $this->eventModel->setStart_time($_POST['inHour']);

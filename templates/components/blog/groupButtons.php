@@ -14,7 +14,7 @@
             if($blog->getUser()->getId_user()==$_SESSION['ID_USER']){
         ?>
             <div class="demo__social-btn-3 demo__social-btn btn-edit"
-                onclick="editPost(<?php echo $blog->getId_blog()?>,this) ">
+                onclick="editPost(<?php echo $blog->getId_blog()?>) ">
                 <i class="far fa-edit"></i>
             </div>
         <?php }}?>

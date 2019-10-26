@@ -47,11 +47,8 @@ class Db{
         $link->beginTransaction(); // por cualquier error, checkpoint
         $query = $link->prepare($attributes["sql"]);
 
-        // echo json_encode([
-        //     "status"=>"error",
-        //     "sql"=>json_encode($query)
-        // ]);
-        // printObj($attributes["params"]);
+        // printObj($query);
+
         // die();
         if(!$query->execute($attributes["params"])) {
             $link->rollBack();
@@ -163,6 +160,33 @@ class Db{
      *  _sql_params , table, params, inner_join, 
      * ]
      */
+    public static function set($params=[]) {
+        if(!is_array($params)){throw new Exception("Array required", 1);}
+        if(!isset($params["table"])){throw new Exception("table required", 1);}
+        if(!isset($params["params"])){throw new Exception("Parameters is required", 1);}
+        if(!isset($params["condition"])){throw new Exception("condition is required", 1);}
+        if(!isset($params["id_table"])){throw new Exception("Id table is required", 1);}
+        $sql = "UPDATE ".$params["table"]." SET ";
+        $_col = '';
+        $keys = array_keys($params["params"]);
+        foreach ($params["params"] as $key => $value) {
+            // die();
+            if( $key === end($keys)){
+                $_col = $_col .' '. $key .'=:'.$key . ' ';
+            }else{
+                $_col = $_col .' '. $key .'=:'.$key . ', ';
+            }
+        }
+        $sql = $sql . $_col .$params["condition"]. ';';
+        // echo $sql;die();
+        $data_sql =[
+            "sql"           => $sql,
+            "params"        =>array_merge( $params["params"] , $params["id_table"]  ),
+            "type"          => "update",
+        ];
+        return self::sql($data_sql);
+    }
+
     public static function get($params=[]) {
         try {
             $params = self::cleanData($params);

@@ -10,9 +10,15 @@ class User{
     private $type_user;
     private $id_gender;
     private $name_gender;
-
+    private $url_photo;
     private $id_TypeUser;
     private $name_TypeUser;
+    public function geturl_photo(){
+        return $this->url_photo;
+    }
+    public function seturl_photo($url_photo){
+        $this->url_photo = $url_photo;
+    }
     public function getname_gender(){
         return $this->name_gender;
     }

@@ -21,7 +21,7 @@ define('AUTH_SALT'          ,'TNX_UPP_@S5249A6');
 
 // Puerto y URL
 define('PORT'               , "81");
-define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.168.1.4:".PORT.BASEPATH);
+define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.168.1.20:".PORT.BASEPATH);
 
 // Las rutas de directorios y archivos
 define('DS'                 , DIRECTORY_SEPARATOR);

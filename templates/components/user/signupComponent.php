@@ -46,7 +46,6 @@
                                 <img src="<?php echo IMAGES."icons/male.svg"?>" alt="">
                                 <span class="flex-center">MASCULINO</span>
                             </div>
-                            
                         </label>
                     </div>
                     <div class="container-gender-input female  txt-white">

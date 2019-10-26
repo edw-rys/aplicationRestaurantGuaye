@@ -34,7 +34,9 @@
         ?>
             <li class="item-nav">
                 <a class="head-sub-menu" href="#!" onclick="toggle('#sub-nav','active')">
-                    <?php echo $user->getUsername()?>
+                    <span label-field='usernamelabel'>
+                      <?php echo $user->getUsername()?>
+                    </span>
                     <i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="options-nav drop-down-nav" id="sub-nav">

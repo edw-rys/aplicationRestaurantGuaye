@@ -1,9 +1,26 @@
 <?php
 // System functions
+/**
+ * Convert array to object
+ * return Object<anonymous>
+ */
 function to_object($array){
     return json_decode(json_encode($array));
 }
-
+/**
+ * Convert object to array
+ * return array()
+ */
+function dismount($object) {
+    $reflectionClass = new ReflectionClass(get_class($object));
+    $array = array();
+    foreach ($reflectionClass->getProperties() as $property) {
+        $property->setAccessible(true);
+        $array[$property->getName()] = $property->getValue($object);
+        $property->setAccessible(false);
+    }
+    return $array;
+}
 function saveImage($_name){
     if(!isset($_FILES[$_name])){
         return [

@@ -1,4 +1,4 @@
-<div class="form-clasic">
+<div class="form-clasic"  style="--color:var(--color-third)">
     <div class="header_">
 		<div class="bottom-head txt-center"><h2 class="title">Nueva receta</h2></div>
 	</div>

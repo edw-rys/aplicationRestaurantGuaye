@@ -49,9 +49,9 @@ function validarUsuarionuevo(data){
 	if(!contrasenia){
 		mensaje.push("Debe ingresar su contraseña.");
 	}else{
-		// if(!regexp_password.test(contrasenia)){
-		// 	mensaje.push("La contraseña debe tener al entre 6 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.");
-		// }
+		if(!regexp_password.test(contrasenia)){
+			mensaje.push("La contraseña debe tener al entre 6 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.");
+		}
 	}
 	if(telf || telf.length>0){
 		if(!soloNum.test(telf)){

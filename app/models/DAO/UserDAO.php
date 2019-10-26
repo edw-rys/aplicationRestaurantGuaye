@@ -6,17 +6,33 @@ class UserDAO {
 	}
 	public function getUser($username){
 		try{
-			$resultSet = Model::sql([
-				"sql"=>"select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender".
+			return Model::sql([
+				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo ,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender ".
 						"from user_ as u ".
 						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
-						"where username=:username",
+						"where username=:username and u.status=1",
 				"params"=>["username"=>$username],
-				"class"=>"User"
-				// "fetch_type"=>"FETCH_CLASS",
+				"class"=>"User",
+				"fetch"=>"one"
 			]);
-			return (empty($resultSet))?$resultSet:$resultSet[0];
+		} catch (Exception $e) {
+			die($e->getMessage());
+			die($e->trace());
+		}
+	}
+	public function getUserById($id){
+		try{
+			return Model::sql([
+				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo, date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender ".
+						"from user_ as u ".
+						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join gender as g on u.gender = g.id_gender ".
+						"where id_user=:id_user and u.status=1",
+				"params"=>["id_user"=>$id],
+				"class"=>"User",
+				"fetch"=>"one"
+			]);
 		} catch (Exception $e) {
 			die($e->getMessage());
 			die($e->trace());
@@ -25,11 +41,11 @@ class UserDAO {
     public function checkUser($username, $password){
 		try{
 			$user = Model::sql([
-				"sql"=>"select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender, u.password ".
+				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo, date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender, u.password ".
 						"from user_ as u ".
 						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
-						"where username=:username",
+						"where username=:username and u.status=1;",
 				"params"=>["username"=>$username],
 				"class"=>"User",
 				"fetch"=>"one"
@@ -46,18 +62,66 @@ class UserDAO {
 			die($e->getMessage());
 			die($e->trace());
 		}
-    }
-    public function update(){
-
-    }
-    public function delete(){
-
 	}
-	public function verifyUserNotRepeat($username){
+	public function checkPassword($id_user, $password){
+		try{
+			$user = Model::sql([
+				"sql"=>"select password ".
+						"from user_ ".
+						"where id_user=:id_user and status=1;",
+				"params"=>["id_user"=>$id_user],
+				"class"=>"User",
+				"fetch"=>"one"
+			]);
+			if(empty($user)){
+				return false;
+			}else{				
+				if(password_verify($password,$user->getPassword())){
+					return true;
+				}
+				return false;
+			}
+		} catch (Exception $e) {
+			die($e->getMessage());
+			die($e->trace());
+		}
+    }
+    public function update($params=[], $id){
+		try{
+			return Model::set([
+				"table"    	=>	"user_",
+				"params"   	=>	$params,
+				"condition"	=>	"where id_user=:id_user",
+				"id_table"	=>	["id_user"=> $id]
+			]);
+		} catch (Exception $e) {
+			die($e->getMessage());
+			die($e->trace());
+		}
+    }
+    public function disable($id){
+		try{
+			return Model::set([
+				"table" 	=> 	"user_",
+				"params"	=> 	["status"=>0],
+				"condition"	=>	"where id_user=:id_user",
+				"id_table"	=>	["id_user"=> $id]
+			]);
+		} catch (Exception $e) {
+			die($e->getMessage());
+			die($e->trace());
+		}
+	}
+	public function verifyUserNotRepeat($username,$id=null){
         try{
-			$parametros = array($username);
+			$parametros = array("username"=>$username);
+			$sql = "SELECT * from user_ where username=:username ";
+			if(!is_null($id)){
+				$sql = $sql. " and id_user!=:id_user;";
+				$parametros["id_user"]=$id;
+			}
 			return Model::sql([
-				"sql"=>"SELECT * from user_ where username=?;",
+				"sql"=>$sql,
 				"params"=>$parametros,
 			]);
 		} catch (Exception $e) {

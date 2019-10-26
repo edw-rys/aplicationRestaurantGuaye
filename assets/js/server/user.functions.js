@@ -300,4 +300,10 @@ const updateDataUser = (user) =>{
             element.setAttribute('src',user.url_image_gender);
         });
     }
+    const urlPhoto = document.querySelectorAll(`[label-field='urlPhotolabel']`);
+    if(urlPhoto){
+        urlPhoto.forEach( element =>{
+            element.setAttribute('src',user.url_photo);
+        });
+    }
 }

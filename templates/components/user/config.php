@@ -17,11 +17,8 @@
                                     <label for="username">Usuario</label>
                                 </span>
                             </div>
-                            <div class="status-username flex-center">
-                                
-                            </div>
                             <div class="send flex-center">
-                                <button type="submit" onclick="updateUser('formUsername')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Enviar</button>
+                                <button type="submit" onclick="updateUser('formUsername')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Actualizar</button>
                             </div>
                         </form>
                     </div>
@@ -45,7 +42,7 @@
                                 </span>
                             </div>
                             <div class="send flex-center">
-                                <button type="submit" onclick="updateUser('formNames')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Enviar</button>
+                                <button type="submit" onclick="updateUser('formNames')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Actualizar</button>
                             </div>
                         </form>
                     </div>
@@ -98,7 +95,7 @@
                                 </span>
                             </div>
                             <div class="send flex-center">
-                                <button type="submit" onclick="updateUser('formPhone')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Enviar</button>
+                                <button type="submit" onclick="updateUser('formPhone')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Actualizar</button>
                             </div>
                         </form>
                     </div>
@@ -138,13 +135,43 @@
                                 </span>
                             </div>
                             <div class="send flex-center">
-                                <button type="submit" onclick="updateUser('formPassword')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Enviar</button>
+                                <button type="submit" onclick="updateUser('formPassword')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Actualizar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
+            <div class="sett">
+                <div class="sub-config">
+                    <a href="#!" class="field flex flex-center space-around"onclick="toggle(` [data-field='first-config-7']`,'hidden')">
+                        <span>Foto de perfil</span>
+                        <span><?php echo $data["user"]->getUsername() ?></span>
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+                    <div class="config-edit hidden" data-field="first-config-7">
+                        <form action="" id="formUpload">
+                            <div class="inputs-config  flex-center flex-y">
+                                <!-- input type File  -->
+                                <div class="middle flex-center">
+                                    <label class="txt-white">
+                                        <input type="file" name="image" class="hidden"/>
+                                        <div class="box-radio active" >
+                                            <span class="icon" style="--color-txt:var(--color-gender);opacity:1;transform: translateY(0px);"  label-field='gendernameClasslabel'>
+                                                <i class="fas fa-camera"></i>
+                                            </span>
+                                            <span class="title-radio">Imagen</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="send flex-center">
+                                <button type="submit" onclick="updateUser('formUpload')" onclick="" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:var(--color-gender)">Subir</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <!-- delete account -->
             <div class="sett">
                 <div class="sub-config">
@@ -162,9 +189,6 @@
                                     <input class="balloon" name="password" id="password_remove" type="password" placeholder="Escriba su nombre de usuario"/>
                                     <label for="password_remove">Clave</label>
                                 </span>
-                            </div>
-                            <div class="status-username flex-center">
-                                
                             </div>
                             <div class="send flex-center">
                                 <button type="submit" onclick="disableAccount('formRemoveAccount')" class="button-hover <?php echo $color?>" label-field='gendernameClasslabel' style="--color-btn:#FF3B3B">Deshabilitar</button>

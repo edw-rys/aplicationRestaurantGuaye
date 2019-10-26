@@ -411,7 +411,16 @@ function cleanModalFree() {
 	return true;
 }
 
-viewImage= (url)=>{
+function activePoster(element){
+	if(!element)return false;
+	let poster = document.getElementById("poster-container");
+	let body = poster.querySelector(".content");
+	body.innerHTML=element;
+	poster.classList.remove("hidden");
+	return true;
+}
+
+const viewImage= (url)=>{
 	activeModal(`<img src="${url}">`);
 }
 

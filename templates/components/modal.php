@@ -13,5 +13,15 @@
     </div>
 </div>
 <div class="modal-free window-modal-bck hidden" onclick="toggle('.modal-free','hidden')">
+</div>
 
+
+
+
+<div class="poster-container hidden" id="poster-container">
+    <a href="#!" onclick="toggle('#poster-container','hidden')" class="button-close-poster flex-center">
+        <i class="fas fa-times"></i>
+    </a>
+    <div class="content">
+    </div>
 </div>

@@ -50,9 +50,9 @@
                     <li class="option-nav">
                       <a class="op-nav" href="<?php echo URL?>user/myprofile">Mi perfil</a>
                     </li>
-                    <li class="option-nav">
-                      <a class="op-nav" href="<?php echo URL?>user/settings">Ajustes</a>
-                    </li>
+                    <!-- <li class="option-nav"> -->
+                      <!-- <a class="op-nav" href="<?php //echo URL?>user/settings">Ajustes</a> -->
+                    <!-- </li> -->
                     <li class="option-nav">
                       <a class="op-nav" href="<?php echo URL?>user/logout">Cerrar sesión</a>
                     </li>

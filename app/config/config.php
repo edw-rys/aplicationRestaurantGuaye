@@ -21,7 +21,7 @@ define('AUTH_SALT'          ,'TNX_UPP_@S5249A6');
 
 // Puerto y URL
 define('PORT'               , "81");
-define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.168.1.20:".PORT.BASEPATH);
+define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.168.1.8:".PORT.BASEPATH);
 
 // Las rutas de directorios y archivos
 define('DS'                 , DIRECTORY_SEPARATOR);
@@ -54,6 +54,7 @@ define('FAVICON'            , ASSETS.'favicon/');
 define('FONTS'              , ASSETS.'fonts/');
 define('IMAGES'             , ASSETS.'img/');
 define("ROUTEFILES"         , 'assets/img/blog/');
+define("ROUTEPHOTO"         , 'assets/img/pictures/upload/');
 define('JS'                 , ASSETS.'js/');
 define('PLUGINS'            , ASSETS.'plugins/');
 define('UPLOADS'            , ASSETS.'uploads/');

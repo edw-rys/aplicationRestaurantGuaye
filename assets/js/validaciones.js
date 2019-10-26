@@ -1,4 +1,4 @@
-const letrasNumEspacio = new RegExp(/^[\w\-\s]+$/ );
+const letrasNumEspacio = new RegExp(/^[\wáéíóúüÑÁÉÍÓÚñ\-\s]+$/ );
 const validaUrl = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/ );
 const imgFormat=new RegExp(/\.(jpg|png|gif)$/i);
 const soloNum=new RegExp(/^[0-9]+$/);
@@ -11,9 +11,9 @@ const emailreg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const expUsername=/^[a-z0-9ü][a-z0-9ü_]{3,15}$/;
 const regexp_password = /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{6,16}$/;
 const regexobj=/^[a-zA-Z0-9üáéíóú][a-zA-Z0-9ü+ _áéíóú-]{3,30}$/;
-const regexobjPrepare=/^[a-zA-Z0-9üáéíóú][a-zA-Z0-9ü+ _.,:;áéíóú-]{3,900}$/;
+const regexobjPrepare=/^[a-zA-Z0-9üÑÁÉÍÓÚáéíóú\r\n][a-zA-Z0-9ü+ _.,:;ÑÁÉÍÓÚáéíñóú@\r\n-]{3,1900}$/;
 
-//k
+
 function validarUsuarionuevo(data){
 	let mensaje=[];
 	let nombre= data.get("name");
@@ -69,15 +69,14 @@ function validarUsuarionuevo(data){
 	return mensaje;
 }
 
-
-
 function validaFormBlog(data) {
-	var nombre = data.get("nombre");
-	var img    = data.get("imagen");
-	var preparacion=data.get("preparacion");
-	var ingredients=data.getAll("ingrediente[]");
+	let nombre = data.get("nombre");
+	let img    = data.get("imagen");
+	let preparacion=data.get("preparacion");
+	let ingredients=data.getAll("ingrediente[]");
 	let imageAut = data.get("imagen-edit");
-	var mensaje=[];
+	let mensaje=[];
+	debugger;
 	// Recolección de datos
 	if(nombre.length==0){
 		mensaje.push("Escriba el nombre.")
@@ -107,7 +106,7 @@ function validaFormBlog(data) {
 			break;
 		}
 	}
-
+	
 	// Validaciones
 	if(!regexobjPrepare.test(preparacion))
 		mensaje.push("Preparación: Caracteres no permitidos o excede la su longitud (max->900)");

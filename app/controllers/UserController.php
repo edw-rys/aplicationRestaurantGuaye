@@ -247,24 +247,50 @@ class UserController{
                     ]; 
                 }
             }else{
-                $res = $this->userDAO->update($_POST,$_SESSION['ID_USER']);
-                if($res){
-                    $data=[
-                        "status"=>"success",
-                        "code"  =>200,
-                        "message"=>"datos actualizados"
-                    ];
-                    $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
-                    if(!is_null($user) && !empty($user) ){
-                        $_SESSION["USER"] = serialize($user);
+                if(!empty($_FILES)){
+                    $data = saveImage('image',ROUTEPHOTO);
+                    if($data["status"]=="success"){
+                        $_POST["url_photo"] = $data["url"];
+                        $res = $this->userDAO->update($_POST,$_SESSION['ID_USER']);
+                        if($res){
+                            $data=[
+                                "status"=>"success",
+                                "code"  =>200,
+                                "message"=>"datos actualizados"
+                            ];
+                            $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+                            if(!is_null($user) && !empty($user) ){
+                                $_SESSION["USER"] = serialize($user);
+                            }
+                        }else{
+                            $data=[
+                                "status"=>"error",
+                                "code"  =>400,
+                                "message"=>"error al actualizar"
+                            ];
+                        }
                     }
                 }else{
-                    $data=[
-                        "status"=>"error",
-                        "code"  =>400,
-                        "message"=>"error al actualizar"
-                    ];
+                    $res = $this->userDAO->update($_POST,$_SESSION['ID_USER']);
+                    if($res){
+                        $data=[
+                            "status"=>"success",
+                            "code"  =>200,
+                            "message"=>"datos actualizados"
+                        ];
+                        $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
+                        if(!is_null($user) && !empty($user) ){
+                            $_SESSION["USER"] = serialize($user);
+                        }
+                    }else{
+                        $data=[
+                            "status"=>"error",
+                            "code"  =>400,
+                            "message"=>"error al actualizar"
+                        ];
+                    }
                 }
+
             }
         }else{
             $data=[
@@ -322,6 +348,26 @@ class UserController{
 
     public function getMyData(){
         $user = $this->userDAO->getUserById($_SESSION["ID_USER"]);
-        echo json_encode(dismount($user));
+        // Profile photo
+        if(!is_null($user)){
+            if(empty($user->geturl_photo())){
+                if($user->getid_gender()==1){
+                    $user->seturl_photo(IMAGES.'pictures/upload/default/male.png');
+                }else{
+                    $user->seturl_photo(IMAGES.'pictures/upload/default/female.png');
+                }
+            }else{
+                $user->seturl_photo(URL.$user->geturl_photo() );
+            }
+            $user = dismount($user);
+            if($user["id_gender"]==1){
+                $user["url_image_gender"]= IMAGES.'icons/male.svg';
+            }else{
+                $user["url_image_gender"]= IMAGES.'icons/female.svg';
+            }
+            echo json_encode($user);
+        }else{
+            echo json_encode(["status"=>"error","code"=>"404"]);
+        }
     }
 }

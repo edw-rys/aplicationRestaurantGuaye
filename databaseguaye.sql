@@ -760,7 +760,7 @@ create table recipe(
     id_recipe int AUTO_INCREMENT,
     url_image varchar(70) NOT null,
     name varchar(40) not null,
-    preparation varchar(900) not null,
+    preparation varchar(2000) not null,
     status int DEFAULT 1,
     PRIMARY KEY (id_recipe)
 );

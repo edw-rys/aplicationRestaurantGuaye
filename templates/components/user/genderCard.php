@@ -2,7 +2,7 @@
     <label class="gender-label relative center">
         <input type="radio" name="gender" value="0" checked>
         <div class="capa">
-            <img src="<?php echo IMAGES."icons/".$gender.".svg"?>" alt="">
+            <img src="<?php echo IMAGES."icons/".$gender.".svg"?>" label-field='genderurlImglabel' alt="">
             <span class="flex-center" label-field='gendertextlabel'><?php echo isset($name_gender)?$name_gender:''?></span>
         </div>
     </label>

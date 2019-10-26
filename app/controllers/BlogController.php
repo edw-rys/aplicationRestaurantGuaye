@@ -189,7 +189,7 @@ class BlogController {
                         $blog->getRecipe()->setUrl_image($_REQUEST['imagen-edit']);
                         if(isset($_FILES['imagen'])){
                             if($_FILES['imagen']['name']){
-                                $data = saveImage('imagen');
+                                $data = saveImage('imagen',ROUTEFILES);
                                 if($data["status"]=="success"){
                                     $url = $data["url"];
                                     $blog->getRecipe()->setUrl_image($url);
@@ -197,7 +197,7 @@ class BlogController {
                             }
                         }
                     }else{
-                        $data = saveImage('imagen');
+                        $data = saveImage('imagen', ROUTEFILES);
                         if($data["status"]=="success"){
                             $url = $data["url"];
                             $blog->getRecipe()->setUrl_image($url);
@@ -243,7 +243,7 @@ class BlogController {
                     }
                     
                 }else{
-                    $data = saveImage('imagen');
+                    $data = saveImage('imagen',ROUTEFILES);
                     if($data["status"]=="success"){
                         $url = $data["url"];
                         $blog->getRecipe()->setUrl_image($url);

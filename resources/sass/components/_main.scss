@@ -244,19 +244,6 @@ section.nosotros ._content {
   .ubicacion .map iframe {
     width: 600px; 
   }
-  .view-recipe{
-    margin: auto;
-  }
-  .view-recipe .prepare{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .view-recipe{
-    max-width: 600px;
-  }
-  .view-recipe img{
-    max-width: 50%;
-  }
 }
 .user-card{
   border: 1px solid var(--color-first);

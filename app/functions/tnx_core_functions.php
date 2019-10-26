@@ -21,7 +21,7 @@ function dismount($object) {
     }
     return $array;
 }
-function saveImage($_name){
+function saveImage($_name, $route){
     if(!isset($_FILES[$_name])){
         return [
             "status"    =>"error",
@@ -43,18 +43,18 @@ function saveImage($_name){
             "message"   =>"Formato de archivo no es válido"
         ];
     }
-    if(!file_exists(ROUTEFILES)){
+    if(!file_exists( $route)){
         return  [
             "status"    =>"error",
             "code"      =>400,
             "message"   =>"Directorio de archivos no existe!"
         ];
     }
-    opendir(ROUTEFILES);
+    opendir( $route);
     $parts = explode(".",$_FILES[$_name]['name']);
     // con el final del explode que sería la extensión de la imagen
     $origen=  $_FILES[$_name]['tmp_name'];
-    $destino= ROUTEFILES. generateRandomString(7). '.'.end($parts);//ends obtiene el último valor del arreglo
+    $destino=  $route. time(). str_replace(end($parts),'',$_FILES[$_name]['name']). '.'.end($parts);//ends obtiene el último valor del arreglo
     move_uploaded_file($origen, $destino);
     // $_FILES[$_name]['type']; tipo de archivo
     return [

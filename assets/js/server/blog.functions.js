@@ -142,7 +142,7 @@ const viewBlog =(id)=>{
     .then(
         res=>{
             if(res && res!="null"){
-                activeModal(res);
+                activePoster(res);
             }   
         }
     )

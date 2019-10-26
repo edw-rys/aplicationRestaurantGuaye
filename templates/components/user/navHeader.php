@@ -2,11 +2,15 @@
     <div class="nav-header">
         <div class="app-icon">
             <img src="<?php
-            if($data['user']->getid_gender()==1){
-                echo IMAGES.'pictures/upload/default/male.png';
+            if(!empty($data['user']->geturl_photo())){
+                echo URL .$data['user']->geturl_photo();
             }else{
-                echo IMAGES.'pictures/upload/default/female.png';
-            }?>" alt="">
+                if($data['user']->getid_gender()==1){
+                    echo IMAGES.'pictures/upload/default/male.png';
+                }else{
+                    echo IMAGES.'pictures/upload/default/female.png';
+                }
+            }  ?>" label-field='urlPhotolabel' alt="">
         </div>
     </div>
     <div class="nav-items">

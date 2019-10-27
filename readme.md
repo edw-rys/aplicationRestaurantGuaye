@@ -13,7 +13,7 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 ### Pre-requisitos 📋
 
 ```
-Cualquier navegador navegador actual (Chrome, Mozilla, Edge).
+navegadores actuales (Chrome, Mozilla).
 Un servidor local para conectarse con php. 
 Motor de base de datos MySql.
 Puede usar xampp server, wampp server o el de preferencia.
@@ -21,7 +21,6 @@ Puede usar xampp server, wampp server o el de preferencia.
 ## :earth_africa: Navegadores Soportados
 
 * Chrome/Chromium 76+
-* Edge 40+
 * Firefox 60+
 
 ## Ejecutando las pruebas ⚙️

@@ -40,6 +40,11 @@
         border: 1px solid var(--color-btn);
     }
 }
+.btn-none{
+  outline: none;
+  border: none;
+  background: none;
+}
 .button-hover{
   outline:none;
 	background: #cfd8dc;

@@ -27,7 +27,7 @@
 <?php if(isset($data["events"])){
 	$fun ="filterByAffair";
 	include_once COMPONENTS."search.php";
-	?>
+?>
 <div class="m-20"></div>
 
 <!-- <form action="" onsubmit="return false">

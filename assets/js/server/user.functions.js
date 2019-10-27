@@ -164,7 +164,7 @@ const configView = ()=>{
     })
     .catch(err=>console.log(err));
 }
-renderPost();
+
 
 // Options edit
 const checkUsername = (username="")=>{
@@ -246,6 +246,34 @@ const getDataMyUser = async()=>{
     }
     return user;
 }
+const searchUser =(idForm)=>{
+    let form =document.getElementById(idForm);
+    if(!form)return false;
+    let data = new FormData(form);
+
+    // Página de búsqueda
+    if(location.toLocaleString().indexOf(urlUser+"search")>-1){
+        form.addEventListener("submit",(e)=>e.preventDefault());
+        fetch(urlUser+"search/"+data.get("search"))
+        .then(res=>res.text())
+        .then(
+            res=>{
+                const dom = document.getElementById("container-seach-user")
+                dom.innerHTML=res;
+                // console.log(res);
+            }
+        )
+        .catch(err=>console.log(err));
+    }else{
+        form.submit.addEventListener('click',e=>{
+            if(!data.get("search")){
+                data.set("search","random")
+            }
+            location.href=urlUser+"search/"+data.get("search")+"/window";
+        });
+    }
+}
+
 /**
  * Actualizar todos los campos que se visualizan en el DOM
  */

@@ -37,12 +37,15 @@
             }
             .title{
                 position: absolute;
-                top: 50%;
+                top: 25%;
                 left: 0;
                 right: 0;
                 text-align: center;
                 font-size: 3em;
                 text-shadow: -3px 4px 15px #CE6161;
+                @media screen and (min-width:750px){
+                    top: 50%;                    
+                }
             }
         }
         &-body_{

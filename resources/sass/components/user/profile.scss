@@ -165,3 +165,30 @@
         background-position: 800px;
     }
 }
+.box-user-min{
+  height: 60px;
+  margin: 10px 5px;
+  transition: background 0.5s;
+  &:hover{
+    background: #B3B3B3;
+  }
+  .picture{
+    width: 60px;
+    height: 100%;
+    overflow: hidden; 
+    border-radius: 10px;
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+  .data{
+    margin-left:10px ;
+  }
+}
+.search-container{
+  width: 95%;
+  @media screen and(min-width:750px) {
+    width: 80%;  
+  }
+}

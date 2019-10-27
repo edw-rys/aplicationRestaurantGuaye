@@ -1,4 +1,4 @@
-<div class="box-login form-clasic">
+<div class="box-login form-clasic" style="margin:0">
   <div class="header_" style="height: 100px;">
     <div class="cont-lock"><i class="material-icons lock">lock</i></div>
     <div class="bottom-head"><h1 class="title">Login</h1></div>

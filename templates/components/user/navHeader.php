@@ -20,13 +20,14 @@
         <div class="nav-item flex-center txt-white">
             <p label-field='namelastnamelabel'><?php echo $data['user']->getName_user().' '.$data['user']->getLast_name() ?></p>
         </div>
+        <?php if(isset($_SESSION["ID_USER"]) && $data['user']->getId_user()==$_SESSION["ID_USER"]){ ?>
         <div class="nav-item flex-center txt-white">
             <a class="block" href="#!" onclick="configView()">
                 <span>Editar</span>
                 <i class="far fa-edit"></i>
             </a>
         </div>
-        <?php 
+        <?php }
             if($data['user']->getid_gender()==1){
                 $gender = "male";
             }else{

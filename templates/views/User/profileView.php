@@ -14,3 +14,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(()=>{
+
+        renderPost(<?php echo (!isset($_SESSION["ID_USER"]) || $_SESSION["ID_USER"] != $data["user"]->getId_user())? $data["user"]->getId_user():0?>);
+    });
+</script>

@@ -161,7 +161,7 @@ function animationLoad(element, w, h) {
 	element.style.border="1px solid var(--color-btn)";
 	element.style.background="white";
 
-	element.innerHTML= `<div class="load" style="whith:${w};height=${h}">
+	element.innerHTML= `<div class="load" style="width:${w};height:${h};position:relative">
 		<hr class="load-c"/><hr class="load-c"/><hr class="load-c"/><hr class="load-c"/>
 	  </div>`;
 	  return true;
@@ -524,13 +524,27 @@ var checkSearch = function(){
 
 function searchToggle(obj, evt){
     var container = $(obj).closest('.search-wrapper');
-        if(!container.hasClass('active')){
-            container.addClass('active');
-            evt.preventDefault();
-        }
-        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-            container.removeClass('active');
-            // clear input
-            container.find('.search-input').val('');
-        }
+	if(!container.hasClass('active')){
+		container.addClass('active');
+		evt.preventDefault();
+	}
+	else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+		container.removeClass('active');
+		// clear input
+		container.find('.search-input').val('');
+	}
 }
+
+
+
+// Handle click on toggle search button
+$('#toggle-search-user').click(function() {
+	$('#search-form-user, #toggle-search').toggleClass('open');
+	return false;
+});
+
+// Handle click on search submit button
+$('#search-form-user button[type=submit]').click(function() {
+	$('#search-form-user, #toggle-search').toggleClass('open');
+	return true;
+});

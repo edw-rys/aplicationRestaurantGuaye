@@ -99,11 +99,11 @@ const editPost=(id=0,version="big")=>{
         getFormRecipe(id);
     }
 }
-const deletePost = (id=0 , btn)=>{
+const deletePost = (id=0 , btn, w="50px",h="50px")=>{
     if(id==0)return;
     let auxContent =btn.innerHTML; 
     btn.classList.add("flex-x");
-    animationLoad(btn,"60px","60px");
+    animationLoad(btn, w, h);
     fetch(urlBlog+"delete/"+id)
     .then(res=>res.json())
     .then(

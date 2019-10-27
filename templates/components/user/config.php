@@ -31,12 +31,12 @@
                     </a>
                     <div class="config-edit hidden" data-field="first-config-2">
                         <form action="" id="formNames">
-                            <div class="inputs-config  flex-center">
-                                <span class="container-input border-bottom-unique">
+                            <div class="inputs-config  flex-center separate-flex-x-y">
+                                <span class="container-input border-bottom-unique separate">
                                     <input class="balloon" id="name" name="name_user" type="text" placeholder="¿Cómo te llamas?" value="<?php echo $data["user"]->getName_user()?>"/>
                                     <label for="name">Nombre</label>
                                 </span>
-                                <span class="container-input  border-bottom-unique">
+                                <span class="container-input  border-bottom-unique separate">
                                     <input class="balloon" id="lastname" name="last_name" type="text" placeholder="Cuál es tu apellido?" value="<?php echo $data["user"]->getLast_name()?>"/>
                                     <label for="lastname">Apellido</label>
                                 </span>

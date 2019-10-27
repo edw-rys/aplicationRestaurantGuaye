@@ -130,17 +130,16 @@ class UserController{
                     "code"=>200,
                     "status"=>"success",
                     "user"=>$user,
-                    "profile"=>"VISIT"
+                    "profile"=>"VISIT",
+                    "title"=>$user->getUsername()." - Inicio"
                 ];
-                if(isset($_SESSION['ID_USER']) && $user->getId_user()){
+                if(isset($_SESSION['ID_USER']) && $user->getId_user() == $_SESSION['ID_USER'] ){
                     $data["profile"]="MY_PROFILE";
                 }
-                // printObj($data);
-                // View::render("profile", $data);
+                View::render("profile", $data);
             }
         }
-        var_dump($data);
-        echo "En proceso";
+        Redirect::to("error");
     }
 
     public function myprofile(){
@@ -152,13 +151,15 @@ class UserController{
                 Redirect::to(URL);
             }else{
                 // printObj($user);
-                View::render("profile",["title"=>"Perfil","user"=>$user]);
+                View::render("profile",["title"=>$user->getUsername(),"user"=>$user]);
             }
         }
     }
     public function renderPost($idUser=null) {
         if(is_null($idUser)){
-            $this->blog->renderPostMin($_SESSION["ID_USER"]);
+            if(isset($_SESSION["ID_USER"])){
+                $this->blog->renderPostMin($_SESSION["ID_USER"]);
+            }
         }else{
             $this->blog->renderPostMin($idUser);
         }
@@ -368,6 +369,18 @@ class UserController{
             echo json_encode($user);
         }else{
             echo json_encode(["status"=>"error","code"=>"404"]);
+        }
+    }
+    public function search($value="",$window=null) {
+        $users = $this->userDAO->search($value);
+        $data =[
+            "title"=>"Buscar usuario",
+            "users"=>$users
+        ];
+        if(!is_null($window)){
+            View::render("search",$data);
+        }else{
+            include_once COMPONENTS."user/panelSearch.php";
         }
     }
 }

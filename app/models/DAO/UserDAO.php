@@ -4,6 +4,22 @@ class UserDAO {
 	//Manejo de datos de actiidades
 	public function __construct(){
 	}
+	public function search($value=""){
+		if(empty($value)){
+			return [];
+		}
+		try{
+			return Model::sql([
+				"sql"=>"select id_user, username, name_user, last_name, url_photo,gender ".
+						"from user_ ".
+						"where ( username like concat('%',:value,'%')  or name_user like concat('%',:value,'%') or last_name like concat('%',:value,'%')) and status=1",
+				"params"=>["value"=>$value],
+			]);
+		} catch (Exception $e) {
+			die($e->getMessage());
+			die($e->trace());
+		}
+	}
 	public function getUser($username){
 		try{
 			return Model::sql([

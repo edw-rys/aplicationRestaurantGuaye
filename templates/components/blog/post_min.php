@@ -18,7 +18,7 @@
                 if(isset($_SESSION["ID_USER"])){
                     if(isset($blogMin) && $blogMin->getUser()->getId_user()==$_SESSION["ID_USER"]){
                         ?>
-                        <a href="#!" class="btn-op-post" onclick="deletePost(<?php echo $blogMin->getId_blog()?>,this)">
+                        <a href="#!" class="block btn-op-post" onclick="deletePost(<?php echo $blogMin->getId_blog()?>,this,'20px','20px')">
                             <i class="far fa-trash-alt"></i>
                         </a>
                         <?php

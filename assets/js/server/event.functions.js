@@ -30,12 +30,11 @@ const saveEvent=()=>{
                 animationChargeRemove(btn,"Publicar");
             }else{
                 let headers_ = new Headers();
-                headers_.append('Content-type' , 'application/x-www-form-urlencoded');
                 headers_.append('token', localStorage.getItem('token'));
                 fetch(urlEvent+"save",{
                     headers:headers_,
-                    method:"POST",
-                    body:data
+                    method: "POST",
+                    body:   data
                 })
                 .then(res=>res.json())
                 .then(

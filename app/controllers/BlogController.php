@@ -18,6 +18,7 @@ class BlogController {
             "title"=>"Blog",
             "allBlog"=>$allBlog,
         ];
+        // printObj($allBlog[0]);
         View::render("blog", $data);
     }
     // public function queryAllBlog(){

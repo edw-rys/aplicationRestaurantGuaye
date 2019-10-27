@@ -76,7 +76,6 @@ function validaFormBlog(data) {
 	let ingredients=data.getAll("ingrediente[]");
 	let imageAut = data.get("imagen-edit");
 	let mensaje=[];
-	debugger;
 	// Recolección de datos
 	if(nombre.length==0){
 		mensaje.push("Escriba el nombre.")
@@ -240,4 +239,3 @@ function validarContacto(){
 	 return false;
 
 }
-

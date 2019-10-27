@@ -25,7 +25,10 @@
     <div class="_footer font-i-f">
         <div class="user flex-center flex-y" style="margin:10px 0;">
             <p>Usuario: <?php echo $blog->getUser()->getUsername(); ?></p>
-            <p>
+            <p date-time="parent">
+                <span class="hidden" date-time="date"><?php echo $blog->getcreation_date()?></span>
+                <span date-time="blog"></span>                
+            
                 <span><?php //echo $blog->getUser()->getName_user(); ?></span>
                 <span><?php //echo $blog->getUser()->getLast_name(); ?></span>
             </p>

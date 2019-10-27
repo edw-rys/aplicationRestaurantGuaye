@@ -548,3 +548,24 @@ $('#search-form-user button[type=submit]').click(function() {
 	$('#search-form-user, #toggle-search').toggleClass('open');
 	return true;
 });
+const updateTimePost=()=>{
+	var time_post = document.querySelectorAll(`[date-time="parent"]`);
+	if(time_post){
+		time_post.forEach(value=>{
+			var this_date = value.querySelector(`[date-time="date"]`).innerHTML;
+			var this_inner = value.querySelector(`[date-time="blog"]`);
+			// Comparar Horas
+			if(moment().diff(moment(this_date),"hour")<5){
+				this_inner.innerHTML=moment(this_date,"YYYY-MM-DD hh:mm:ss").fromNow();
+			}else{
+				if(moment().diff(moment(this_date),"day") < 3){
+					var xdiff = moment(this_date).day() - moment().day();
+					this_inner.innerHTML=moment().subtract(Math.abs(xdiff), 'days').calendar();;
+				}else{
+					this_inner.innerHTML=moment(this_date,"YYYY-MM-DD hh:mm:ss").format('LL')
+				}
+			}
+		});
+	}
+}
+updateTimePost();

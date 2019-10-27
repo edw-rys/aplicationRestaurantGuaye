@@ -79,6 +79,7 @@ const saveBlog = ()=>{
                             toastr.error(res.message);
                         }
                         animationChargeRemove(btn,"Publicar");
+                        updateTimePost();
                     }
                 )
                 .catch(err=>{

@@ -319,6 +319,7 @@ class BlogDAO {
     $blog->setDate_blog($res->creation_date);
     $blog->setRecipe($recipe);
     $blog->setUser($user);
+    $blog->setcreation_date($res->creation_date);
     $blog->setUrl_social_network($socialnetwork);
     return $blog;
   }

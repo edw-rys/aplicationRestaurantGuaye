@@ -14,12 +14,16 @@
 	<link rel="stylesheet" href="<?php echo CSS?>calendar.min.css">
 	<link href="https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/master/calendarorganizer.min.css" rel="stylesheet" />
 	
-	<script>
-		const url="<?php echo URL?>";
-	</script>
 	<script src="<?php echo JS?>pluggins/jquery.min.js"></script>
 	<script src="<?php echo JS?>pluggins/toastr.min.js"></script>
 	<script src="<?php echo JS?>pluggins/calendar.min.js"></script>
+	<script src="<?php echo JS?>lib/moment.js"></script>
+	<script src="<?php echo JS?>lib/moment.locale.min.js"></script>
+	<script>
+		const url="<?php echo URL?>";
+		// Moment js, español
+		moment.locale("es");
+	</script>
 	
 
 	<!-- <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script> -->

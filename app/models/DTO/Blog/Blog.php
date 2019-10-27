@@ -7,13 +7,21 @@ class Blog{
     private $date_blog;
     private $user;
     private $url_social_network=array();
+    private $creation_date;
+    
     public function __construct(){
         $url_social_network=array();
     }
     public function addLink($link){     
         array_push($this->url_social_network, $link);
     }
-
+    
+    public function getcreation_date(){
+        return $this->creation_date;
+    }
+    public function setcreation_date($creation_date){
+        $this->creation_date = $creation_date;
+    }
     public function getDestacado() {
         return $this->destacado;
     }

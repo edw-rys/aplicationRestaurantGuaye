@@ -709,9 +709,10 @@ CREATE TABLE user_(
     last_name varchar(20) not null,
     password varchar(255) not null,
     phone_number varchar(11),
-    date_create date not null,
+    date_create DATETIME not null,
     id_TypeUser int not null,
     gender int not null,
+    user_update_at datetime on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     url_photo varchar(500) ,
     status int DEFAULT 1,
     PRIMARY KEY (id_user),
@@ -783,10 +784,11 @@ INSERT INTO recipe(id_recipe, url_image, name, preparation)
 -- tabla de blogs
 create table blog(
     id_blog int AUTO_INCREMENT,
-    creation_date DATE  ,
     id_user int not null,
     id_recipe int not null,
     destacado int DEFAULT 0,
+    creation_date DATETIME not null ,
+    blog_update_at datetime on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     status int DEFAULT 1,
     PRIMARY KEY (id_blog),
     FOREIGN KEY (id_user) REFERENCES user_(id_user),
@@ -795,7 +797,7 @@ create table blog(
 
 -- insertar datos del blog 
 INSERT INTO blog(id_blog, creation_date, id_user,id_recipe)
-    values(1,"2019-07-27",2,1),(2,"2019-07-27",3,2),(3,"2019-07-27",2,3);
+    values(1,"2019-01-27 08:14:33",2,1),(2,"2019-05-27 11:25:47",3,2),(3,"2019-07-27 09:24:33",2,3);
 
 -- tabla del tipo de red social
 CREATE TABLE TypeSocialNetwork(

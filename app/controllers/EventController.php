@@ -3,8 +3,10 @@ require_once MODELS."DTO/User/User.php";
 require_once MODELS.'DAO/EventModel.php';
 class EventController {
     private $eventModel;
+    private $jwt;
     public function __construct() { 
         $this->eventModel = new EventModel();
+        $this->jwt = new JwtAuth();
     }
 
     public function index(){
@@ -129,117 +131,136 @@ class EventController {
     }
 
     public function save(){
-        //en caso de la ausencia de algún campo, retornar =>faltan campos
-        if(!(isset($_POST['asunto']) && isset($_POST['fecha']) && 
-            isset($_POST['inHour']) && isset($_POST['outHour']) && 
-            isset($_POST['comentarios']))){
-                $data = [
-                    "code"=>400,
-                    "status"=>"error",
-                    "message"=>"Compelte todos los campos, por favor!",
-                ];
-        }else{
-            // Token
-            $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
-            $this->eventModel->setExecutionDate($_POST['fecha']);
-            $this->eventModel->setAffair($_POST['asunto']);
-            $this->eventModel->setStart_time($_POST['inHour']);
-            $this->eventModel->setEnd_time($_POST['outHour']);
-            $this->eventModel->setComments($_POST['comentarios']);
-            //verificar choque de horas
-            if($this->checkSchedule( $_POST['fecha'],$_POST['inHour'], $_POST['outHour'],
-            )){
-                $data = [
-                    "code"=>400,
-                    "status"=>"error",
-                    "message"=>"No se pudo guardar los datos, hay choque de horarios con otra reservación",
-                ];
+        // Check token
+        $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
+        if($this->jwt->checkToken($token)){
+
+            //en caso de la ausencia de algún campo, retornar =>faltan campos
+            if(!(isset($_POST['asunto']) && isset($_POST['fecha']) && 
+                isset($_POST['inHour']) && isset($_POST['outHour']) && 
+                isset($_POST['comentarios']))){
+                    $data = [
+                        "code"=>400,
+                        "status"=>"error",
+                        "message"=>"Compelte todos los campos, por favor!",
+                    ];
             }else{
-                $id_user=isset($_SESSION['ID_USER'])?$_SESSION['ID_USER']:'';
-                $this->eventModel->setUser($id_user);
-                $numfilasAfectadas = 0;
-                if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
-                    // editar
-                    // verificar que la publicación concuerda con su respectivo dueño
-                    $verify = $this->eventModel->getData(["id_event"=>$_REQUEST['id'], "id_user"=> $_SESSION['ID_USER']]);
-                    if(empty($verify)){
-                        $data = [
-                            "code"=>400,
-                            "status"=>"error",
-                            "message"=>"Usted no tiene permisos para editar este evento!",
-                        ];
-                    }else{
-                        $this->eventModel->setId_event($_POST['id']);
-                        $numfilasAfectadas = $this->eventModel->update();
-                        $data = [
-                            "code"=>200,
-                            "status"=>"success",
-                            "message"=>"Editado exitosamente",
-                            "idEvent"=>$_POST['id']
-                        ];
-                    }
+                // Token
+                $this->eventModel->setExecutionDate($_POST['fecha']);
+                $this->eventModel->setAffair($_POST['asunto']);
+                $this->eventModel->setStart_time($_POST['inHour']);
+                $this->eventModel->setEnd_time($_POST['outHour']);
+                $this->eventModel->setComments($_POST['comentarios']);
+                //verificar choque de horas
+                if($this->checkSchedule( $_POST['fecha'],$_POST['inHour'], $_POST['outHour'],
+                )){
+                    $data = [
+                        "code"=>400,
+                        "status"=>"error",
+                        "message"=>"No se pudo guardar los datos, hay choque de horarios con otra reservación",
+                    ];
                 }else{
-                    $numfilasAfectadas = $this->eventModel->create();
-                    
-                    if ($numfilasAfectadas > 0) {
-                        $data = [
-                            "code"=>200,
-                            "status"=>"success",
-                            "message"=>"Guardado exitosamente",
-                            "idEvent"=>$numfilasAfectadas
-                        ];
-                    } else {
-                        $data = [
-                            "code"=>400,
-                            "status"=>"error",
-                            "message"=>"No se pudo guardar los datos",
-                            "dat"=>$numfilasAfectadas
-                        ];
-                    }
-                }
-            }
-        }
-        echo json_encode($data);
-    }
-    public function delete($id_=null){
-        if(!is_null($id_)){
-            $verify = $this->eventModel->getData(["id_event"=>$id_, "id_user"=> $_SESSION['ID_USER']]);
-            if(empty($verify)){
-                $data = [
-                    "code"=>400,
-                    "status"=>"error",
-                    "message"=>"Usted no tiene permisos para eliminar este evento!",
-                ];
-            }else{
-                $event= $this->eventModel->getData(["id_event"=>$id_,"mode"=>"class"]);
-                if(!empty($event)){
-                    
-                    if(date("Y-m-d")>$event->getExecutionDate()){
-                        $data = [
-                            "code"=>400,
-                            "status"=>"error",
-                            "message"=>"No se permite eliminar datos reservaciones que ya han pasado su fecha de reservación.",
-                        ];
+                    $id_user=isset($_SESSION['ID_USER'])?$_SESSION['ID_USER']:'';
+                    $this->eventModel->setUser($id_user);
+                    $numfilasAfectadas = 0;
+                    if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+                        // editar
+                        // verificar que la publicación concuerda con su respectivo dueño
+                        $verify = $this->eventModel->getData(["id_event"=>$_REQUEST['id'], "id_user"=> $_SESSION['ID_USER']]);
+                        if(empty($verify)){
+                            $data = [
+                                "code"=>400,
+                                "status"=>"error",
+                                "message"=>"Usted no tiene permisos para editar este evento!",
+                            ];
+                        }else{
+                            $this->eventModel->setId_event($_POST['id']);
+                            $numfilasAfectadas = $this->eventModel->update();
+                            $data = [
+                                "code"=>200,
+                                "status"=>"success",
+                                "message"=>"Editado exitosamente",
+                                "idEvent"=>$_POST['id']
+                            ];
+                        }
                     }else{
-                        $numfilasAfectadas= $this->eventModel->delete($id_);
+                        $numfilasAfectadas = $this->eventModel->create();
+                        
                         if ($numfilasAfectadas > 0) {
                             $data = [
                                 "code"=>200,
                                 "status"=>"success",
-                                "message"=>"Datos eliminados correctamente.",
+                                "message"=>"Guardado exitosamente",
+                                "idEvent"=>$numfilasAfectadas
                             ];
                         } else {
                             $data = [
                                 "code"=>400,
                                 "status"=>"error",
-                                "message"=>"Error al eliminar los datos",
+                                "message"=>"No se pudo guardar los datos",
+                                "dat"=>$numfilasAfectadas
                             ];
                         }
                     }
                 }
             }
-            echo json_encode($data);    
+        }else{
+            $data = [
+                "code"=>400,
+                "status"=>"error",
+                "message"=>"Permiso no autorizado",
+            ];
         }
+        echo json_encode($data);
+    }
+    public function delete($id_=null){
+        $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
+        if($this->jwt->checkToken($token)){
+            if(!is_null($id_)){
+                $verify = $this->eventModel->getData(["id_event"=>$id_, "id_user"=> $_SESSION['ID_USER']]);
+                if(empty($verify)){
+                    $data = [
+                        "code"=>400,
+                        "status"=>"error",
+                        "message"=>"Usted no tiene permisos para eliminar este evento!",
+                    ];
+                }else{
+                    $event= $this->eventModel->getData(["id_event"=>$id_,"mode"=>"class"]);
+                    if(!empty($event)){
+                        
+                        if(date("Y-m-d")>$event->getExecutionDate()){
+                            $data = [
+                                "code"=>400,
+                                "status"=>"error",
+                                "message"=>"No se permite eliminar datos reservaciones que ya han pasado su fecha de reservación.",
+                            ];
+                        }else{
+                            $numfilasAfectadas= $this->eventModel->delete($id_);
+                            if ($numfilasAfectadas > 0) {
+                                $data = [
+                                    "code"=>200,
+                                    "status"=>"success",
+                                    "message"=>"Datos eliminados correctamente.",
+                                ];
+                            } else {
+                                $data = [
+                                    "code"=>400,
+                                    "status"=>"error",
+                                    "message"=>"Error al eliminar los datos",
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            $data = [
+                "code"=>400,
+                "status"=>"error",
+                "message"=>"Permiso no autorizado",
+            ];
+        }
+        echo json_encode($data);    
     }
     //verifica choque de horarios y que hora_in < hora_out
     public function checkSchedule($date_, $hourin, $hourout){

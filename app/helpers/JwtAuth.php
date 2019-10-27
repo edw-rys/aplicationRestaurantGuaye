@@ -51,9 +51,10 @@ class JwtAuth{
         try{
             $jwt = str_replace('"','',$jwt);
             $decoded = JWT::decode($jwt, $this->key, ['HS256']);
-        }catch(\UnexpectedValueException $e){
+            // die();
+        }catch(UnexpectedValueException $e){
             $auth= false;
-        }catch(\DomainException $ex){
+        }catch(DomainException $ex){
             $auth= false;
         }
         if(!empty($decoded) && is_object($decoded) && isset($decoded->sub)){

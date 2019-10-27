@@ -30,7 +30,10 @@ const saveMenu=()=>{
                 });
                 animationChargeRemove(btn,"Publicar");
             }else{
+                let headers_ = new Headers();
+                headers_.append('token', localStorage.getItem('token'));
                 fetch(urlMenu+"save",{
+                    headers:headers_,
                     method:"POST",
                     body:data
                 })
@@ -66,7 +69,9 @@ const editFood=(idcontrol=0 ,idcomida=0)=>{
 const deleteMenu=(idcontrol,btn)=>{
     if(idcontrol)
     if(confirm('esta seguro?')){
-        fetch(urlMenu+"delete/"+idcontrol)
+        let headers_ = new Headers();
+        headers_.append('token', localStorage.getItem('token'));
+        fetch(urlMenu+"delete/"+idcontrol,{headers:headers_,method:"GET"})
         .then(res=>res.json())
         .then(
             res=>{

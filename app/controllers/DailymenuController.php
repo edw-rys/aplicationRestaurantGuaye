@@ -86,122 +86,140 @@ class DailymenuController{
                 "code"=>400
             ];
         }else{
-            $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$id_Control);
-            if(empty($check)){
-                $data=[
-                    "message"=>"No tiene permisos de eliminar este contenido.",
-                    "status"=>"error",
-                    "code"=>400
-                ];    
-            }else{
-                $rowsDelete=0;
-                $rowsDelete=$this->foodDao->deleteFoodControl($id_Control);
-                if($rowsDelete>0){
+            $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
+            if($this->jwt->checkToken($token)){
+                $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$id_Control);
+                if(empty($check)){
                     $data=[
-                        "message"=>"Comida eliminada de la lista.",
-                        "status"=>"success",
-                        "code"=>200
-                    ];  
-                }
-                else{
-                    $data=[
-                        "message"=>"No se pudo eliminar.",
+                        "message"=>"No tiene permisos de eliminar este contenido.",
                         "status"=>"error",
                         "code"=>400
-                    ];  
+                    ];    
+                }else{
+                    $rowsDelete=0;
+                    $rowsDelete=$this->foodDao->deleteFoodControl($id_Control);
+                    if($rowsDelete>0){
+                        $data=[
+                            "message"=>"Comida eliminada de la lista.",
+                            "status"=>"success",
+                            "code"=>200
+                        ];  
+                    }
+                    else{
+                        $data=[
+                            "message"=>"No se pudo eliminar.",
+                            "status"=>"error",
+                            "code"=>400
+                        ];  
+                    }
                 }
+            }else{
+                $data = [
+                    "code"=>400,
+                    "status"=>"error",
+                    "message"=>"Permiso no autorizado",
+                ];
             }
         }
         echo json_encode($data);
     }
     public function save(){
-        if(!(isset($_REQUEST['horario']) && isset($_REQUEST['type_food']) && 
-            isset($_REQUEST['nombre']) && isset($_REQUEST['precio']) && 
-            isset($_REQUEST['descripcion'] ) && isset($_REQUEST['ctg']) )){
-                $data=[
-                    "message"=>"Compelte todos los campos, por favor!.",
-                    "status"=>"error",
-                    "code"=>400
-                ];  
-        }else{
-            //Create category 
-            $ctg=new CtgFood( );
-            $ctg->setId_ctgfood($_REQUEST['ctg']);
-            //
-            $tf=new TypeFood();
-            $tf->setId_TypeFood($_REQUEST['type_food']);
-            $sch=new schedule();
-            $sch->setId_schedule($_REQUEST['horario']);
-            //Create foodcontrol        
-            $foodControl=new FoodControl();
-            $foodControl->setTypefood($tf);
-            $foodControl->setSchedule($sch);
-            //Create food
-            $food=new Food();
-            $food->setName_food($_REQUEST['nombre']);
-            $food->setDesciption_food($_REQUEST['descripcion']);
-            $food->setPrice($_REQUEST['precio']);
-            $food->setCtg_food($ctg );
-            
-            
-            //Set foof
-            $foodControl->setFood($food);
-            //Create dailymenu and set foodcontrol
-            $dailyMenu=new DailyMenu();
-            $dailyMenu->setFoodControl($foodControl);
-            $filas_afectadas=0;
-
-            if( isset($_POST["idc"]) && $_POST["idc"]!=0 &&
-                isset($_POST["idf"]) && $_POST["idf"]!=0){
-                // Edit
-                $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$_POST["idc"]);
-                
-                if(empty($check)){
+        $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
+        if($this->jwt->checkToken($token)){
+            if(!(isset($_REQUEST['horario']) && isset($_REQUEST['type_food']) && 
+                isset($_REQUEST['nombre']) && isset($_REQUEST['precio']) && 
+                isset($_REQUEST['descripcion'] ) && isset($_REQUEST['ctg']) )){
                     $data=[
-                        "message"=>"No tiene permisos de editar este contenido.",
+                        "message"=>"Compelte todos los campos, por favor!.",
                         "status"=>"error",
                         "code"=>400
                     ];  
+            }else{
+                //Create category 
+                $ctg=new CtgFood( );
+                $ctg->setId_ctgfood($_REQUEST['ctg']);
+                //
+                $tf=new TypeFood();
+                $tf->setId_TypeFood($_REQUEST['type_food']);
+                $sch=new schedule();
+                $sch->setId_schedule($_REQUEST['horario']);
+                //Create foodcontrol        
+                $foodControl=new FoodControl();
+                $foodControl->setTypefood($tf);
+                $foodControl->setSchedule($sch);
+                //Create food
+                $food=new Food();
+                $food->setName_food($_REQUEST['nombre']);
+                $food->setDesciption_food($_REQUEST['descripcion']);
+                $food->setPrice($_REQUEST['precio']);
+                $food->setCtg_food($ctg );
+                
+                
+                //Set foof
+                $foodControl->setFood($food);
+                //Create dailymenu and set foodcontrol
+                $dailyMenu=new DailyMenu();
+                $dailyMenu->setFoodControl($foodControl);
+                $filas_afectadas=0;
+
+                if( isset($_POST["idc"]) && $_POST["idc"]!=0 &&
+                    isset($_POST["idf"]) && $_POST["idf"]!=0){
+                    // Edit
+                    $check=$this->foodDao->checkUserForPostAndDate($_SESSION['ID_USER'],$_POST["idc"]);
+                    
+                    if(empty($check)){
+                        $data=[
+                            "message"=>"No tiene permisos de editar este contenido.",
+                            "status"=>"error",
+                            "code"=>400
+                        ];  
+                    }else{
+                        $foodControl->setId_control($_POST["idc"]);
+                        $food->setId_food($_POST["idf"]);
+                        $foodControl->setFood($food);
+                        $dailyMenu->getFoodControl($foodControl);
+                        $filas_afectadas=$this->dailyMenuDAO->update($dailyMenu);  
+                        if($filas_afectadas>0){
+                            $data=[
+                                "message"=>"Comida editada.",
+                                "status"=>"success",
+                                "code"=>200
+                            ];
+                        }
+                        else{
+                            $data=[
+                                "message"=>"Error al editar.",
+                                "status"=>"error",
+                                "code"=>400
+                            ];
+                        }
+                    }
+        
                 }else{
-                    $foodControl->setId_control($_POST["idc"]);
-                    $food->setId_food($_POST["idf"]);
-                    $foodControl->setFood($food);
-                    $dailyMenu->getFoodControl($foodControl);
-                    $filas_afectadas=$this->dailyMenuDAO->update($dailyMenu);  
+                    // save
+                    $filas_afectadas=$this->dailyMenuDAO->insert($dailyMenu,$_SESSION['ID_USER']);
                     if($filas_afectadas>0){
                         $data=[
-                            "message"=>"Comida editada.",
+                            "message"=>"Comida guardada.",
                             "status"=>"success",
                             "code"=>200
                         ];
                     }
                     else{
                         $data=[
-                            "message"=>"Error al editar.",
+                            "message"=>"Error al guardar.",
                             "status"=>"error",
                             "code"=>400
                         ];
                     }
                 }
-    
-            }else{
-                // save
-                $filas_afectadas=$this->dailyMenuDAO->insert($dailyMenu,$_SESSION['ID_USER']);
-                if($filas_afectadas>0){
-                    $data=[
-                        "message"=>"Comida guardada.",
-                        "status"=>"success",
-                        "code"=>200
-                    ];
-                }
-                else{
-                    $data=[
-                        "message"=>"Error al guardar.",
-                        "status"=>"error",
-                        "code"=>400
-                    ];
-                }
             }
+        }else{
+            $data = [
+                "code"=>400,
+                "status"=>"error",
+                "message"=>"Permiso no autorizado",
+            ];
         }
         echo json_encode($data);
     }

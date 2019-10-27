@@ -43,9 +43,12 @@ const saveBlog = ()=>{
                 });
                 animationChargeRemove(btn,"Publicar");
             }else{
+                let headers_ = new Headers();
+                headers_.append('token', localStorage.getItem('token'));
                 fetch(urlBlog+"save",{
                     method:"POST",
-                    body:data
+                    body:data,
+                    headers:headers_
                 })
                 .then(res=>res.json())
                 .then(
@@ -105,7 +108,9 @@ const deletePost = (id=0 , btn, w="50px",h="50px")=>{
     let auxContent =btn.innerHTML; 
     btn.classList.add("flex-x");
     animationLoad(btn, w, h);
-    fetch(urlBlog+"delete/"+id)
+    let headers_ = new Headers();
+    headers_.append('token', localStorage.getItem('token'));
+    fetch(urlBlog+"delete/"+id,{headers:headers_})
     .then(res=>res.json())
     .then(
         res=>{

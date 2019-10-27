@@ -90,7 +90,9 @@ const deleteEvent=(id,col)=>{
         let aux = col.innerHTML;
         animationCharge(col);
         setTimeout(() => {
-            fetch(urlEvent+"delete/"+id)
+            let headers_ = new Headers();
+            headers_.append('token', localStorage.getItem('token'));
+            fetch(urlEvent+"delete/"+id,{headers:headers_,method:"GET"})
             .then(res=>res.json())
             .then(
                 res=>{

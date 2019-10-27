@@ -43,7 +43,7 @@ function validarUsuarionuevo(data){
 	if(!nombUsuario){
 		mensaje.push("Debe ingresar su nombre de usuario.");
 	}else
-	if(!expUsername.test(nombUsuario)){
+	if(!expUsername.test(nombUsuario.toLowerCase())){
 		mensaje.push("Nombre de usuario: letras y números, rago de caracteres [3-15], símbolos permitidos [ _ ü ], no se admiten espacios");
 	}
 	if(!contrasenia){

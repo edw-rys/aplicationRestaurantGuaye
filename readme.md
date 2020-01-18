@@ -131,53 +131,53 @@ _Iniciaron el proyecto_
 
 ### Screenshot ⌨️
 __Index__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_1.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_1.png)
 
 __Login__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_01.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_01.png)
 
 __Registro de usuario__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_00.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_00.png)
 
 
 __Vista del perfil de un usuario común o el aut+enticado__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_8.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_8.png)
 
 __Configuraciones de una cuenta de usuario__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_9.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_9.png)
 
 __Búsqueda de cuentas de usuario__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_10.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_10.png)
 
 __Búsqueda de cuentas de usuario (Versión móvil)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_10_movil.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_10_movil.png)
 
 __Menú dirario (vista para usuario no administrador)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_2.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_2.png)
 
 __Menú dirario (vista para usuario administrador)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_2admin.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_2admin.png)
 
 __Blog__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_3.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_3.png)
 
 __Postear nueva receta en el blog__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_4.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_4.png)
 
 __Opciones de un post__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_5.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_5.png)
 
 __pciones de un post para un usuario tipo moderador__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_5moderador.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_5moderador.png)
 
 __Visualizar un post (Vista en ordenador)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_6.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_6.png)
 
 __Visualizar un post (Vista en Dispotivos móviles pequeños)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_6_movil.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_6_movil.png)
 
 __Vista de eventos por usuario (Vista en ordenador)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_7.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_7.png)
 
 __Vista de eventos por usuario (Vista en Dispotivos móviles pequeños)__
-![alt text](https://raw.githubusercontent.com/edw-rys/aplicationrestauranguaye/master/assets/img/pictures/screenshot/number_7_movil.png)
+![alt text](https://raw.githubusercontent.com/edw-rys/aplicationRestaurantGuaye/master/assets/img/pictures/screenshot/number_7_movil.png)

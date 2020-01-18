@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // System constants
 /* 
     * Saber si estamos de forma local o remota
@@ -21,7 +21,8 @@ define('AUTH_SALT'          ,'TNX_UPP_@S5249A6');
 
 // Puerto y URL
 define('PORT'               , "81");
-define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.168.1.8:".PORT.BASEPATH);
+define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.152.1.12:".PORT.BASEPATH);
+define('URI'                , IS_LOCAL ?'http://localhost:'.PORT.BASEPATH :"http://192.152.1.12:".PORT.BASEPATH);
 
 // Las rutas de directorios y archivos
 define('DS'                 , DIRECTORY_SEPARATOR);
@@ -73,7 +74,7 @@ define('DB_ENGINE'          , 'mysql');
 define('DB_HOST'            , 'http://127.0.0.1:81');
 define('DB_NAME'            , 'guaye');
 define('DB_USER'            , 'root');
-define('DB_PASS'            , 'root');
+define('DB_PASS'            , 'Grupo7@');
 define('DB_CHARSET'         , 'utf8');
 
 // El controlador por defecto / el método por defecto / y el controlador de errores por defecto

@@ -21,6 +21,7 @@
 	<script src="<?php echo JS?>lib/moment.locale.min.js"></script>
 	<script>
 		const url="<?php echo URL?>";
+		const uri ="<?php echo URI?>";
 		// Moment js, español
 		moment.locale("es");
 	</script>

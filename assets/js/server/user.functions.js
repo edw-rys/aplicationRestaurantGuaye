@@ -4,7 +4,8 @@ const formLogin = document.querySelector("form[name='loginForm']");
 
 const getFormLogin = function(param="login") {
     cleanModalFree();
-    fetch(urlUser+"signin/"+param)
+    fetch(urlUser+"signin/"+param
+    )
     .then(res=>res.text())
     .then(res=>{
         // console.log(res);
@@ -26,7 +27,6 @@ const login =(form) =>{
     if(!form){
         form=document.getElementById("formLogin");
     }
-
     form.addEventListener("submit",e=>{e.preventDefault();});
     let loginUser=new FormData(form);
     // Bloquear botón

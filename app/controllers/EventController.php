@@ -8,7 +8,6 @@ class EventController {
         $this->eventModel = new EventModel();
         $this->jwt = new JwtAuth();
     }
-
     public function index(){
         if(!isset($_SESSION["USER"])){
             Redirect::to("");
@@ -62,7 +61,6 @@ class EventController {
             }
         }
     }
-
     public function new($id=null){
         if(isset($_SESSION["USER"])){
             if(!is_null($id)){
@@ -129,12 +127,10 @@ class EventController {
             }
         }
     }
-
     public function save(){
         // Check token
         $token = isset($_SERVER["HTTP_TOKEN"]) ? trim($_SERVER["HTTP_TOKEN"]) : '';
         if($this->jwt->checkToken($token)){
-
             //en caso de la ausencia de algún campo, retornar =>faltan campos
             if(!(isset($_POST['asunto']) && isset($_POST['fecha']) && 
                 isset($_POST['inHour']) && isset($_POST['outHour']) && 
@@ -335,7 +331,6 @@ class EventController {
         }
         var_dump($data);
     }
-
     public function calendar(Type $var = null){
         $data=[
             "calendar"=>$this->eventModel->getDataCalendarEvent()

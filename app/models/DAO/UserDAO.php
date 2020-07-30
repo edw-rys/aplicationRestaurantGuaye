@@ -25,7 +25,7 @@ class UserDAO {
 			return Model::sql([
 				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo ,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender ".
 						"from user_ as u ".
-						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join TypeUser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
 						"where username=:username and u.status=1",
 				"params"=>["username"=>$username],
@@ -42,7 +42,7 @@ class UserDAO {
 			return Model::sql([
 				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo, date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender ".
 						"from user_ as u ".
-						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join TypeUser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
 						"where id_user=:id_user and u.status=1",
 				"params"=>["id_user"=>$id],
@@ -59,7 +59,7 @@ class UserDAO {
 			$user = Model::sql([
 				"sql"=>"select id_user, username,name_user, last_name, phone_number, url_photo, date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender, u.password ".
 						"from user_ as u ".
-						"inner join typeuser as t on u.id_TypeUser= t.id_TypeUser ".
+						"inner join TypeUser as t on u.id_TypeUser= t.id_TypeUser ".
 						"inner join gender as g on u.gender = g.id_gender ".
 						"where username=:username and u.status=1;",
 				"params"=>["username"=>$username],

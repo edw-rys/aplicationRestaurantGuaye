@@ -237,7 +237,7 @@ CREATE PROCEDURE getUserCheck(IN usname VARCHAR(20),IN psswd VARCHAR(20))
 BEGIN
     select id_user, username,name_user, last_name, phone_number,date_create,t.id_TypeUser, t.name_TypeUser, g.name_gender, g.id_gender 
     	from user_ as u
-        inner join typeuser as t on u.id_TypeUser= t.id_TypeUser
+        inner join TypeUser as t on u.id_TypeUser= t.id_TypeUser
         inner join gender as g on u.gender = g.id_gender
     	where u.status=1 and username=usname and password=psswd;
 END$$
@@ -685,6 +685,7 @@ DELIMITER ;
 
 
 -- tabla del tipo de usuario
+DROP TABLE IF EXISTS `TypeUser`;
 CREATE TABLE TypeUser(
     id_TypeUser int AUTO_INCREMENT,
     name_TypeUser varchar(15) not null,
@@ -694,6 +695,7 @@ CREATE TABLE TypeUser(
 -- insercion de 3 tipos de usuarios
 INSERT INTO TypeUser(id_TypeUser, name_TypeUser) VALUES (101,'admin'),(102,'cliente'), (303,'Moderador');
 
+DROP TABLE IF EXISTS `gender`;
 CREATE TABLE gender(
     id_gender int AUTO_INCREMENT,
     name_gender varchar(20) not null,
@@ -702,6 +704,7 @@ CREATE TABLE gender(
 );
 insert into gender values(1,"masculino",1) , (2,"femenino",1);
 -- tabla de usuario
+DROP TABLE IF EXISTS `user_`;
 CREATE TABLE user_(
     id_user int AUTO_INCREMENT,
     username varchar(30) not null,
@@ -712,7 +715,7 @@ CREATE TABLE user_(
     date_create DATETIME not null,
     id_TypeUser int not null,
     gender int not null,
-    user_update_at datetime on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    user_update_at datetime DEFAULT null,
     url_photo varchar(500) ,
     status int DEFAULT 1,
     PRIMARY KEY (id_user),
@@ -730,6 +733,7 @@ INSERT INTO user_(id_user, username, name_user, last_name, password, phone_numbe
         (6,"moderador","moderador","moderador","$2y$10$SOq7YEVfnoCTenxMMicebeYXfGld0e66slMCgpTyo93wpou3t.TbG","",303,'2019-06-27',1),
         (7,'Ka','Pi', "Kar","$2y$10$8O7e32sf3giWbzZ0oudcoOg6B9nA/ZrwtbMNyowtoaqFXMhrd9Rgm","",101,'2019-06-27',2);
 
+DROP TABLE IF EXISTS `event_`;
 CREATE TABLE event_(
     id_event int AUTO_INCREMENT,
     affair varchar(20) not null, -- asunto
@@ -757,6 +761,7 @@ INSERT INTO event_(id_event, affair,creation_date,execution_date, start_time, en
 
 
 -- tabla de recetas
+DROP TABLE IF EXISTS `recipe`;
 create table recipe(
     id_recipe int AUTO_INCREMENT,
     url_image varchar(70) NOT null,
@@ -782,13 +787,14 @@ INSERT INTO recipe(id_recipe, url_image, name, preparation)
 
 
 -- tabla de blogs
+DROP TABLE IF EXISTS `blog`;
 create table blog(
     id_blog int AUTO_INCREMENT,
     id_user int not null,
     id_recipe int not null,
     destacado int DEFAULT 0,
     creation_date DATETIME not null ,
-    blog_update_at datetime on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    blog_update_at datetime DEFAULT null  ,
     status int DEFAULT 1,
     PRIMARY KEY (id_blog),
     FOREIGN KEY (id_user) REFERENCES user_(id_user),
@@ -800,6 +806,7 @@ INSERT INTO blog(id_blog, creation_date, id_user,id_recipe)
     values(1,"2019-01-27 08:14:33",2,1),(2,"2019-05-27 11:25:47",3,2),(3,"2019-07-27 09:24:33",2,3);
 
 -- tabla del tipo de red social
+DROP TABLE IF EXISTS `TypeSocialNetwork`;
 CREATE TABLE TypeSocialNetwork(
     id_socialNetwork int AUTO_INCREMENT,
     name_socialNetwork varchar(25) not null,
@@ -818,6 +825,7 @@ INSERT INTO TypeSocialNetwork(id_socialNetwork, name_socialNetwork,name_class)
 
 
 -- tabla link_social_network_blog
+DROP TABLE IF EXISTS `link_social_network_blog`;
 CREATE TABLE link_social_network_blog(
     id_link int AUTO_INCREMENT,
     link varchar(1000) not null,
@@ -839,6 +847,7 @@ INSERT INTO link_social_network_blog(id_link, link, id_socialNetwork, id_blog)
 
 
 -- tabla de ingredientes
+DROP TABLE IF EXISTS `ingredients`;
 CREATE TABLE ingredients(
 	id_ingredient int AUTO_INCREMENT,
     name_ingredient varchar(70) not null,
@@ -858,6 +867,7 @@ INSERT INTO ingredients(id_ingredient, name_ingredient,id_recipe )
 
 -- ----------------
 -- tabla de horarios
+DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE schedule(
     id_schedule int AUTO_INCREMENT,
     name_schedule varchar(70) not null,
@@ -870,6 +880,7 @@ INSERT INTO schedule(id_schedule,name_schedule,name_icon) values(30,"MAÑANA","f
 
 
 -- TABLA DE LA CATEGORIA DE COMIDA
+DROP TABLE IF EXISTS `CtgFood`;
 CREATE TABLE CtgFood(
     id_ctgfood int AUTO_INCREMENT,
     name_ctgfood varchar(70) not null,
@@ -883,6 +894,7 @@ INSERT INTO CtgFood(id_ctgfood,name_ctgfood)
 
 
 -- TABLA DE TIPO DE COMIDA
+DROP TABLE IF EXISTS `TypeFood`;
 CREATE TABLE TypeFood(
     id_TypeFood int AUTO_INCREMENT,
     name_TypeFood varchar(70) not null,
@@ -894,6 +906,7 @@ INSERT INTO TypeFood(id_TypeFood,name_TypeFood)
     values(10,"PARA EMPEZAR"),(11,"SEGUNDO"),(12,"POSTRE"),(13,"TODO");
 
 -- TABLA DEL MENU DE COMIDA
+DROP TABLE IF EXISTS `DailyMenu`;
 CREATE TABLE DailyMenu(
     id_menu int AUTO_INCREMENT,
     date_create DATE ,
@@ -905,6 +918,7 @@ INSERT INTO DailyMenu(id_menu, date_create)
     values(1,"2019-07-07"),(2,"2019-08-7"),(3,"2019-08-09"),(4,"2019-08-09");
 -- Tabla de comidas del menú
 
+DROP TABLE IF EXISTS `Food`;
 CREATE TABLE Food(
     id_food int AUTO_INCREMENT,
     name_food varchar(50) not null,
@@ -928,6 +942,7 @@ INSERT INTO Food(id_food, name_food, description_food, price, id_ctgfood)
     (9,"Encebollado + arroz","desc 8o",7,5 ),
     (10,"Bolón + café","desc 9",2.50,5 );
 
+DROP TABLE IF EXISTS `foodControl`;
 CREATE TABLE foodControl(
     id_control int AUTO_INCREMENT,
     id_TypeFood int not null,

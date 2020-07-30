@@ -14,15 +14,15 @@ date_default_timezone_set('America/Guayaquil');
 define('LANG'               ,'es');
 
 // Ruta base de nuestro proyecto
-define("BASEPATH", IS_LOCAL ? '/aplicationRestaurantGuaye/' : '/aplicationRestaurantGuaye/');
+define("BASEPATH", IS_LOCAL ? '/' : '/');
 
 // Sal del sistema
 define('AUTH_SALT'          ,'TNX_UPP_@S5249A6');
 
 // Puerto y URL
-define('PORT'               , "81");
-define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://192.152.1.12:".PORT.BASEPATH);
-define('URI'                , IS_LOCAL ?'http://localhost:'.PORT.BASEPATH :"http://192.152.1.12:".PORT.BASEPATH);
+define('PORT'               , "80");
+define('URL'                , IS_LOCAL ?'http://127.0.0.1:'.PORT.BASEPATH :"http://www.guaye.edwtnx.com:".PORT.BASEPATH);
+define('URI'                , IS_LOCAL ?'http://localhost:'.PORT.BASEPATH :"http://www.guaye.edwtnx.com:".PORT.BASEPATH);
 
 // Las rutas de directorios y archivos
 define('DS'                 , DIRECTORY_SEPARATOR);
@@ -66,15 +66,15 @@ define('LDB_ENGINE'         , 'mysql');
 define('LDB_HOST'           , 'localhost');
 define('LDB_NAME'           , 'guaye');
 define('LDB_USER'           , 'root');
-define('LDB_PASS'           , 'root');
+define('LDB_PASS'           , '');
 define('LDB_CHARSET'        , 'utf8');
 
 // Set para conexión en producción o servidor real
 define('DB_ENGINE'          , 'mysql');
 define('DB_HOST'            , 'http://127.0.0.1:81');
 define('DB_NAME'            , 'guaye');
-define('DB_USER'            , 'root');
-define('DB_PASS'            , 'Grupo7@');
+define('DB_USER'            , 'guaye_admin');
+define('DB_PASS'            , '');
 define('DB_CHARSET'         , 'utf8');
 
 // El controlador por defecto / el método por defecto / y el controlador de errores por defecto

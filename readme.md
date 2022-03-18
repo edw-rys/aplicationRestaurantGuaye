@@ -1,8 +1,11 @@
 # AplicationGuaye
 
 _El siguiente proyecto se trata de una aplicación web, los módulos implementados son los siguientes:_
+
 **Módulo com CRUD completo de un Blog para el restaurante.**
+
 **Módulo com CRUD completo de petición para reservaciones de eventos para los clientes.**
+
 **Módulo com CRUD completo de menú de comidas diarias.**
 
 ## Comenzando 🚀
@@ -26,6 +29,7 @@ Puede usar xampp server, wampp server o el de preferencia.
 
 ## Ejecutando las pruebas ⚙️
 **Módulo de usuario** 
+
 _1. Registo_\
 _2. Inicio se sesión_\
 _3. Actualización de datos de usuario_\

@@ -2,11 +2,11 @@
 
 _El siguiente proyecto se trata de una aplicación web, los módulos implementados son los siguientes:_
 
-**Módulo com CRUD completo de un Blog para el restaurante.**
+**Módulo con CRUD completo de un Blog para el restaurante.**
 
-**Módulo com CRUD completo de petición para reservaciones de eventos para los clientes.**
+**Módulo con CRUD completo de petición para reservaciones de eventos para los clientes.**
 
-**Módulo com CRUD completo de menú de comidas diarias.**
+**Módulo con CRUD completo de menú de comidas diarias.**
 
 ## Comenzando 🚀
 
